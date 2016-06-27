@@ -1,0 +1,33 @@
+<% if(type=="one"){ %>
+<div style="margin-bottom:10px;">
+    <label class="radio-inline">
+      <input type="radio" name="receive_type" id="inlineRadio1" value="0" checked="checked"> 全公司
+    </label>
+    <label class="radio-inline" style="display:none;">
+      <input type="radio" name="receive_type" id="inlineRadio3" value="3"> 职位
+    </label>
+    <label class="radio-inline" style="display:none;">
+      <input type="radio" name="receive_type" id="inlineRadio2" value="2"> 部门
+    </label>
+    <label class="radio-inline" style="display:none;">
+      <input type="radio" name="receive_type" id="inlineRadio4" value="1"> 员工
+    </label>
+    <input type="hidden" name="is_all" value="1" id="is_all"/>
+</div>
+<% } %>
+<div id="select_object"<% if(type=="one"){ %> style="display:none;"<% } %>>
+    <div class="block note-object-result" id="object-result">
+        <ul class="list-inline object-list" style="min-height: 48px;"></ul>
+    </div>
+    <div class="box">
+        <% if(_.where(objects, {name: "position"}).length>0){ %>
+        <button type="button" class="btn btn-default" data-type="position" data-typeid="3" id="btn3" data-position="">按职位 <i class="fa fa-plus"></i></button>
+        <% } %>
+        <% if(_.where(objects, {name: "department"}).length>0){ %>
+        <button type="button" class="btn btn-default" data-type="department" data-typeid="2" id="btn2" data-department="">按部门 <i class="fa fa-plus"></i></button>
+        <% } %>
+        <% if(_.where(objects, {name: "employee"}).length>0){ %>
+        <button type="button" class="btn btn-default" data-type="employee" data-typeid="1" id="btn1" data-employee="">按人员 <i class="fa fa-plus"></i></button>
+        <% } %>
+    </div>
+</div>

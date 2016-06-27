@@ -1,0 +1,7 @@
+<%= Hby.ux.util.IM.getImage(photoUrl, name, 'm', {
+	'data-chatid': id
+	}) %>
+<p class="right_member_name"><%= name || '&nbsp;' %></p>
+<% if(owner == window.imUser.imAccountId && id != window.imUser.imAccountId){ %>
+<span class="delete_member" style="cursor:pointer"></span>
+<% } %>

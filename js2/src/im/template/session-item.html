@@ -1,0 +1,35 @@
+<div class="sessionItem" data-scene='<%= scene %>' data-chatid='<%= id %>' data-userid='<%= user.userId %>'>
+<a href="javascript:;" class="depart_user" >
+<% if(scene == 'team'){ %>
+    <span class="crm-image-show-client" style="width: 40px; height: 40px; line-height: 40px;">
+        <img src="/public/style/images/im/im_group_icon.png" class="list_user_icon" width="20" height="20">
+    </span>
+<% }else{ %>
+    <%= Hby.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
+<% } %>
+    <span class="user_chat_num imUnReadNumChorme" style="<%= unread ? 'display:block;' : '' %>"><%= unread > 99 ? '99+' : unread %></span>
+</a>
+<p class="userNickname"><%= scene == 'team' ? (team.name || '讨论组') : user.displayName %></p>
+<p class="userlastComment">
+<% 
+var lastText = '';
+if(lastMsg.type == 'text'){
+    lastText = Hby.ux.util.IM.textToFace(lastMsg.text);
+}else{
+    if(lastMsg.type !== 'notification'){
+        var contentObj = JSON.parse(lastMsg.content);
+        switch(contentObj.fileType){
+            case 'image':
+                lastText = '[图片]';
+                break;
+            case 'audio':
+                lastText = '[语音]';
+                break;
+            default:
+                lastText = '[文件]';
+        }
+    }
+}%>
+<%= lastText %>
+</p>
+</div>

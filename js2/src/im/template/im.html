@@ -1,0 +1,47 @@
+<!--聊天窗口-->
+<div class="imIcon" style="display: none" id="imIcon">
+    <a href="javascript:;" class="imBtn imBtn-bg"></a> <a href="javascript:;" class="chat_num imUnReadNum" id="chat_num">0</a>
+</div>
+<div class="im_container" id="imContainer" style="bottom: -460px;">
+    <div class="im_left" onselectstart="return false;" style="-moz-user-select:none;">
+        <div class="newChatWindow" style="display:none;"><a href="javascript:;" class="newChatBtn" title="创建会话"></a></div>
+        <h1 class="im_left_title11" style="cursor: pointer;">
+            <img src="public/style/images/im/im-icon-1127.png" class="im_userIcon11" width="26" height="26">
+            <span class="im_userName11">聊天</span>
+            <a href="javascript:;" class="im_collapse" id="imCollapse" style="display:none;"></a>
+            <a href="javascript:;" class="chat_num11 imUnReadNum" id="chat_num_new_top" style="display:none;">0</a>
+        </h1>
+        <div class="im_search"> <i></i>
+            <input type="text" class="search_contractor" id="searchUser" placeholder="查找同事" />
+            <span class="deleteSearchVal" id="deleteSearchVal"></span>
+            <ul class="im_search_tip">
+            <!-- 搜索结果 -->
+            </ul>
+        </div>
+        <div class="list_tabs">
+            <a href="javascript:;" class="history_record"><i class="menberTab_i history_record_i history_record_active"></i></a>
+            <a href="javascript:;" class="contactor fn-bb"><i class="menberTab_i contactor_i"></i></a>
+        </div>
+        <div class="list_container_wraper">
+            <div class="list_container_inner">
+                <!--最近联系人标签-->
+                <div class="list_container" id="listRecentMember" style="display: block;height: 100%;">
+                    <ul class="departMember_p" id="departMember_p">
+                        <!-- 会话列表 -->
+                    </ul>
+                </div>
+                <!--最近联系人标签 end-->
+                <div class="list_container" id="listMemberAndGroup">
+                    <!--部门联系人-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="im_mainBody_left" id="currentContacts" style="display: none;">
+        <div class="im_message_area">
+            <ul class="im_message_box_list">
+            </ul>
+        </div>
+    </div>
+</div>
+<!--聊天窗口 IM end-->

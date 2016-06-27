@@ -1,0 +1,126 @@
+@import url(bootstrap.css?v=1);
+@import url(../style/jquery-ui.css?v=1);
+@import url(../style/base.css?v=1);
+@import url(../style/public.css?v=1);
+@import url(../style/default/home.css?v=1);
+@import url(../style/zTreeStyle.css?v=1);
+html, body{
+    line-height: normal;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+/*.crm-wrapper .crm-home-right{
+    overflow-y: scroll;
+}*/
+
+
+/*头部*/
+.crm-home-left,
+.crm-home-top {
+    line-height: 30px;
+}
+
+.top-head-menu > .activate {
+    background-color: #0171A9;
+    padding-right: 5px;
+    padding-left: 5px;
+    border-radius: 3px;
+}
+
+.top-head-menu > .activate >input {
+    border-width: 0;
+    background-color: #0171A9;
+    color: #fff;
+    width: 168px;
+}
+
+.top-head-menu > .activate > input::-webkit-input-placeholder {
+    color: #f0f0f0;
+    opacity: 0.9;
+}
+
+.top-head-menu > .activate > input:-moz-placeholder {
+    color: #f0f0f0;
+    opacity: 0.9;
+}
+
+.top-head-menu > .activate > input::-moz-placeholder {
+    color: #f0f0f0;
+    opacity: 0.9;
+}
+
+.top-head-menu > .activate > input:-ms-input-placeholder {
+    color: #f0f0f0;
+    opacity: 0.9;
+}
+
+
+/*选择人员*/
+
+.dialog_title_search {
+    width: 100%;
+    height: 28px;
+    border-bottom: 1px solid #ced1d6;
+    display: none;
+}
+
+.ui-dialog-buttonset .ui-button:first-child .ui-button-text {
+    color: #fff;
+}
+
+.left_list_con {
+    float: left;
+    width: 45%;
+    height: 100%;
+    border: 1px solid #ced1d6;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+
+/*内容区*/
+
+.tabpanel-container {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    width: 100%;
+    overflow-y: scroll;
+    background-color: #fff;
+}
+
+
+/*IM*/
+
+.chat_container {
+    height: 415px !important;
+    overflow: auto;
+    padding: 20px;
+    background: #f7f7f7;
+}
+
+.textarea_content_text {
+    width: 300px !important;
+}
+
+
+/*IM头像*/
+
+.crm-image-show-client {
+    position: absolute;
+    color: #fff;
+    line-height: 40px;
+    text-align: center;
+    font-size: 25px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.crm-image-show-client img {
+    border-radius: 5px;
+    vertical-align: top;
+}

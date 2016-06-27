@@ -1,0 +1,48 @@
+<% if(is_showtime){ %>
+<li class="time cleen"><%= add_time %></li>
+<% } %>
+<li class="<%= window.account.get('uid') == uid ? 'my' : 'he' %>">
+    <dl>
+        <dt><img class="radius18" src="<%= window.account.get('uid') == uid ? window.account.get('image') : option.image %>"></dt>
+        <dd>
+            <div></div><span class="<%= msg_type == 'text' ? 'text' : 'others' %>">
+            <% if(msg_type == 'text'){ %>
+            	<%= message %>
+            <% }else if(msg_type == 'image'){ %>
+        		<% if(!is_uploading){ %>
+					<img src="<%= file_url ? 'http://file.' + (document.domain.indexOf('vxplo.cn')>=0 ? 'vt.vxplo.cn' : 'ih5.cn') + file_url : '' %>">
+				<% }else{ %>
+					<img src="<%= fileObject.src %>">
+	                <div class="progress" id="progressbar_<%= _id %>">
+	                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+	                </div>
+                <% } %>
+        	<% }else{ %>
+	                <div class="send-out radius5">
+	                    <div class="send-nei">
+	                        <% if(fileObject.ext == 'xlsx' || fileObject.ext == 'xls'){ %><i class="fa fa-file-excel-o"></i><% } %>
+	                        <% if(fileObject.ext == 'docx' || fileObject.ext == 'doc'){ %><i class="fa fa-file-word-o"></i><% } %>
+	                        <% if(fileObject.ext == 'txt'){ %><i class="fa fa-file-text-o"></i><% } %>
+	                        <% if(fileObject.ext == 'pdf'){ %><i class="fa fa-file-pdf-o"></i><% } %>
+	                        <% if(_.indexOf(['xlsx','xls','docx','doc','txt','pdf'], fileObject.ext) < 0){ %><i class="fa fa-file-o"></i><% } %>
+	                        <i class="fa fa-<%= error ? 'times' : 'check' %>-circle"></i>
+	                    </div>
+	                    <div class="send-title">
+	                        <div><p class="send-name"><%= fileObject.name %></p><p class="send-size">(<%= Math.ceil(fileObject.size/1024) %>KB)</p></div>
+        					<% if(!is_uploading){ %>
+	                        	<span class="<%= error ? 'send-failed' : '' %>"><%= error ? '发送失败' : '成功发送文件' %></span>
+	                        	<% if(!error){ %>
+	                        	<a href="<%= file_url ? 'http://file.' + (document.domain.indexOf('vxplo.cn')>=0 ? 'vt.vxplo.cn' : 'ih5.cn') + file_url : '' %>" class="button">打开</a>
+	                        	<% } %>
+							<% }else{ %>
+				                <div class="progress" id="progressbar_<%= _id %>">
+				                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+				                </div>
+                			<% } %>
+	                    </div>
+	                </div>
+            <% } %>
+            </span>
+        </dd>
+    </dl>
+</li>

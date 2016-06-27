@@ -1,0 +1,7 @@
+ <dl class="">
+    <dt><a href="#mine/home/<%= fuid %>" title="点击查看Ta的主页"><img class="radius18" src="<%= fuser.image || 'img/default-user.png' %>"></a></dt>
+    <dd><a href="javascript:void(0);" data-fuid="<%= fuid %>" title="点击私聊"><%= fuser.name %></a></dd>
+</dl> 
+<% if(unread_num){ %>
+<div class="chat-number"><%= unread_num >= 100 ? '99+' : unread_num %></div>
+<% } %>

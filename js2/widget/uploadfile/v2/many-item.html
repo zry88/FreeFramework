@@ -1,0 +1,17 @@
+<td><div style="width:260px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;" title="<%= fileName %>"><%= fileName %></div></td>
+<td>
+<% if(isUploading){ %>
+<div class="progress" style="margin:10px 0 0; height:5px;" id="progressbar_<%= timestamp %>">
+    <div class="progress-bar progress-bar-success" aria-valuenow="60%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<% }else{ %>
+<i class="gi gi-circle_ok text-success"></i>上传成功
+<% } %>
+</td>
+<% var theSize = Math.ceil(fileObj.size/1024); %>
+<td><%= fileObj.size ? (theSize/1024 <1 ? theSize+"<small>KB</small>" : Math.ceil(theSize/1024)+"<small>MB</small>") : "0<small>KB</small>" %></td>
+<td>
+    <!-- <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-success"><i class="fa fa-play"></i></a> -->
+    <!-- <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-xs btn-warning"><i class="fa fa-pause"></i></a> -->
+    <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+</td>

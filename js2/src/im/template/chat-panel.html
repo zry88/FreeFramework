@@ -1,0 +1,84 @@
+<div id="imContinerMiddle" data-scene="<%= scene %>" data-chatid="<%= chatId %>">
+    <h1 class="im_right_title">
+        <% if(scene == 'team'){ %>
+        <span class="add_chat_member" id="slideGroupName">
+            <i class="group_icon"><img src="/public/style/images/im/im_group_icon.png" width="20" height="20"></i>
+            <span class="group_name" id="groupName"><%= team.name %></span>
+            <i class="slide_icon"></i>
+        </span>
+        <% }else{ %>
+        <span class="add_chat_member" id="slideGroupName">
+            <i class="group_icon">
+            <%= Hby.ux.util.IM.getImage(user.photoUrl, user.displayName, 's', {
+                'css': {
+                    'position': 'inherit',
+                    'display': 'inline-block'
+                }
+                }) %>
+            </i>
+            <span class="group_name" id="groupName"><%= user.displayName %></span>
+            <i class="slide_icon"></i>
+        </span>
+        <% } %>
+        <a href="javascript:;" class="im_close" id="imClose"></a>
+    </h1>
+    <div class="slide_group_area" id="slideGroupArea">
+        <% if(scene == 'team' && team.owner == window.imUser.imAccountId){ %>
+        <div class="theme_wrapper">
+            <input type="text" class="theme_text" placeholder="讨论主题"><a href="javascript:;" class="theme_submit">修改</a> 
+        </div>
+        <% } %>
+        <div class="group_member_area fn-clear">
+            <h1>讨论组成员</h1>
+            <div class="member_lists">
+                <a href="javascript:;" class="member" id="currentUserInGroup">
+                    <%= Hby.ux.util.IM.getImage(window.imUser.photoUrl, window.imUser.displayName) %>
+                    <p class="right_member_name mySelfName" id="mySelfName"><%= window.imUser.displayName %></p>
+                </a>
+                <span class="new_member" id="newMember">
+                    <% if(scene == 'p2p'){ %>
+                    <a href="javascript:;" class="member">
+                        <%= Hby.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
+                        <p class="right_member_name"><%= user.displayName %></p>
+                    </a>
+                    <% } %>
+                </span>
+                <a href="javascript:;" class="member" id="add_member"> <img src="public/style/images/im/im_add_group.png" width="40" height="40">
+                    <p class="right_member_name">添加</p>
+                </a>
+                <% if(scene == 'team' && team.owner !== window.imUser.imAccountId){ %>
+                <a href="javascript:;" class="member" id="out_group"> <img src="public/style/images/im/im_delete_group.png" width="40" height="40">
+                    <p class="right_member_name">退出</p>
+                </a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <div class="im_container_and_sendArea">
+        <div class="im_mainBody_right">
+            <div class="chat_container" id="chatContainer">
+                <a id="seeRecordMessege" class="im-record-message" href="javascript:;" data-lastid="0" style="display:none;">点击查看聊天记录</a>
+                <div id="historyMessArea">
+                <!-- 聊天内容 -->
+                </div>
+                <div id="msgEnd" data-isend="1" style="heigth: 0px;"></div>
+            </div>
+            <div class="sendArea fn-clear" id="comment_txt_div_<%= chatId %>">
+                <a class="im_emotion" title="表情"></a>
+                <a class="im_pic_cut" title="截图" style="display:none;"></a>
+                <a class="im_file ajax-qiniu-upload" id="im_file_<%= chatId %>" title="文件" style="position: relative; z-index: 0;"></a>
+                <div contenteditable="true" class="textarea_content_text" id="content_<%= chatId %>" style="width:284px;"></div>
+                <div class="imSendDiv">
+                    <a class="sendBtn" id="sendBtn" href="javascript:;">
+                        <span class="imSendName">发送　　</span>
+                        <i class="imSendSlect" id="imSendSlect" title="选择快捷方式"></i>
+                    </a>
+                    <ul class="imSendSlectUl" id="imSendSlectUl">
+                        <li><a href="javascript:;"><i <%= keyType == 'enter' && 'class="imIconSelected"' %> data-keytype="enter"></i>按Enter键发送消息</a></li>
+                        <li><a href="javascript:;"><i <%= keyType == 'ctrl+enter' && 'class="imIconSelected"' %> data-keytype="ctrl+enter"></i>按Ctrl+Enter键发送消息</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
