@@ -9,6 +9,7 @@ define([
 ], function(Hby) {
     var BaseView = Hby.View.extend({
         initialize: function(option) {
+            var that = this;
             if (!this.template && !option.el) {
                 this.tpl = option.tpl || this.tpl || '';
                 if (option.tpl) {
@@ -24,10 +25,23 @@ define([
             if (this.options.className) this.$el.addClass(this.options.className);
             if (this.options.attr) this.$el.attr(this.options.attr);
             if (this.options.style) this.$el.css(this.options.style);
-            if (this.options.html || (this.options.text && this.options.html)){
-                this.$el.html(this.options.html);
+            if (this.options.html || (this.options.text && this.options.html)) {
+                if (_.isObject(this.options.html)) {
+                    if (_.isArray(this.options.html)) {
+                        this.$el.empty();
+                        _.each(this.options.html, function(val, index) {
+                            var view = Hby.view.create(val);
+                            that.$el.append(view.render().el);
+                        });
+                    } else {
+                        var view = Hby.view.create(this.options.html);
+                        this.$el.html(view.render().el);
+                    }
+                } else {
+                    this.$el.html(this.options.html);
+                }
             }
-            if(this.options.text && !this.options.html) this.$el.text(this.options.text);
+            if (this.options.text && !this.options.html) this.$el.text(this.options.text);
         },
     });
     return BaseView;

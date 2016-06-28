@@ -16,73 +16,80 @@ options: {
 }
 */
 define([
-    'lib2/core/view/View'
-], function(BaseView) {
-    Hby.widgets.guide = BaseView.extend({
-        initialize: function(option) {
-            var that = this;
-            this.currentItem = 0;
-            var defaults = {
-                options: {
-                    key: '',        //引导插件ID(新框架不用)
-                    el: '',         //引导插入dom节点(新框架不用)
-                    mask: true,     //是否显示遮罩层
-                    type: 'step',   //类型
-                    root: static_url + '/img/guide/',   //图片根路径
-                    module: Hby.getCurrentModule ? Hby.getCurrentModule() : '',     //当前模块名(新框架不用)
-                    steps: [{
-                        html: '',
-                        buttons: {}
-                    }]
-                }
+    'jquery'
+], function($) {
+    var Guide = function(option) {
+        var that = this;
+        this.currentItem = 0;
+        this.options = {
+            key: '', //引导插件ID
+            el: 'body', //引导插入dom节点
+            mask: true, //是否显示遮罩层
+            type: 'step', //类型
+            root: static_url + '/img/guide/', //图片根路径
+            module: '', //当前模块名
+            steps: [{
+                html: '',
+                buttons: {}
+            }]
+        };
+        if (option) $.extend(true, this.options, option || {});
+        this.$el = $('<div/>');
+
+        if (option.key) this.$el.attr('id', option.key);
+        if (this.options.className) this.$el.addClass(this.options.className);
+        if (this.options.attr) this.$el.attr(this.options.attr);
+        if (this.options.style) this.$el.css(this.options.style);
+        if (this.options.html) this.$el.html(this.options.html);
+        if (window.localStorage.getItem(this.options.module)) {
+            return this;
+        }
+        var options = this.options,
+            elCss = {
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                left: 0,
+                height: '100%',
+                overflow: 'hidden',
+                zIndex: 100000,
+                backgroundCcolor: 'transparent',
+                backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'width:100%; height:50px; opacity: 0.6;\'><rect fill=\'#000\' x=\'0\' y=\'0\' width=\'100%\' height=\'100%\'/></svg>")',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: '100% 100%',
+                backgroundSize: 'cover',
             };
-            if (option) $.extend(true, defaults, option || {});
-            if (option.key) this.el.id = option.key;
-            if (window.localStorage.getItem(defaults.options.module)) {
-                return this;
-            }
-            this.parent(defaults);
-            var options = this.options,
-                elCss = {
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    height: '100%',
-                    overflow: 'hidden',
-                    zIndex: 100000,
-                    backgroundCcolor: 'transparent',
-                    backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'width:100%; height:50px; opacity: 0.5;\'><rect fill=\'#000\' x=\'0\' y=\'0\' width=\'100%\' height=\'100%\'/></svg>")',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: '100% 100%',
-                    backgroundSize: 'cover',
-                };
-            if (!options.mask) elCss.backgroundImage = '';
-            this.$el.css(elCss);
-            // 容器层
-            var containerEl = $('<div/>'),
-                containerCss = {
-                    width: '100%',
-                    height: '100%',
-                    position: 'relative',
-                };
-            containerEl.css(containerCss).attr('id', 'guide_content');
-            this.$el.append(containerEl);
-            if (this.options.el) {
-                $(this.options.el).append(this.$el);
-            }
-            this.renderAll();
-        },
+        if (!options.mask) elCss.backgroundImage = '';
+        this.$el.css(elCss);
+        // 容器层
+        var containerEl = $('<div/>'),
+            containerCss = {
+                width: '100%',
+                height: '100%',
+                position: 'relative',
+            };
+        containerEl.css(containerCss).attr('id', 'guide_content');
+        this.$el.append(containerEl);
+        if (this.options.el) {
+            $(this.options.el).append(this.$el);
+        }
+        $(this.options.el).append(this.$el);
+        $('.tabpanel-container').css({
+            overflowY: 'scroll'
+        });
+        this.renderAll();
+    };
+    Guide.prototype = {
         renderAll: function() {
             var that = this;
-            if (!_.isEmpty(this.options.steps)) {
-                var itemContainer = this.$('#guide_content'),
+            if (!$.isEmptyObject(this.options.steps)) {
+                var itemContainer = this.$el.find('#guide_content'),
                     theItem = this.options.steps[this.currentItem];
                 itemContainer.empty();
                 if (theItem.html) {
                     itemContainer.append(theItem.html);
                 } else if (theItem.images) {
-                    _.each(theItem.images, function(imgObj, index) {
+                    $.each(theItem.images, function(index, imgObj) {
                         var img = new Image(),
                             imgCss = {
                                 position: 'absolute',
@@ -93,12 +100,12 @@ define([
                             itemContainer.append(this);
                         };
                         if (imgObj.style) {
-                            _.extend(imgCss, imgObj.style);
+                            $.extend(imgCss, imgObj.style);
                             $(img).css(imgCss);
                         }
                     });
                 }
-                if (!_.isEmpty(theItem.buttons)) {
+                if (!$.isEmptyObject(theItem.buttons)) {
                     var buttonsEl = $('<div/>'),
                         buttonsCss = {
                             width: '100%',
@@ -107,10 +114,10 @@ define([
                             textAlign: 'center',
                             bottom: 0
                         };
-                    if (theItem.buttons.style) _.extend(buttonsCss, theItem.buttons.style);
+                    if (theItem.buttons.style) $.extend(buttonsCss, theItem.buttons.style);
                     buttonsEl.css(buttonsCss).attr('id', 'guide_buttons');
                     itemContainer.append(buttonsEl);
-                    _.each(theItem.buttons, function(button, key) {
+                    $.each(theItem.buttons, function(key, button) {
                         if (button.src) {
                             var img = $('<img/>'),
                                 imgCss = {
@@ -118,7 +125,7 @@ define([
                                     display: 'inline-block',
                                 };
                             img.attr('src', (that.options.root + button.src) || '');
-                            if (button.style) _.extend(imgCss, button.style);
+                            if (button.style) $.extend(imgCss, button.style);
                             if (!button.onclick) {
                                 img.click(function() {
                                     that[key]();
@@ -176,8 +183,8 @@ define([
         // 跳过或我知道了
         skip: function() {
             window.localStorage.setItem(this.options.module, 1);
-            this.remove();
+            this.$el.remove();
         }
-    });
-    return Hby.widgets.guide;
+    };
+    return Guide;
 });

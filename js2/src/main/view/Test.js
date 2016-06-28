@@ -82,8 +82,8 @@ define([
                     },
                     widgets: [{
                         key: 'panel_1',
-                        src: 'widget2/test/app',
-                        name: 'test',
+                        src: 'widget2/test/app2',
+                        name: 'test2',
                         target: 'row_0-col_0',
                         binds: {
                             'triggerEvent': 'onEvent',

@@ -78,7 +78,7 @@ define([
                         html: '菜单一',
                         target: 'tabPanel1',
                         content: {
-                            key: this.id + '_btn',
+                            key: this.id + '_btn2',
                             view: BtnView,
                             context: this,
                             options: {
@@ -93,7 +93,7 @@ define([
                         html: '菜单2',
                         target: 'tabPanel2',
                         content: {
-                            url: 'http://crm.com/ss.html'
+                            url: 'http://freeframework.com/ss.html'
                         }
                     }, {
                         url: 'javascript:;',
@@ -126,7 +126,7 @@ define([
         },
         onevent: function(data) {
             this.$('#panel_2_header span').text(data.num);
-            this.$('#panel_2_body p').append('<div class="alert alert-success" role="alert"><strong> Oh snap! </strong> Change a few things up and try submitting again. </div>');
+            this.$('#panel_2_body > p').append('<div class="alert alert-success" role="alert"><strong> Oh snap! </strong> Change a few things up and try submitting again. </div>');
         },
         clickNav: function(data) {
             console.warn(data.attr('id'));
