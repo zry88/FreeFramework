@@ -1,0 +1,12 @@
+<li class="depart_member_li" data-userid="<%= userId || 0 %>" data-chatid="<%= chatId %>" data-scene="<%= scene %>">
+    <a href="javascript:;" class="depart_user">
+    <% if(scene == 'team'){ %>
+        <span class="crm-image-show-client" style="width: 40px; height: 40px; line-height: 40px;">
+            <img src="/public/style/images/im/im_group_icon.png" class="list_user_icon" width="20" height="20">
+        </span>
+    <% }else{ %>
+        <%= FUI.ux.util.IM.getImage(photoUrl, displayName) %>
+    <% } %>
+    </a>
+    <p class="userNickname"><%= scene == 'team' ? (displayName || '讨论组') : displayName %></p>
+</li>

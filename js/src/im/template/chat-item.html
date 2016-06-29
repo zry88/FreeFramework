@@ -1,0 +1,173 @@
+<% if(type == 'notification'){ %>
+    <div class="chat_time fn-clear" style="color:#999;"><%= text %></div>
+<% }else{ %>
+    <% if(is_showtime){ %>
+    <div class="chat_time fn-clear"><%= FUI.util.Date.getDateTime(oldCreatedTime ? oldCreatedTime : time, 'Y-M-D hh:mm:ss') %></div>
+    <% } %>
+    <% if(flow == 'out'){  %>
+    <!-- 发出消息 -->
+    <div class="chat_content_right fn-clear" id="">
+        <div class="show_detail">
+            <% if(scene == 'team'){ %>
+            <div class="chat_detail_username">
+                <p><%= fromUser.displayName %></p>
+            </div>
+            <% } %>
+            <div class="chat_detail_content" id="item_<%= idClient %>"><span class="im_arrow"></span>
+                <% if(type == 'text'){  %>
+                <p>
+                <%= FUI.ux.util.IM.urlToHref(FUI.ux.util.IM.textToFace(text)) %>
+                </p>
+                <% } %>
+                <!-- <p class="im-send-msg-pram">
+                <span class="im-fail-msg-mark" title="点击重发" time="C6ECBF70-C350-0001-C44A-18001A601376"></span>
+                </p>
+                 -->
+                <% if(type !== 'text'){ %>
+                    <% var contentObj = typeof content == 'string' ? JSON.parse(content) : content,
+                            fileExt = FUI.ux.util.Qiniu.getExtName(contentObj.name),
+                            url = contentObj.url || '',
+                            canPreview = FUI.ux.util.Qiniu.isCanPreview(fileExt) ? '' : 'none',
+                            fileIconClass = FUI.ux.util.IM.getMapedExtClass(fileExt);
+                    %>
+                    <% if(is_uploading){ %>
+                    <!-- 上传进度 -->
+                    <div class="myPreviewPic">
+                        <h3 id="myPreviewPic">
+                            <div class="chat-file-container" id="<%= contentObj.fileId %>">
+                                <% if(contentObj.fileType == 'image'){ %>
+                                <div class="ajax-file-upload-statusbar" style="width: 180px;">
+                                    <img class="ajax-file-upload-preview" src="/public/style/images/upload-icon.png" style="width: 80px; height: 78px;">
+                                    <div class="ajax-file-upload-filename"><%= contentObj.name %></div>
+                                    <div class="ajax-file-upload-progress" style="">
+                                        <div class="ajax-file-upload-bar ajax-file-upload-1426817959046" style="width:0%; text-align: center;"></div>
+                                    </div>
+                                    <div class="ajax-file-upload-red" style="display:none;">x</div>
+                                </div>
+                                <% }else{ %>
+                                <div>
+                                    <span class="im-uplodfile-icon"></span>
+                                    <a style="color:#fff;" size="" href="javascript:;"><%= contentObj.name %> ( <%= FUI.ux.util.Qiniu.convertByteUnit(contentObj.size) %> )</a>
+                                </div>
+                                <div class="ajax-file-upload-statusbar" style="width: 180px;">
+                                    <div class="ajax-file-upload-progress" style="">
+                                        <div class="ajax-file-upload-bar ajax-file-upload-1426817959046" style="width: 0%; text-align: center;"></div>
+                                    </div>
+                                    <div class="ajax-file-upload-red" style="display:none;">x</div>
+                                </div>
+                                <% } %>
+                            </div>
+                        </h3>
+                    </div>
+                    <% }else{ %>
+                    <!-- 上传完成 -->
+                        <% if(contentObj.fileType == 'image' || type == 'image'){ %>
+                            <p>
+                            <span size="<%= contentObj.size %>" class="im-img-grid"  data-id="<%= idClient %>">
+                            <img class="resizeme" src="<%= (url.indexOf('?') >= 0 ? url : url + '?imageView/2/w/180') || '' %>">
+                            </span>
+                            </p>
+                            <div class="relayBtn" data-content='<%= content %>'>转发</div>
+                        <% }else if(contentObj.fileType == 'audio' || type == 'audio'){ %>
+                            <style type="text/css" media="screen">
+                                #item_<%= idClient %>{width: 32px;};
+                            </style>
+                            <p>
+                            <audio controls preload="auto" id="chatAudio_<%= idClient %>" style="display:none;">
+                                <source src="<%= FUI.ux.util.IM.getRealSrc(contentObj.key || contentObj.url) %>" type="audio/mpeg">
+                                <source src="" type="audio/ogg">
+                                <source src="" type="audio/wav">
+                            </audio>
+                            <a href="javascript:void(0);" data-target="chatAudio_<%= idClient %>" class="chatVoiceBtn imPause-left"></a>
+                            <span class="chatVoiceTime im-voice-right"><%= contentObj.recordTime %>"</span>
+                            </p>
+                        <% }else{ %>
+                            <% if(type !== 'mixed'){ %>
+                            <p>
+                                <span class="imUploadFileIcon <%= fileIconClass %>"></span>
+                                <a size="<%= contentObj.size %>" href="<%= url.indexOf('?') >= 0 ? url : (url + '?attname=' + contentObj.name) %>"><%= contentObj.name %>(<%= FUI.ux.util.Qiniu.convertByteUnit(contentObj.size) %>)</a>
+                            </p>
+                            <div class="imFileAreaDiv">
+                                <a href="<%= url.indexOf('?') >= 0 ? url : (url + '?attname=' + contentObj.name) %>" class="imfiledown">下载</a>
+                                <a href="javascript:;" data-id="<%= idClient %>" class="imfilepreview <%= canPreview %>">预览</a>
+                            </div>
+                            <p></p>
+                            <% } %>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        <div class="pic_user">
+            <%= FUI.ux.util.IM.getImage(fromUser.photoUrl, fromUser.displayName) %>
+        </div>
+    </div>
+    <% }else{ %>
+    <!-- 接收消息 -->
+    <div class="chat_content_left fn-clear" id="">
+        <div class="pic_user">
+        <%= FUI.ux.util.IM.getImage(fromUser.photoUrl, fromUser.displayName, 'm', {
+            'data-chatid': from,
+            'data-userid': fromUser.userId,
+            }) %>
+        </div>
+        <div class="show_detail">
+            <% if(scene == 'team'){ %>
+            <div class="chat_detail_username">
+                <p><%= fromUser.displayName %></p>
+            </div>
+            <% } %>
+            <div class="chat_detail_content" id="item_<%= idClient %>"><span class="im_arrow"></span>
+                <% if(type == 'text'){  %>
+                <p>
+                <%= FUI.ux.util.IM.urlToHref(FUI.ux.util.IM.textToFace(text)) %>
+                </p>
+                <% } %>
+                <% if(type !== 'text'){ %>
+                    <% var contentObj = typeof content == 'string' ? JSON.parse(content) : content,
+                           fileExt = FUI.ux.util.Qiniu.getExtName(contentObj.name),
+                           canPreview = FUI.ux.util.Qiniu.isCanPreview(fileExt) ? '' : 'none',
+                           url = contentObj.url,
+                           fileIconClass = FUI.ux.util.IM.getMapedExtClass(fileExt);
+
+                %>
+                    <% if(contentObj.fileType == 'image' || type == 'image'){ %>
+                        <p>
+                        <span size="<%= contentObj.size %>" class="im-img-grid" data-id="<%= idClient %>">
+                        <img class="resizeme" src="<%= (url.indexOf('?') >= 0 ? url : url + '?imageView/2/w/180') || '' %>">
+                        </span>
+                        </p>
+                        <div class="relayBtn" data-content='<%= content %>'>转发</div>
+                    <% }else if(contentObj.fileType == 'audio' || type == 'audio'){ %>
+                    <style type="text/css" media="screen">
+                        #item_<%= idClient %>{width: 32px;};
+                    </style>
+                        <p>
+                        <audio controls preload="auto" id="chatAudio_<%= idClient %>" style="display:none;">
+                            <source src="<%= FUI.ux.util.IM.getRealSrc(contentObj.key || contentObj.url) %>" type="audio/mpeg">
+                            <source src="" type="audio/ogg">
+                            <source src="" type="audio/wav">
+                        </audio>
+                        <a href="javascript:void(0);" data-target="chatAudio_<%= idClient %>" class="chatVoiceBtn imPause-right"></a>
+                        <span class="chatVoiceTime im-voice-left" style="color:#34495e;"><%= contentObj.recordTime %>"</span>
+                        </p>
+                    <% }else{ %>
+                        <% if(type !== 'mixed'){ %>
+                        <p>
+                            <span class="imUploadFileIcon <%= fileIconClass %>"></span>
+                            <a size="<%=contentObj.size%>" href="<%= url.indexOf('?') >= 0 ? url : (url + '?attname=' + contentObj.name) %>"><%= contentObj.name %>(<%= FUI.ux.util.Qiniu.convertByteUnit(contentObj.size) %>)</a>
+                        </p>
+                        <div class="imFileAreaDiv">
+                            <a href="<%= url.indexOf('?') >= 0 ? url : (url + '?attname=' + contentObj.name) %>" class="imfiledown">下载</a>
+                            <a href="javascript:;" data-id="<%= idClient %>" class="imfilepreview <%= canPreview %>">预览</a>
+                        </div>
+                        <p></p>
+                        <% } %>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <% } %>
+<% } %>
+<div style="clear:both"></div>

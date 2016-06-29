@@ -1,0 +1,11 @@
+<a href="javascript:;" title="<%= name %>" data-scene="<%= scene %>" data-chatid="<%= chatId || 0 %>" data-userid="<%= user.userId || 0 %>">
+    <span class="im_message_list_pho">
+	<% if(scene == 'p2p'){ %>
+		<%= FUI.ux.util.IM.getImage(photoUrl, name, 's') %>
+    <% }else{ %>
+        <img src="/public/style/images/im/im_group_icon.png" width="20" height="20">
+    <% } %>
+    </span>
+    <span class="im_message_list_name"><%= name %></span>
+</a>
+<i class="im_message_list_close"></i>
