@@ -78,6 +78,15 @@ define([
                                     // height: 100,
                                 }
                             }]
+                        }, {
+                            // className: 'aa',
+                            style: {},
+                            cols: [{
+                                // className: '',
+                                style: {
+                                    // background: '#f00',
+                                }
+                            }]
                         }]
                     },
                     widgets: [{
@@ -133,6 +142,18 @@ define([
                         src: 'widget/test/app',
                         name: 'test',
                         target: 'row_1-col_2',
+                        binds: {
+                            'triggerEvent': 'onEvent9',
+                            'triggerEvent2': 'onEvent10',
+                        },
+                        options: {
+                            className: 'panel panel-white'
+                        }
+                    }, {
+                        key: 'panel3_1',
+                        src: 'widget/test/app3',
+                        name: 'test3',
+                        target: 'row_2-col_0',
                         binds: {
                             'triggerEvent': 'onEvent9',
                             'triggerEvent2': 'onEvent10',

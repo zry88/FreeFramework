@@ -89,9 +89,9 @@ define([
                     dataItem = _.findWhere(that.options.data, { id: theRowId });
                 if (dataItem) {
                     dataItem.selected = !!isChecked ? true : false;
-                    if(!!isChecked){
+                    if (!!isChecked) {
                         target.parent().parent().addClass('warning');
-                    }else{
+                    } else {
                         target.parent().parent().removeClass('warning');
                     }
                 }
@@ -107,17 +107,17 @@ define([
                     item.selected = isChecked ? true : false;
                 });
                 $.each(this.$('td > input[type="checkbox"]'), function(i, el) {
-                    if(!!isChecked){
+                    if (!!isChecked) {
                         $(el).attr('checked', 'checked').parent().parent().addClass('warning');
-                    }else{
+                    } else {
                         $(el).removeAttr('checked').parent().parent().removeClass('warning');
                     }
                 });
             }
         },
         // 获取
-        getSelectedRow: function(){
-            var rows = _.where(this.options.data, {selected: true});
+        getSelectedRow: function() {
+            var rows = _.where(this.options.data, { selected: true });
             return rows ? rows : [];
         },
         renderAll: function() {
@@ -164,7 +164,7 @@ define([
                 var tbodyEl = this.$('#' + this.id + '_tbody').empty();
                 var showData = function(item, index) {
                     var theTrId = that.id + '_tbody_tr_' + index;
-                    if(!item.id) item.id = theTrId;
+                    if (!item.id) item.id = theTrId;
                     if (index < options.pageSize) {
                         FUI.view.create({
                             key: theTrId,
@@ -180,7 +180,11 @@ define([
                                         view: Td,
                                         context: that,
                                         options: {
-                                            html: '<input type="checkbox" value="' + theTrId + '">'
+                                            html: '<input type="checkbox" value="' + theTrId + '">',
+                                            style: {
+                                                width: '30px',
+                                                textAlign: 'center'
+                                            }
                                         }
                                     });
                                 }

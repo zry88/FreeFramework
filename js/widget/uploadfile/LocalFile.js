@@ -6,15 +6,27 @@
  * 返回
  */
 define([
-    'core/view/View',
+    'lib/core/view/View',
     'holder'
 ], function(BaseView, Holder){
     var AppView = BaseView.extend({
         initialize: function(options){
-            this.initConfig(options);
-            this.addFiles(this.defaults, this.defaults.fileEl);
+            // this.initConfig(options);
+            this.addFiles(options, this.defaults.fileEl);
         },
-        initConfig: function(options){
+        // initConfig: function(options){
+        //     var options = options || {};
+        //     this.defaults = {
+        //         url: '',   //上传地址
+        //         el: '',     //
+        //         fileEl: '', //文件域
+        //         resultEl: '', //返回保存上传文件名的组件
+        //         type: 'one', //one为单个，many为多个, preview为预览
+        //         params: {},     //其他上传参数
+        //     };
+        //     if(options) this.defaults = $.extend(true, {}, this.defaults, options);
+        // },
+        addFiles: function(options, fileEl){
             var options = options || {};
             this.defaults = {
                 url: '',   //上传地址
@@ -25,9 +37,7 @@ define([
                 params: {},     //其他上传参数
             };
             if(options) this.defaults = $.extend(true, {}, this.defaults, options);
-        },
-        addFiles: function(options, fileEl){
-            this.initConfig(options);
+            // this.initConfig(options);
             var fileEl = _.has(fileEl, "jquery") ? fileEl : $(fileEl),
                 files = fileEl.prop('files');
             this.rendAll(files);

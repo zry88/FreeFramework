@@ -57,7 +57,7 @@ define([
                     context: this,
                     options: options.header || {},
                 });
-                theHeader.$el.html(options.header.html ? options.header.html : ('<h3 class="panel-title">' + options.header.text + '</h3>'));
+                // theHeader.$el.html(options.header.html ? options.header.html : ('<h3 class="panel-title">' + options.header.text + '</h3>'));
             }
 
             var theBody = FUI.view.create({

@@ -2,10 +2,10 @@
  * 上传可预览图片视图
  * @author: yrh
  * @create: 2015/3/1
- * @update: 2015/3/2
+ * @update: 2016/3/24
  */
 define([
-    'widget/uploadfile/v2/UploadFile',
+    'widget/uploadfile/UploadFile',
     'text!widget/uploadfile/v2/preview.html',
     'localResizeIMG',
     'holder'
