@@ -93,7 +93,7 @@ define([
                         html: '菜单2',
                         target: 'tabPanel2',
                         content: {
-                            url: 'http://freeframework.com/ss.html'
+                            url: 'http://freeui.com/ss.html'
                         }
                     }, {
                         url: 'javascript:;',
