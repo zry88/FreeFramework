@@ -1,100 +1,904 @@
+<!DOCTYPE html>
+<!-- Template Name: Clip-Two - Responsive Admin Template build with Twitter Bootstrap 3.x | Author: ClipTheme -->
+<!--[if IE 8]><html class="ie8" lang="en"><![endif]-->
+<!--[if IE 9]><html class="ie9" lang="en"><![endif]-->
+<!--[if !IE]><!-->
 <html lang="en">
+<!--<![endif]-->
+<!-- start: HEAD -->
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
     <meta name="renderer" content="webkit|ie-comp|ie-stand" />
     <title>FreeUI</title>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <!-- start: META -->
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content="IE=edge,IE=9,IE=8,chrome=1" /><![endif]-->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <!-- end: META -->
+    <!-- start: MAIN CSS -->
     <link rel="stylesheet" type="text/css" href="css/common.css" />
     <script type="text/javascript">
-        var permissionRight = JSON.parse('{"Analysis":{"achievement":2,"attendance":4,"customer":16,"dynamic":1,"hasRight":55,"signexport":32},"CalendarInfo":{"hasRight":1,"query":1},"Competitor":{"add":2,"hasRight":59,"query":1,"share":32,"transfer":16,"update":8},"Contact":{"add":1,"delete":4,"hasRight":63,"import":32,"query":8,"share":16,"update":2},"Contract":{"add":2,"hasRight":59,"query":1,"share":32,"transfer":16,"update":8},"Customer":{"add":2,"confirmCust":4096,"hasRight":5863,"import":512,"merge":1024,"public":64,"query":1,"setpool":128,"share":32,"update":4},"Dashboard":{"add":2,"delete":4,"hasRight":15,"query":1,"update":8},"Document":{"add":2,"delete":8,"folder":16,"hasRight":31,"query":1,"update":4},"Email":{"antispam":8192,"base_setting":512,"compose":2,"delete":4,"folder":1024,"forwarding":8,"hasRight":28639,"pop3_account":64,"query":1,"reply":16,"rule":2048,"signature":256,"smtp_account":128,"template":16384},"Forecast":{"hasRight":1,"query":1},"Leads":{"add":2,"hasRight":55,"import":16,"query":1,"transfer":32,"update":4},"Opportunity":{"add":2,"delete":4,"hasRight":63,"query":1,"share":32,"transfer":16,"update":8},"Product":{"hasRight":49,"query":1,"share":32,"transfer":16},"Scheduled":{"add":2,"delete":8,"hasRight":31,"query":1,"reply":16,"update":4},"Signin":{"hasRight":1,"query":1},"Target":{"add":2,"hasRight":11,"query":1,"update":8},"User":{"basic_setting":64,"hasRight":193,"password_setting":128,"query":1},"Workflow":{"hasRight":1,"query":1}}'),
+    var permissionRight = JSON.parse('{"Analysis":{"achievement":2,"attendance":4,"customer":16,"dynamic":1,"hasRight":55,"signexport":32},"CalendarInfo":{"hasRight":1,"query":1},"Competitor":{"add":2,"hasRight":59,"query":1,"share":32,"transfer":16,"update":8},"Contact":{"add":1,"delete":4,"hasRight":63,"import":32,"query":8,"share":16,"update":2},"Contract":{"add":2,"hasRight":59,"query":1,"share":32,"transfer":16,"update":8},"Customer":{"add":2,"confirmCust":4096,"hasRight":5863,"import":512,"merge":1024,"public":64,"query":1,"setpool":128,"share":32,"update":4},"Dashboard":{"add":2,"delete":4,"hasRight":15,"query":1,"update":8},"Document":{"add":2,"delete":8,"folder":16,"hasRight":31,"query":1,"update":4},"Email":{"antispam":8192,"base_setting":512,"compose":2,"delete":4,"folder":1024,"forwarding":8,"hasRight":28639,"pop3_account":64,"query":1,"reply":16,"rule":2048,"signature":256,"smtp_account":128,"template":16384},"Forecast":{"hasRight":1,"query":1},"Leads":{"add":2,"hasRight":55,"import":16,"query":1,"transfer":32,"update":4},"Opportunity":{"add":2,"delete":4,"hasRight":63,"query":1,"share":32,"transfer":16,"update":8},"Product":{"hasRight":49,"query":1,"share":32,"transfer":16},"Scheduled":{"add":2,"delete":8,"hasRight":31,"query":1,"reply":16,"update":4},"Signin":{"hasRight":1,"query":1},"Target":{"add":2,"hasRight":11,"query":1,"update":8},"User":{"basic_setting":64,"hasRight":193,"password_setting":128,"query":1},"Workflow":{"hasRight":1,"query":1}}'),
         sources_root = '/',
         imUser = JSON.parse('{"dbid":1000141,"imAccountId":"56da9cc9ab8795616c169272vmqkb3u6","imToken":"0733b3715dbca8ec654e754f73316f98","userId":100000161487}');
     </script>
 </head>
 
 <body>
-    <div class="crm-wrapper">
-        <div class="crm-home-top unselect">
-            <a href="javascript:;" class="left-logo">
-                <i></i>
-            </a>
-            <div class="top-head-menu">
-                <div class="in-block thm-item thm-item-search activate">
-                    <input class='head-input-search' type="text" value="" placeholder="搜索">
-                    <span class="menu-search in-block cur tm-icon"><i></i></span>
-                </div>
-                <span class="vertical-line">|</span>
-                <div class="in-block thm-item thm-item-user">
-                    <a class='head-menu-user tm-icon' href='javascript:;'>
-                        <span class="menu-user-icon "><i></i></span><span class="head-menu-text hm-user-name">余荣辉</span><i class="user-arrow-icon"></i>
+    <div id="app" class="app-navbar-fixed app-sidebar-fixed">
+        <!-- sidebar -->
+        <div class="sidebar app-aside" id="sidebar">
+            <div class="sidebar-container perfect-scrollbar">
+                <nav>
+                    <!-- start: SEARCH FORM -->
+                    <div class="search-form">
+                        <a class="s-open" href="#">
+                            <i class="ti-search"></i>
+                        </a>
+                        <form class="navbar-form" role="search">
+                            <a class="s-remove" href="#" target=".navbar-form">
+                                <i class="ti-close"></i>
+                            </a>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="搜索">
+                                <button class="btn search-button" type="submit">
+                                    <i class="ti-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- end: SEARCH FORM -->
+                    <!-- start: MAIN NAVIGATION MENU -->
+                    <div class="navbar-title">
+                        <span>菜单</span>
+                    </div>
+                    <ul class="main-navigation-menu">
+                        <li class="active open">
+                            <a href="index.html">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-home"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 仪表板 </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-settings"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> UI 元素 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="ui_elements.html">
+                                        <span class="title"> Elements </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_buttons.html">
+                                        <span class="title"> Buttons </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_links.html">
+                                        <span class="title"> Links </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_icons.html">
+                                        <span class="title"> Font Awesome Icons </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_line_icons.html">
+                                        <span class="title"> Linear Icons </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_modals.html">
+                                        <span class="title"> Modals </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_toggle.html">
+                                        <span class="title"> Toggle </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_tabs_accordions.html">
+                                        <span class="title"> Tabs &amp; Accordions </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_panels.html">
+                                        <span class="title"> Panels </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_notifications.html">
+                                        <span class="title"> Notifications </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_treeview.html">
+                                        <span class="title"> Treeview </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_media.html">
+                                        <span class="title"> Media Object </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_nestable.html">
+                                        <span class="title"> Nestable List </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ui_typography.html">
+                                        <span class="title"> Typography </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-layout-grid2"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 表格 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="table_basic.html">
+                                        <span class="title">Basic Tables</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="table_responsive.html">
+                                        <span class="title">Responsive Tables</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="table_data.html">
+                                        <span class="title">Advanced Data Tables</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-pencil-alt"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 表单 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="form_elements.html">
+                                        <span class="title">Form Elements</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form_text_editor.html">
+                                        <span class="title">Text Editor</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form_wizard.html">
+                                        <span class="title">Form Wizard</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form_validation.html">
+                                        <span class="title">Form Validation</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form_image_cropping.html">
+                                        <span class="title">Image Cropping</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="form_multiple_upload.html">
+                                        <span class="title">Multiple File Upload</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-user"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 登录 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="login_signin.html">
+                                        <span class="title"> Login Form </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="login_registration.html">
+                                        <span class="title"> Registration Form </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="login_forgot.html">
+                                        <span class="title"> Forgot Password Form </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="login_lockscreen.html">
+                                        <span class="title">Lock Screen</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-layers-alt"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 页面 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="pages_user_profile.html">
+                                        <span class="title">User Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pages_invoice.html">
+                                        <span class="title">Invoice</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pages_timeline.html">
+                                        <span class="title">Timeline</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pages_calendar.html">
+                                        <span class="title">Calendar</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pages_messages.html">
+                                        <span class="title">Messages</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pages_blank_page.html">
+                                        <span class="title">Blank Page</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-package"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 其他 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="utilities_search_result.html">
+                                        <span class="title">Search Results</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="utilities_error_404.html">
+                                        <span class="title">Error 404</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="utilities_error_500.html">
+                                        <span class="title">Error 500</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="utilities_pricing_table.html">
+                                        <span class="title">Pricing Table</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-folder"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 三级菜单 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 1</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 1
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 2
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 3
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 2</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 1
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 2
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 3
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 3</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 1
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 2
+                                                </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                    Sample Link 3
+                                                </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-menu-alt"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 四级菜单 </span><i class="icon-arrow"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 1</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 1</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 2</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 3</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 2</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 1</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 2</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 3</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;">
+                                        <span>Item 3</span> <i class="icon-arrow"></i>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 1</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 2</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;">
+                                                <span>Sample Link 3</span> <i class="icon-arrow"></i>
+                                            </a>
+                                            <ul class="sub-menu">
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 1
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 2
+                                                        </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                            Sample Link 3
+                                                        </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="maps.html">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-location-pin"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 地图 </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts.html">
+                                <div class="item-content">
+                                    <div class="item-media">
+                                        <i class="ti-pie-chart"></i>
+                                    </div>
+                                    <div class="item-inner">
+                                        <span class="title"> 图表 </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- end: MAIN NAVIGATION MENU -->
+                    <!-- start: DOCUMENTATION BUTTON -->
+<!--                     <div class="wrapper">
+                        <a href="documentation.html" class="button-o">
+                            <i class="ti-help"></i>
+                            <span>Documentation</span>
+                        </a>
+                    </div> -->
+                    <!-- end: DOCUMENTATION BUTTON -->
+                </nav>
+            </div>
+        </div>
+        <!-- / sidebar -->
+        <div class="app-content">
+            <!-- start: TOP NAVBAR -->
+            <header class="navbar navbar-default navbar-static-top">
+                <!-- start: NAVBAR HEADER -->
+                <div class="navbar-header">
+                    <a href="#" class="sidebar-mobile-toggler pull-left hidden-md hidden-lg" class="btn btn-navbar sidebar-toggle" data-toggle-class="app-slide-off" data-toggle-target="#app" data-toggle-click-outside="#sidebar">
+                        <i class="ti-align-justify"></i>
                     </a>
-                    <div class='head-float-menu user'>
-                        <ul class="head-user-menu-list tm-icon">
-                            <li><a class="head-user-myset" href="javascript:;" type="head-user-menu-userSetting"><i class="person-set"></i><span class='head-user-menu-text'>个人设置</span></a></li>
-                            <li><a class="head-user-exit" href="/j_acegi_logout"><i class="person-logout"></i><span class='head-user-menu-text'>退出登录</span></a></li>
-                        </ul>
-                    </div>
+                    <a class="navbar-brand" href="#">
+                        <img src="img/demo/logo.png" alt="" />
+                    </a>
+                    <a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed" data-toggle-target="#app">
+                        <i class="ti-align-justify"></i>
+                    </a>
+                    <a class="pull-right menu-toggler visible-xs-block" id="menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <i class="ti-view-grid"></i>
+                    </a>
                 </div>
-                <span class="vertical-line">|</span>
-                <div class="thm-item in-block thm-item-msg">
-                    <a class='head-menu-msg' href="/sysnotice">
-                        <span class="menu-msg-icon tm-icon"><i></i>
-                            <div class="atme-top-menu top-menu-sysnotice" style="display:none;"><span class="atme-sn-radio"></span></div>
-                </span>
-                <span class="head-menu-text">消息</span>
-                </a>
-                <div class="tip-float-menu">
-                    <div class='index_sn_unread_hoverTip'>
-                        <div class="index_sn_unread_hoverTip_inner"><span class="index_sn_unread_num">0</span>
-                            <span class="index_sn_unread_title">条消息提醒</span>
-                        </div>
+                <!-- end: NAVBAR HEADER -->
+                <!-- start: NAVBAR COLLAPSE -->
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-right">
+                        <!-- start: MESSAGES DROPDOWN -->
+                        <li class="dropdown">
+                            <a href class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="dot-badge partition-red"></span> <i class="ti-comment"></i> <span>消息</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-light dropdown-messages dropdown-large">
+                                <li>
+                                    <span class="dropdown-header"> Unread messages</span>
+                                </li>
+                                <li>
+                                    <div class="drop-down-wrapper ps-container">
+                                        <ul>
+                                            <li class="unread">
+                                                <a href="javascript:;" class="unread">
+                                                    <div class="clearfix">
+                                                        <div class="thread-image">
+                                                            <img src="img/demo/avatar-2.jpg" alt="">
+                                                        </div>
+                                                        <div class="thread-content">
+                                                            <span class="author">Nicole Bell</span>
+                                                            <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
+                                                            <span class="time"> Just Now</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" class="unread">
+                                                    <div class="clearfix">
+                                                        <div class="thread-image">
+                                                            <img src="img/demo/avatar-3.jpg" alt="">
+                                                        </div>
+                                                        <div class="thread-content">
+                                                            <span class="author">Steven Thompson</span>
+                                                            <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
+                                                            <span class="time">8 hrs</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;">
+                                                    <div class="clearfix">
+                                                        <div class="thread-image">
+                                                            <img src="img/demo/avatar-5.jpg" alt="">
+                                                        </div>
+                                                        <div class="thread-content">
+                                                            <span class="author">Kenneth Ross</span>
+                                                            <span class="preview">Duis mollis, est non commodo luctus, nisi erat porttitor ligula...</span>
+                                                            <span class="time">14 hrs</span>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="view-all">
+                                    <a href="#">
+                                            See All
+                                        </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- end: MESSAGES DROPDOWN -->
+                        <!-- start: ACTIVITIES DROPDOWN -->
+                        <li class="dropdown">
+                            <a href class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-check-box"></i> <span>动态</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-light dropdown-messages dropdown-large">
+                                <li>
+                                    <span class="dropdown-header"> You have new notifications</span>
+                                </li>
+                                <li>
+                                    <div class="drop-down-wrapper ps-container">
+                                        <div class="list-group no-margin">
+                                            <a class="media list-group-item" href="">
+                                                <img class="img-circle" alt="" src="img/demo/avatar-1.jpg">
+                                                <span class="media-body block no-margin"> Use awesome animate.css <small class="block text-grey">10 minutes ago</small> </span>
+                                            </a>
+                                            <a class="media list-group-item" href="">
+                                                <span class="media-body block no-margin"> 1.0 initial released <small class="block text-grey">1 hour ago</small> </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="view-all">
+                                    <a href="#">
+                                            See All
+                                        </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- end: ACTIVITIES DROPDOWN -->
+                        <!-- start: LANGUAGE SWITCHER -->
+                        <li class="dropdown">
+                            <a href class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="ti-world"></i> 简体中文
+                            </a>
+                            <ul role="menu" class="dropdown-menu dropdown-light fadeInUpShort">
+                                <li>
+                                    <a href="#" class="menu-toggler">
+                                            简体中文
+                                        </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-toggler">
+                                            English
+                                        </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="menu-toggler">
+                                            Italiano
+                                        </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- start: LANGUAGE SWITCHER -->
+                        <!-- start: USER OPTIONS DROPDOWN -->
+                        <li class="dropdown current-user">
+                            <a href class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="img/demo/avatar-1.jpg" alt=""> <span class="username">myname <i class="ti-angle-down"></i></i></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-dark">
+                                <li>
+                                    <a href="pages_user_profile.html">
+                                            My Profile
+                                        </a>
+                                </li>
+                                <li>
+                                    <a href="pages_calendar.html">
+                                            My Calendar
+                                        </a>
+                                </li>
+                                <li>
+                                    <a hef="pages_messages.html">
+                                            My Messages (3)
+                                        </a>
+                                </li>
+                                <li>
+                                    <a href="login_lockscreen.html">
+                                            Lock Screen
+                                        </a>
+                                </li>
+                                <li>
+                                    <a href="login_signin.html">
+                                            Log Out
+                                        </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- end: USER OPTIONS DROPDOWN -->
+                    </ul>
+                    <!-- start: MENU TOGGLER FOR MOBILE DEVICES -->
+                    <div class="close-handle visible-xs-block menu-toggler" data-toggle="collapse" href=".navbar-collapse">
+                        <div class="arrow-left"></div>
+                        <div class="arrow-right"></div>
                     </div>
+                    <!-- end: MENU TOGGLER FOR MOBILE DEVICES -->
+                </div>
+                <a class="dropdown-off-sidebar" data-toggle-class="app-offsidebar-open" data-toggle-target="#app" data-toggle-click-outside="#off-sidebar">
+                        &nbsp;
+                    </a>
+                <!-- end: NAVBAR COLLAPSE -->
+            </header>
+            <!-- end: TOP NAVBAR -->
+            <div class="main-content">
+                <div class="wrap-content container" id="container">
+                    <!-- 内容 -->
                 </div>
             </div>
-            <span class="vertical-line">|</span>
-            <div class="in-block thm-item thm-item-help">
-                <a class='head-menu-help' href='javascript:;'>
-                    <span class="menu-help-icon tm-icon">
-                            <i></i>
-                            <div class="atme-top-menu top-menu-feedback" style="display:none;"><span class="atme-sn-radio"></span></div>
-            </span>
-            <span class="head-menu-text">帮助</span>
-            </a>
-            <div class='head-float-menu help'>
-                <ul class="head-user-menu-list tm-icon">
-                    <li>
-                        <a class="head-help-feedback" href="/feedback">
-                            <i class="help-feedback"></i>
-                            <div class="atme-top-menu top-menu-feedback" style="display:none;"><span class="atme-sn-radio"></span></div>
-                            <span class='head-help-menu-text'>意见反馈</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="head-help-center" target="_blank" href="http://www.winbons.com/win/ser.html">
-                            <i class="help-center"></i>
-                            <span class='head-help-menu-text'>帮助中心</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="head-new-intro" target="_blank" href="https://pf.winbons.com/version/lastest?dbId=1000141&terminal=Web">
-                            <i class="new-intro"></i>
-                            <span class='head-help-menu-text'>新功能介绍</span>
-                        </a>
-                    </li>
-                </ul>
+        </div>
+        <!-- start: FOOTER -->
+        <footer>
+            <div class="footer-inner">
+                <div class="pull-left">
+                    &copy; <span class="current-year"></span><span class="text-bold text-uppercase">FreeUI</span>. <span>All rights reserved</span>
+                </div>
+                <div class="pull-right">
+                    <span class="go-top"><i class="ti-angle-up"></i></span>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
-    <div class="crm-home-left unselect"></div>
-    <div class="crm-home-right">
-        <div class="tabpanel-container"></div>
-        <div class="container-frame-detail" id="containerDetail">
-            <div class="detail-inner" id="detailInner"></div>
-        </div>
-    </div>
+        </footer>
+        <!-- end: FOOTER -->
     </div>
 </body>
 <script src="js/config-debug.js"></script>

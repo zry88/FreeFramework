@@ -1,7 +1,7 @@
 require([
     'jquery',
     'jqueryui',
-    'lib/core/FUI',
+    'core/FUI',
     "src/im/dataproxy/IM",
     "src/im/controller/IM",
     'src/im/view/YunXin'

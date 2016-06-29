@@ -2,7 +2,7 @@
  * 聊天窗视图
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     "src/im/dataproxy/IM",
     'text!src/im/template/chat-panel.html',
     'src/im/view/ChatItem',
@@ -10,7 +10,7 @@ define([
     'src/im/view/TeamMembers',
     "widget/uploadfile/Qiniu",
     "imagesloaded",
-    "lib/ux/ImageCapture/ImageCapture",
+    "core/ux/ImageCapture/ImageCapture",
     "lib/vendor/components/facebox/facebox"
 ], function(ListView, ImDataproxy, Template, ChatItem, AddTeamMember, TeamMembers, QiniuUpload, imagesLoaded, ImageCapture) {
     var View = ListView.extend({

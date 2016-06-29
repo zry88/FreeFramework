@@ -5,7 +5,7 @@
  * @class AppView
  */
 define([
-    "lib/core/FUI",
+    "core/FUI",
     "text!widget/pagination/app.html"
 ], function(FUI, template) {
     var AppView = FUI.View.extend({

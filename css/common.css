@@ -1,13 +1,21 @@
 @import url(bootstrap.css?v=1);
-@import url(../style/jquery-ui.css?v=1);
-@import url(../style/base.css?v=1);
-@import url(../style/public.css?v=1);
-@import url(../style/default/home.css?v=1);
-@import url(../style/zTreeStyle.css?v=1);
-html, body{
-    line-height: normal;
-}
+@import url(jquery-ui.css?v=1);
+@import url(font-awesome.min.css?v=1);
+@import url(themify-icons.min.css?v=1);
+@import url(animate.css?v=1);
+@import url(../js/vendor/components/perfect-scrollbar/perfect-scrollbar.min.css?v=1);
+@import url(../js/vendor/components/switchery/switchery.min.css?v=1);
+@import url(styles.css?v=1);
+@import url(plugins.css?v=1);
+@import url(themes/theme-1.css?v=1);
 
+html, body{
+    font-family: 'Microsoft Yahei'
+}
+.wrap-content{
+    padding-right: 0;
+    padding-left: 0;
+}
 a:hover {
     text-decoration: none;
 }

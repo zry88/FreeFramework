@@ -2,7 +2,7 @@
  * 选择讨论组人员视图
  */
 define([
-    'lib/core/view/UiDialog',
+    'core/view/UiDialog',
     'text!widget/selectPersonnel/select-personnel.html',
     "widget/selectPersonnel/MemberTree"
 ], function(BaseUiDialog, Template, MemberTree) {

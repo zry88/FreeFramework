@@ -2,7 +2,7 @@
  * 聊天窗口视图
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     "text!src/test/template/chat.html"
 ], function(ListView, Template) {
     var View = ListView.extend({

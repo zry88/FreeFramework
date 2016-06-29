@@ -2,7 +2,7 @@
  * 当前联系人
  */
 define([
-    "lib/core/data/model/Remote"
+    "core/data/model/Remote"
 ], function(RemoteModel) {
     var Model = RemoteModel.extend({
         idAttribute: 'chatId',

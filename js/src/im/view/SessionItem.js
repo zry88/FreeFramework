@@ -2,7 +2,7 @@
  * 会话
  */
 define([
-    "lib/core/view/Item",
+    "core/view/Item",
     "text!src/im/template/session-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({

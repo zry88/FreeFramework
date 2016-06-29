@@ -6,7 +6,7 @@
  * 返回
  */
 define([
-    'lib/core/view/View',
+    'core/view/View',
     'holder'
 ], function(BaseView, Holder){
     var AppView = BaseView.extend({

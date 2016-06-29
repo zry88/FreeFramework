@@ -2,7 +2,7 @@
  * 群组
  */
 define([
-    "lib/core/data/Collection",
+    "core/data/Collection",
     "src/im/model/Team"
 ], function(BaseCollection, Model) {
     var Collection = BaseCollection.extend({

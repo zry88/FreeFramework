@@ -2,7 +2,7 @@
  * 人员树视图
  */
 define([
-    "lib/core/view/View",
+    "core/view/View",
     'ztree'
 ], function(BaseView) {
     var View = BaseView.extend({

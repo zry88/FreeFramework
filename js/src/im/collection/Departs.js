@@ -2,7 +2,7 @@
  * im部门
  */
 define([
-    "lib/core/data/collection/Remote",
+    "core/data/collection/Remote",
     "src/im/model/Depart"
 ], function(RemoteCollection, Model) {
     var Collection = RemoteCollection.extend({

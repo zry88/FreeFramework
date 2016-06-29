@@ -1,7 +1,7 @@
 define([
-    'lib/core/view/component/Panel',
-    'lib/core/view/component/Table',
-    'lib/core/view/element/Button',
+    'core/view/component/Panel',
+    'core/view/component/Table',
+    'core/view/element/Button',
 ], function(PanelView, TableView, BtnView) {
     FUI.widgets.test2 = PanelView.extend({
         events: {
@@ -13,7 +13,8 @@ define([
                 options: {
                     hideFooter: false,
                     header: {
-                        html: '面板标题' + option.key + '<span></span>'
+                        html: '<h4 class="panel-title text-primary">面板标题' + option.key + '<span></span></h4>',
+                        className: 'panel-heading border-light'
                     },
                     body: {
                         html: '<p></p>'

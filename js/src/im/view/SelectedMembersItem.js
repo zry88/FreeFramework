@@ -2,7 +2,7 @@
  * 已选人员条目
  */
 define([
-    "lib/core/view/Item",
+    "core/view/Item",
     "text!src/im/template/selected-members-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({

@@ -4,8 +4,8 @@
  * @class main
  */
 define([
-    'lib/core/FUI',
-    'lib/core/view/View',
+    'core/FUI',
+    'core/view/View',
     'src/main/view/Test',
     'src/main/view/Menu'
 ], function(FUI, BaseView, TestView, MenuView) {
@@ -21,7 +21,6 @@ define([
             // 测试demo
             FUI.view.create({
                 key: "demo",
-                el: '.tabpanel-container',
                 view: TestView,
                 inset: 'html',
             });

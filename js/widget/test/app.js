@@ -1,8 +1,8 @@
 define([
-    'lib/core/view/component/Panel',
-    'lib/core/view/element/Button',
-    'lib/core/view/component/Nav',
-    'lib/core/view/component/Tab',
+    'core/view/component/Panel',
+    'core/view/element/Button',
+    'core/view/component/Nav',
+    'core/view/component/Tab',
 ], function(PanelView, BtnView, NavView, TabView) {
     FUI.widgets.test = PanelView.extend({
         events: {
@@ -14,7 +14,8 @@ define([
                 options: {
                     hideFooter: false,
                     header: {
-                        html: '面板标题' + option.key + '<span></span>'
+                        html: '<h4 class="panel-title text-primary">面板标题' + option.key + '<span></span></h4>',
+                        className: 'panel-heading border-light'
                     },
                     body: {
                         html: '<p>Some default panel content here. Nulla vitae elit libero, a pharetra augue. Aenean lacinia bibendum nulla sed consectetur. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Nullam id dolor id nibh ultricies vehicula ut id elit.</p><div class="tt"></div>'
@@ -39,7 +40,7 @@ define([
                 context: this,
                 inset: 'before',
                 options: {
-                    className: 'nav nav-tabs',
+                    // className: 'nav nav-tabs',
                     navs: [{
                         url: 'javascript:;',
                         html: '菜单一'

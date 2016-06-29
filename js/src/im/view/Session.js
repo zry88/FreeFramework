@@ -2,7 +2,7 @@
  * 会话视图
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     'src/im/view/SessionItem',
 ], function(ListView, SessionItem) {
     var View = ListView.extend({

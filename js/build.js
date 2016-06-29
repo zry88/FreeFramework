@@ -173,7 +173,7 @@
         indexeddb: 'lib/vendor/system/data/backbone.indexeddb',
         framework7: 'lib/vendor/libs/framework7/framework7',
         jquery: 'lib/vendor/libs/jquery/jquery-2.2.1.min',
-        util: 'lib/core/util/Util',
+        util: 'core/util/Util',
         mOxie: 'lib/vendor/components/plupload/moxie',
         plupload: 'lib/vendor/components/plupload/plupload.dev',
         qiniu: 'lib/vendor/libs/qiniu/qiniuSDK',
@@ -237,7 +237,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -250,7 +250,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -263,7 +263,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -276,7 +276,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -289,7 +289,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -302,7 +302,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -316,7 +316,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -329,7 +329,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -342,7 +342,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         },
@@ -355,7 +355,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/core/FUI',
+                'core/FUI',
                 'util',
             ]
         }

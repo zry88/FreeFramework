@@ -2,7 +2,7 @@
  * 当前联系人
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     'src/im/view/CurrentContactsItem'
 ], function(ListView, CurrentContactsItem) {
     var View = ListView.extend({

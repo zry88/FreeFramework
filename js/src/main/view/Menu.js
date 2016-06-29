@@ -3,7 +3,7 @@
  * @class menu
  */
 define([
-    'lib/core/view/View',
+    'core/view/View',
     'text!src/main/template/menu.html'
 ], function(BaseView, TplMenu) {
     var View = BaseView.extend({

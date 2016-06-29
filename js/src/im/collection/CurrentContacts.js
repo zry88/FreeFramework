@@ -2,7 +2,7 @@
  * 当前联系人
  */
 define([
-    "lib/core/data/Collection",
+    "core/data/Collection",
     "src/im/model/CurrentUser"
 ], function(BaseCollection, Model) {
     var Collection = BaseCollection.extend({

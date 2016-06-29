@@ -2,7 +2,7 @@
  * 所有用户
  */
 define([
-    "lib/core/data/collection/Remote",
+    "core/data/collection/Remote",
     "src/main/model/AllUser"
 ], function(RemoteCollection, Model) {
     var Collection = RemoteCollection.extend({

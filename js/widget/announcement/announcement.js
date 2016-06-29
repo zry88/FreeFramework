@@ -6,7 +6,7 @@
  * @update: 2016/5/11
  */
 define([
-    'lib/core/FUI',
+    'core/FUI',
     'text!widget/announcement/announcement.html',
     'lib/vendor/system/data/backbone.localStorage',
     /*'jMarquee',*/

@@ -2,7 +2,7 @@
  * 联系人视图
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     'src/im/view/ContactsItem',
 ], function(ListView, ContactsItem) {
     var View = ListView.extend({

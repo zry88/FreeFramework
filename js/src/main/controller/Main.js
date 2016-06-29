@@ -4,7 +4,7 @@
  * 2016/1/8 update 2016/1/8
  */
 define([
-    'lib/core/router/Router',
+    'core/router/Router',
     'src/main/view/Main',
     // "src/main/dataproxy/Main",
 ], function(BaseController, MainView) {

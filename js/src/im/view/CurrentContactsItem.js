@@ -2,7 +2,7 @@
  * 当前联系人条目
  */
 define([
-    "lib/core/view/Item",
+    "core/view/Item",
     "text!src/im/template/current-contacts-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({

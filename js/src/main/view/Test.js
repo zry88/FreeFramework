@@ -1,5 +1,5 @@
 define([
-    'lib/core/view/Layout',
+    'core/view/Layout',
 ], function(LayoutView) {
     var View = LayoutView.extend({
         initialize: function(option) {
@@ -7,7 +7,7 @@ define([
             var defaults = {
                 options: {
                     style: {
-                        marginTop: '20px',
+                        marginTop: '15px',
                         // width: '1024px',
                         // marginRight: 0
                     },
@@ -90,7 +90,7 @@ define([
                             'triggerEvent2': 'onEvent2',
                         },
                         options: {
-                            className: 'panel panel-info'
+                            className: 'panel panel-white'
                         }
                     }, {
                         key: 'panel_2',
@@ -102,7 +102,7 @@ define([
                             'triggerEvent2': 'onEvent4',
                         },
                         options: {
-                            className: 'panel panel-danger'
+                            className: 'panel panel-white'
                         }
                     }, {
                         key: 'panel1',
@@ -113,7 +113,9 @@ define([
                             'triggerEvent': 'onEvent5',
                             'triggerEvent2': 'onEvent6',
                         },
-                        // options: {}
+                        options: {
+                            className: 'panel panel-white'
+                        }
                     }, {
                         key: 'panel2',
                         src: 'widget/test/app',
@@ -123,6 +125,9 @@ define([
                             'triggerEvent': 'onEvent7',
                             'triggerEvent2': 'onEvent8',
                         },
+                        options: {
+                            className: 'panel panel-white'
+                        }
                     }, {
                         key: 'panel3',
                         src: 'widget/test/app',
@@ -132,6 +137,9 @@ define([
                             'triggerEvent': 'onEvent9',
                             'triggerEvent2': 'onEvent10',
                         },
+                        options: {
+                            className: 'panel panel-white'
+                        }
                     }]
                 }
             };

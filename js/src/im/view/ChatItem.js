@@ -3,7 +3,7 @@
  * 聊天窗口
  */
 define([
-    "lib/core/view/Item",
+    "core/view/Item",
     "text!src/im/template/chat-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({

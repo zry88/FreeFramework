@@ -1,5 +1,5 @@
 define([
-	'lib/core/data/Proxy',
+	'core/data/Proxy',
 ], function(BaseProxy){
 	var Dataproxy = BaseProxy.extend({
 		initialize: function(){

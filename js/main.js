@@ -1,14 +1,14 @@
 require.config(CONFIG.REQUIRE_CONFIG);
 require([
     'jquery',
-    'jqueryui',
-    'lib/core/FUI',
+    // 'jqueryui',
+    'core/FUI',
     // 'framework7',
     'src/main/app',
     // 'fastclick',
     'util',
     'uxUtil'
-], function($, jqueryui, FUI, App) {
+], function($, FUI, App) {
     "use strict";
     // FUI.fw7 = new Framework7(CONFIG.FW7_CONFIG || {});
 

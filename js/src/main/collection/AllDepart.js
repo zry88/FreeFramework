@@ -2,8 +2,8 @@
  * 所有部门
  */
 define([
-    'lib/core/FUI',
-    "lib/core/data/collection/Remote",
+    'core/FUI',
+    "core/data/collection/Remote",
     "src/main/model/AllDepart"
 ], function(FUI, RemoteCollection, Model) {
     var Collection = RemoteCollection.extend({

@@ -1,5 +1,5 @@
 define([
-    'lib/core/router/Router',
+    'core/router/Router',
     "src/im/dataproxy/IM",
     'src/im/view/IM',
     'src/im/view/Contacts',

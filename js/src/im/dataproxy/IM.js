@@ -1,5 +1,5 @@
 define([
-    'lib/core/data/Proxy',
+    'core/data/Proxy',
     'src/main/collection/AllUsers',
     'src/main/collection/AllDepart',
     'src/im/collection/Departs',

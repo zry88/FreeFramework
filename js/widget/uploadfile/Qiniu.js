@@ -2,7 +2,7 @@
  * 七牛上传
  */
 define([
-    'lib/core/view/View',
+    'core/view/View',
     'qiniu'
 ], function(BaseView, Qiniu) {
     // FUI.uploadFiles = FUI.uploadFiles || [];   //上传队列

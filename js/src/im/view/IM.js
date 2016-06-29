@@ -2,7 +2,7 @@
  * IM主面板视图
  */
 define([
-    "lib/core/view/View",
+    "core/view/View",
     "widget/announcement/announcement",
     "text!src/im/template/im.html",
     "text!src/im/template/search-item.html",

@@ -1,5 +1,5 @@
 define([
-    'lib/core/base/Router',
+    'core/base/Router',
     'src/test/view/Chat'
 ], function(BaseController, ChatView) {
     var Controller = BaseController.extend({

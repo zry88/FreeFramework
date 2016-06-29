@@ -2,7 +2,7 @@
  * 已选人员
  */
 define([
-    "lib/core/view/List",
+    "core/view/List",
     'src/im/view/SelectedMembersItem',
 ], function(ListView, SelectedMembersItem) {
     var View = ListView.extend({

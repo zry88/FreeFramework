@@ -1,5 +1,5 @@
 define([
-	'lib/core/base/Proxy',
+	'core/base/Proxy',
 	'src/test/collection/Chat'
 ], function(BaseProxy, Chat){
 	var Dataproxy = BaseProxy.extend({

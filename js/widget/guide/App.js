@@ -16,7 +16,7 @@ options: {
 }
 */
 define([
-    'lib/core/view/View'
+    'core/view/View'
 ], function(BaseView) {
     FUI.widgets.guide = BaseView.extend({
         initialize: function(option) {
