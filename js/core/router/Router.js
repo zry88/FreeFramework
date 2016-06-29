@@ -7,8 +7,8 @@
 define([
     'core/FUI'
 ], function(FUI) {
-    var AppRouter = FUI.Router.extend({
+    // var AppRouter = FUI.Router.extend({
 
-    });
-    return AppRouter;
+    // });
+    return FUI.Router;
 });
