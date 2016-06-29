@@ -10,18 +10,17 @@ define([
     var BaseView = Hby.View.extend({
         initialize: function(option) {
             var that = this;
-            if (!this.template && !option.el) {
-                this.tpl = option.tpl || this.tpl || '';
-                if (option.tpl) {
-                    if (typeof this.tpl == 'string') {
-                        this.template = _.template(this.tpl);
-                    } else {
-                        if (this.tpl instanceof jQuery) this.template = _.template(this.tpl.html());
+            if (option.key) this.el.id = this.id = option.key;
+            this.options = _.extend(this.options || {}, option.options || {});
+            if (!this.template && this.options.template) {
+                if (typeof this.tpl == 'string') {
+                    this.template = _.template(this.options.template);
+                } else {
+                    if (this.options.template instanceof jQuery){
+                        this.template = _.template(this.options.template[0]);
                     }
                 }
             }
-            if (option.key) this.el.id = this.id = option.key;
-            this.options = _.extend(this.options || {}, option.options || {});
             if (this.options.className) this.$el.addClass(this.options.className);
             if (this.options.attr) this.$el.attr(this.options.attr);
             if (this.options.style) this.$el.css(this.options.style);

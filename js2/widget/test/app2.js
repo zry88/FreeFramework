@@ -1,6 +1,6 @@
 define([
     'lib2/core/view/component/Panel',
-    'lib2/core/view/element/Table',
+    'lib2/core/view/component/Table',
     'lib2/core/view/element/Button',
 ], function(PanelView, TableView, BtnView) {
     Hby.widgets.test2 = PanelView.extend({
