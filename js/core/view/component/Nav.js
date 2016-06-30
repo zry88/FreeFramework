@@ -46,14 +46,18 @@ define([
         renderAll: function() {
             var navs = this.options.navs,
                 that = this;
+            var getXY = function() {
+                // var X = $(‘#DivID’).offset().top;
+            };
             var loopNav = function(data, level) {
-                var container = level ? $('<ul class="dropdown-menu"></ul>') : that.$el;
+                console.warn(level, level.toString().length);
+                var container = level ? $('<ul class="dropdown-menu ' + (level.toString().length > 3 ? 'right' : '') + '"></ul>') : that.$el;
                 for (var i = 0; i < data.length; i++) {
                     var liEl = $('<li/>'),
                         aEl = $('<a/>'),
                         nav = data[i],
                         _level = level + '_' + i,
-                        id = that.id + '_nav_' + _level ;
+                        id = that.id + '_nav_' + _level;
                     liEl.attr('id', id);
                     liEl.data('nav', nav);
                     that.datas[_level] = nav;
@@ -67,7 +71,7 @@ define([
                     if (nav.html) aEl.html(nav.html);
                     if (nav.navs) {
                         aEl.addClass('dropdown-toggle');
-                        aEl.append(' <span class="caret"></span>');
+                        aEl.append(' <span class="caret ' + (level.toString().length > 2 ? 'sub' : '') + '"></span>');
                         liEl.append(aEl);
                         var subNavs = nav.navs;
                         var subEl = arguments.callee(subNavs, _level);
@@ -92,10 +96,10 @@ define([
                 subMenu = target.children('ul');
             if (target.hasClass('dropdown')) {
                 target.addClass('open');
-            }else{
-                if(target.parent().hasClass('dropdown-menu')){
+            } else {
+                if (target.parent().hasClass('dropdown-menu')) {
                     this.$('.dropdown').removeClass('open');
-                }else{
+                } else {
                     target.addClass('active').siblings('li').removeClass('active');
                 }
                 FUI.Events.trigger(this.context.id + ':clickNav', target);

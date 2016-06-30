@@ -13,6 +13,7 @@ define([
             if(!option.options.className) option.options.className = 'btn btn-default';
             if(!option.options.html) option.options.html = '按钮';
             this.parent(option);
+            this.$el.attr('type', 'button');
             this.$el.html(this.options.html);
         },
     });

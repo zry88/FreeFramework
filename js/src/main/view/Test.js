@@ -84,7 +84,7 @@ define([
                             cols: [{
                                 // className: '',
                                 style: {
-                                    // background: '#f00',
+                                    // height: '300px'
                                 }
                             }]
                         }]
@@ -159,7 +159,11 @@ define([
                             'triggerEvent2': 'onEvent10',
                         },
                         options: {
-                            className: 'panel panel-white'
+                            className: 'panel panel-white',
+                            style: {
+                                border: 'none',
+                                height: '300px'
+                            },
                         }
                     }]
                 }

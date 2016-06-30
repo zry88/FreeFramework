@@ -3899,9 +3899,6 @@ a.text-light:hover {
 
 .panel-footer {
     position: relative;
-    border-top-width: 1px;
-    border-top-style: solid;
-    border-top-color: inherit;
     padding: 15px;
     background: none;
 }

@@ -8,16 +8,25 @@
 @import url(styles.css?v=1);
 @import url(plugins.css?v=1);
 @import url(themes/theme-1.css?v=1);
-
-html, body{
+html,
+body {
     font-family: 'Microsoft Yahei'
 }
-.wrap-content{
+
+.wrap-content {
     padding-right: 0;
     padding-left: 0;
 }
+
 a:hover {
     text-decoration: none;
+}
+
+
+/*表格*/
+
+.table > thead > tr > th {
+    border-bottom: 1px solid #ddd;
 }
 
 
@@ -27,9 +36,28 @@ a:hover {
 
 
 /*头部*/
+
 .crm-home-left,
 .crm-home-top {
     line-height: 30px;
+}
+/*下拉菜单*/
+.caret.sub {
+    border-left: 4px dashed;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -4px;
+}
+.nav-tabs.nav-justified > .dropdown .dropdown-menu.left{
+    right: 100%;
+    top: 0;
+}
+.nav-tabs.nav-justified > .dropdown .dropdown-menu.right{
+    left: 100%;
+    top: 0;
 }
 
 .top-head-menu > .activate {

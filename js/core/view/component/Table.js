@@ -142,6 +142,13 @@ define([
                     });
                 }
                 _.each(options.columns, function(col, index) {
+                    if (col.hide) {
+                        if (col.style) {
+                            col.style.display = 'none';
+                        } else {
+                            col.style = { display: 'none' }
+                        }
+                    }
                     FUI.view.create({
                         key: that.id + '_thead_th_' + index,
                         el: that.$('#' + that.id + '_thead_tr'),
@@ -159,7 +166,6 @@ define([
                     context: this,
                 });
             }
-
             if (!options.tbody.hide) {
                 var tbodyEl = this.$('#' + this.id + '_tbody').empty();
                 var showData = function(item, index) {
@@ -193,6 +199,13 @@ define([
                                         var theCol = _.findWhere(options.columns, { dataIndex: key }),
                                             newOption = $.extend(true, {}, theCol);
                                         newOption.html = val;
+                                        if (newOption.hide) {
+                                            if (newOption.style) {
+                                                newOption.style.display = 'none';
+                                            } else {
+                                                newOption.style = { display: 'none' }
+                                            }
+                                        }
                                         FUI.view.create({
                                             key: that.id + '_tbody_td_' + key,
                                             el: that.$('#' + theTrId),

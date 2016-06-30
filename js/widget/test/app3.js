@@ -52,6 +52,7 @@ define([
                     }, {
                         text: '尺寸',
                         dataIndex: 'size',
+                        // hide: true
                     }, {
                         text: '说明',
                         dataIndex: 'desc',
@@ -67,26 +68,31 @@ define([
                     }, {
                         name: '苹果',
                         size: 200,
-                        desc: [{
-                            key: '2_btn',
-                            view: BtnView,
-                            context: this,
-                            options: {
-                                html: '首选项',
-                                className: 'btn btn-primary btn-xs',
-                                style: {
-                                    marginRight: '10px'
-                                },
-                            }
-                        }, {
-                            key: '3_btn',
-                            view: BtnView,
-                            context: this,
-                            options: {
-                                html: '我是按钮',
-                                className: 'btn btn-success btn-xs',
-                            }
-                        }]
+                        desc: '很好吃'
+                    }, {
+                        name: '玻璃心',
+                        size: 100,
+                        desc: '小心轻放'
+                    }, {
+                        name: '爱心',
+                        size: 800,
+                        desc: '玩不起就别玩'
+                    }, {
+                        name: '苹果',
+                        size: 200,
+                        desc: '很好吃'
+                    }, {
+                        name: '玻璃心',
+                        size: 100,
+                        desc: '小心轻放'
+                    }, {
+                        name: '爱心',
+                        size: 800,
+                        desc: '玩不起就别玩'
+                    }, {
+                        name: '苹果',
+                        size: 200,
+                        desc: '很好吃'
                     }]
                 }
             });

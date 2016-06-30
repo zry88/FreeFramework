@@ -55,7 +55,19 @@ define([
                             html: '子菜单一'
                         }, {
                             url: 'javascript:;',
-                            html: '<span class="glyphicon glyphicon-star"></span> 子菜单二'
+                            html: '<span class="glyphicon glyphicon-star"></span> 子菜单二',
+                            navs: [{
+                                url: 'javascript:;',
+                                html: '三级子菜单一'
+                            }, {
+                                url: 'javascript:;',
+                                html: '<span class="glyphicon glyphicon-star"></span> 三级子菜单二'
+                            }, {
+                                className: 'divider'
+                            }, {
+                                url: 'javascript:;',
+                                html: '三级子菜单三'
+                            }]
                         }, {
                             className: 'divider'
                         }, {
