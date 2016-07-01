@@ -4,9 +4,9 @@
  * @create: 2016/6/23
  * @update: 2016/6/23
 * options: {
-    currentTab: '',
+    currentItem: '',
     multiPage: false,   //是否多页
-    navs: [{
+    data: [{
         url: '',
         html: '',
         style: {},
@@ -29,9 +29,9 @@ define([
             var that = this,
                 defaults = {
                     options: {
-                        currentTab: 0,
+                        currentItem: 0,
                         multiPage: false,
-                        navs: []
+                        data: []
                     }
                 };
             if (option) $.extend(true, defaults, option || {});
@@ -42,13 +42,13 @@ define([
                 view: NavView,
                 context: this,
                 options: {
-                    currentNav: this.options.currentTab,
-                    navs: this.options.navs
+                    currentItem: this.options.currentItem,
+                    data: this.options.data
                 }
             });
             this.renderAll();
             FUI.Events.off(null, null, this);
-            FUI.Events.on(this.id + ':clickNav', this._clickTab, this);
+            FUI.Events.on(this.id + ':clickItem', this._clickTab, this);
         },
         // 获取面板异步内容
         _getData: function(option, id) {
@@ -77,7 +77,7 @@ define([
             var TabContent = function(tab, id, index) {
                 var contentItemEl = $('<div class="tab-pane"></div>');
                 contentItemEl.attr('id', id);
-                if (options.currentTab == index) {
+                if (options.currentItem == index) {
                     contentItemEl.addClass('active');
                     if (tab.content.key) {
                         var view = FUI.view.create(tab.content);
@@ -92,21 +92,22 @@ define([
                 }
                 contentEl.append(contentItemEl);
             };
-            if (options.navs.length) {
+            if (options.data.length) {
                 if (options.multiPage) {
-                    _.each(options.navs, function(tab, index) {
+                    _.each(options.data, function(tab, index) {
                         TabContent(tab, tab.target, index);
                     });
                 } else {
                     var tabContentId = this.id + '_tabContent_0';
-                    TabContent(options.navs[options.currentTab], tabContentId, options.currentTab);
+                    TabContent(options.data[options.currentItem], tabContentId, options.currentItem);
                 }
             }
             if (!this.$('.tab-content').length) this.$el.append(contentEl);
             return this;
         },
-        _clickTab: function(el) {
-            var target = el.children('a'),
+        _clickTab: function(resp) {
+            var el = resp.data,
+                target = el.children('a'),
                 multiPage = this.options.multiPage,
                 that = this;
             if (target.length) {

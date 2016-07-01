@@ -1,13 +1,10 @@
 /*
- * 导航通用组件类
+ * 下拉菜单按钮通用组件类
  * @author: yrh
- * @create: 2016/6/21
- * @update: 2016/6/21
+ * @create: 2016/7/1
+ * @update: 2016/7/1
 * options: {
-    className: 'nav nav-tabs',
-    tabsAlgin: 'left',
-    //type: 'horizontal/vertical',
-    currentNavId: '',
+    currentItem: '',
     data: [{
         url: '',
         html: '',
@@ -21,20 +18,20 @@ define([
     'core/view/component/Dropdown',
 ], function(DropdownView) {
     var Template = [
-        '<a href="<%= url %>" <%= target ? ("aria-controls=\'" + target + "\'") : "" %> <%= data.length ? "class=\'dropdown-toggle\'" : "" %>>',
+        '<a href="<%= url %>" <%= target ? ("aria-controls=\'" + target + "\'") : "" %>>',
         '<%= html ? html : (text ? text : "") %>',
-        '<%= data.length ? ("<span class=\'caret " + (level.toString().length > 2 ? "sub" : "") + "\'></span>") : "" %></a>'
+        '<%= data.length ? ("<span class=\'caret sub\'></span>") : "" %></a>'
     ].join('');
     var View = DropdownView.extend({
-        tagName: 'ul',
         events: {
+            'click ': '_clickItem',
             'click li': '_clickItem'
         },
         initialize: function(option) {
             var that = this,
                 defaults = {
                     options: {
-                        className: 'nav nav-tabs nav-justified',
+                        className: 'btn-group',
                         button: null,
                         currentItem: 0,
                         itemsTpl: Template,

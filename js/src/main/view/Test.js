@@ -115,8 +115,8 @@ define([
                         }
                     }, {
                         key: 'panel1',
-                        src: 'widget/test/app',
-                        name: 'test',
+                        src: 'widget/test/app4',
+                        name: 'test4',
                         target: 'row_1-col_0',
                         binds: {
                             'triggerEvent': 'onEvent5',

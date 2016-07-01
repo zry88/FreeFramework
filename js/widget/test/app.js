@@ -3,7 +3,8 @@ define([
     'core/view/element/Button',
     'core/view/component/Nav',
     'core/view/component/Tab',
-], function(PanelView, BtnView, NavView, TabView) {
+    'core/view/component/Dropdown',
+], function(PanelView, BtnView, NavView, TabView, DropdownView) {
     FUI.widgets.test = PanelView.extend({
         events: {
             'click button': 'onKeyClick',
@@ -41,7 +42,7 @@ define([
                 inset: 'before',
                 options: {
                     // className: 'nav nav-tabs',
-                    navs: [{
+                    data: [{
                         url: 'javascript:;',
                         html: '菜单一'
                     }, {
@@ -50,13 +51,13 @@ define([
                     }, {
                         url: 'javascript:;',
                         html: '菜单二',
-                        navs: [{
+                        data: [{
                             url: 'javascript:;',
                             html: '子菜单一'
                         }, {
                             url: 'javascript:;',
                             html: '<span class="glyphicon glyphicon-star"></span> 子菜单二',
-                            navs: [{
+                            data: [{
                                 url: 'javascript:;',
                                 html: '三级子菜单一'
                             }, {
@@ -85,8 +86,8 @@ define([
                 inset: 'before',
                 options: {
                     multiPage: false,
-                    currentTab: 1,
-                    navs: [{
+                    currentItem: 1,
+                    data: [{
                         url: 'javascript:;',
                         html: '菜单一',
                         target: 'tabPanel1',
@@ -112,7 +113,7 @@ define([
                         url: 'javascript:;',
                         html: '菜单二',
                         target: 'tabPanel3',
-                        navs: [{
+                        data: [{
                             url: 'javascript:;',
                             html: '子菜单一',
                             target: 'tabPanel3',
@@ -128,7 +129,55 @@ define([
                             url: 'javascript:;',
                             html: '子菜单三',
                             target: 'tabPanel3',
-                            content: '面板三3'
+                            content: {
+                                key: this.id + '_menu_2',
+                                view: DropdownView,
+                                context: this,
+                                options: {
+                                    direction: 'down',
+                                    style: {
+                                        float: 'right'
+                                    },
+                                    button: {
+                                        className: 'btn btn-default dropdown-toggle',
+                                        text: '下拉菜单'
+                                    },
+                                    data: [{
+                                        url: 'javascript:;',
+                                        html: '菜单一'
+                                    }, {
+                                        url: 'javascript:;',
+                                        html: '菜单2'
+                                    }, {
+                                        url: 'javascript:;',
+                                        html: '菜单二',
+                                        data: [{
+                                            url: 'javascript:;',
+                                            html: '子菜单一'
+                                        }, {
+                                            url: 'javascript:;',
+                                            html: '<span class="glyphicon glyphicon-star"></span> 子菜单二',
+                                            data: [{
+                                                url: 'javascript:;',
+                                                html: '三级子菜单一'
+                                            }, {
+                                                url: 'javascript:;',
+                                                html: '<span class="glyphicon glyphicon-star"></span> 三级子菜单二'
+                                            }, {
+                                                className: 'divider'
+                                            }, {
+                                                url: 'javascript:;',
+                                                html: '三级子菜单三'
+                                            }]
+                                        }, {
+                                            className: 'divider'
+                                        }, {
+                                            url: 'javascript:;',
+                                            html: '子菜单三'
+                                        }]
+                                    }]
+                                }
+                            }
                         }]
                     }]
                 }
