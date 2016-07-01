@@ -32,6 +32,7 @@ define([
     var View = BaseView.extend({
         tagName: 'div',
         events: {
+            'click': '_clickItem',
             'click li': '_clickItem'
         },
         initialize: function(option) {

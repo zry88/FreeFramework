@@ -138,10 +138,10 @@ define([
                                     style: {
                                         float: 'right'
                                     },
-                                    button: {
+                                    button: [{
                                         className: 'btn btn-default dropdown-toggle',
                                         text: '下拉菜单'
-                                    },
+                                    }],
                                     data: [{
                                         url: 'javascript:;',
                                         html: '菜单一'
