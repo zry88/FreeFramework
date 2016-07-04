@@ -8,8 +8,12 @@ define([
     'core/view/View',
     'core/view/component/Panel',
     'core/view/component/Table',
-], function(BaseView, PanelView, TableView) {
+    'core/view/component/Dropdown',
+], function(BaseView, PanelView, TableView, DropdownView) {
     var View = BaseView.extend({
+        // events: {
+        //     'click .cols_setting li a': '_clickItem'
+        // },
         initialize: function(option) {
             var that = this,
                 defaults = {
@@ -21,6 +25,7 @@ define([
                         selectable: false, //是否可选
                         thead: {
                             hide: false,
+                            bgColor: ''
                         },
                         tbody: {
                             hide: false,
@@ -35,6 +40,8 @@ define([
                 };
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on(this.id + ':showHideCol', this._showHideCol, this);
             // 列宽
             var colWidth = '20%',
                 colArr = _.filter(this.options.columns, function(val) {
@@ -43,7 +50,7 @@ define([
             if (colArr.length) {
                 colWidth = ((100 / colArr.length) - 1) + '%';
             }
-            _.each(this.options.columns, function(val, index) {
+            _.each(colArr, function(val, index) {
                 if (!val.hide) {
                     if (val.style) {
                         if (!val.style.width) val.style.width = colWidth;
@@ -57,12 +64,13 @@ define([
             var dataTableStyle = {
                 marginBottom: 0,
                 height: '100%',
-                position: 're'
+                position: 'relative'
             };
             if (this.options.style) {
                 _.extend(dataTableStyle, this.options.style);
             }
-            console.warn(dataTableStyle, this.options.style);
+            // console.warn(dataTableStyle, this.options.style);
+            var bgColor = this.options.thead.bgColor || 'rgb(240, 240, 240)';
             FUI.view.create({
                 key: this.id + '_panel',
                 el: this.$el,
@@ -74,7 +82,7 @@ define([
                     hideFooter: this.options.tfoot.hide,
                     style: dataTableStyle,
                     header: {
-                        html: {
+                        html: [{
                             key: this.id + '_header',
                             view: TableView,
                             context: this,
@@ -93,14 +101,15 @@ define([
                                     marginBottom: 0
                                 }
                             }
-                        },
+                        }],
                         className: 'panel-heading border-light',
                         style: {
                             padding: 0,
                             minHeight: 'inherit',
                             paddingRight: '18px',
                             borderTop: '1px solid #ddd',
-                            borderBottom: 'none'
+                            borderBottom: 'none',
+                            position: 'relative'
                         }
                     },
                     body: {
@@ -129,6 +138,69 @@ define([
                     }
                 }
             });
+            // 显示隐藏列
+            var Dropdown = DropdownView.extend({
+                events: {
+                    'click': '_clickItem',
+                    'click .checkbox': '_clickCheckbox'
+                },
+                initialize: function(option) {
+                    this.parent(option);
+                },
+                _clickCheckbox: function(event) {
+                    event.stopPropagation();
+                    var target = $(event.currentTarget),
+                        theCheckbox = target.find('input[type="checkbox"]'),
+                        index = target.data('index'),
+                        isShow = theCheckbox.is(':checked') ? 1 : 0;
+                    FUI.Events.trigger(that.id + ':showHideCol', { show: isShow, index: index });
+                }
+            });
+            var colsData = [],
+                itemsTpl = [
+                    '<a href="javascript:;"><div class="checkbox" style="margin:0" data-index="<%= index %>"><label>',
+                    '<input type="checkbox" value="" <%= !hide ? "checked=\'checked\'" : "" %>>',
+                    ' <%= html ? html : "" %></label></div></a>',
+                ].join('');
+            _.each(this.options.columns, function(val, index) {
+                colsData.push({
+                    html: val.text,
+                    hide: val.hide || false,
+                    index: index
+                });
+            });
+            var colsSetting = FUI.view.create({
+                key: this.id + '_cols_setting',
+                el: this.$('.panel-heading'),
+                view: Dropdown,
+                context: this,
+                options: {
+                    style: {
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        width: '18px',
+                        height: '100%',
+                        borderBottom: '1px #ddd solid',
+                        borderLeft: '1px #ddd solid'
+                    },
+                    className: 'dropdown cols_setting',
+                    direction: 'down',
+                    button: [{
+                        className: 'btn btn-default dropdown-toggle',
+                        style: {
+                            border: 'none',
+                            borderRadius: 0,
+                            padding: '6px 5px',
+                            height: '100%',
+                            backgroundColor: bgColor
+                        }
+                    }],
+                    itemsTpl: itemsTpl,
+                    data: colsData
+                }
+            });
+
             this.renderAll();
         },
         renderAll: function() {
@@ -154,6 +226,27 @@ define([
                 }
             });
             return this;
+        },
+        // 显示和隐藏列
+        _showHideCol: function(data) {
+            this.$('.table tr').each(function(index, el) {
+                var theTd = $(el).children().eq(data.index + 1);
+                if (theTd.length) {
+                    if (data.show) {
+                        theTd.show();
+                        theTd.css('width', theTd.data('width'));
+                        // console.warn($(el).children().last() == theTd);
+                        // if($(el).children().last() == theTd){
+                        //     $(el).children(':visible').prev().css('width', theTd.data('width'));
+                        // }
+                    } else {
+                        theTd.hide();
+                        if ($(el).children(':visible').length > 1) {
+                            $(el).children(':visible').last().width('auto');
+                        }
+                    }
+                }
+            });
         }
     });
     return View;

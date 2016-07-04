@@ -11,6 +11,11 @@ define([
     	tagName: 'th',
         initialize: function(option) {
             this.parent(option);
+            if(this.options.style){
+                if(this.options.style.width){
+                    this.$el.data('width', this.options.style.width);
+                }
+            }
         },
     });
     return View;

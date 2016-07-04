@@ -41,6 +41,7 @@ define([
                     selectable: true,
                     thead: {
                         // hide: true
+                        bgColor: 'rgb(240, 240, 240)'
                     },
                     columns: [{
                         text: '名称',
