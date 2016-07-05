@@ -119,7 +119,7 @@ define([
                             overflowY: 'scroll',
                             position: 'absolute',
                             marginBottom: '48px',
-                            marginTop: '40px',
+                            marginTop: '38px',
                             top: 0,
                             right: 0,
                             left: 0,
@@ -230,20 +230,20 @@ define([
         // 显示和隐藏列
         _showHideCol: function(data) {
             this.$('.table tr').each(function(index, el) {
-                var theTd = $(el).children().eq(data.index + 1);
+                var subCount = $(el).children().length,
+                    theTd = $(el).children().eq(data.index + 1);
                 if (theTd.length) {
                     if (data.show) {
                         theTd.show();
                         theTd.css('width', theTd.data('width'));
-                        // console.warn($(el).children().last() == theTd);
-                        // if($(el).children().last() == theTd){
-                        //     $(el).children(':visible').prev().css('width', theTd.data('width'));
-                        // }
+                        if (data.index != 0) {
+                            theTd.prev().css('width', theTd.data('width'));
+                        }
                     } else {
                         theTd.hide();
-                        if ($(el).children(':visible').length > 1) {
-                            $(el).children(':visible').last().width('auto');
-                        }
+                    }
+                    if ($(el).children(':visible').length > 1) {
+                        $(el).children(':visible').last().width('auto');
                     }
                 }
             });
