@@ -11,7 +11,9 @@ define([
         initialize: function(option) {
             var defaults = {
                 options: {
-                    hideFooter: false,
+                    style: {
+                        borderRadius: 0
+                    },
                     header: {
                         html: '<h4 class="panel-title text-primary">面板标题' + option.key + '<span></span></h4>',
                         className: 'panel-heading border-light'
@@ -20,7 +22,8 @@ define([
                         html: '<p></p>'
                     },
                     footer: {
-                        html: '这是footer'
+                        html: '这是footer',
+                        hide: false
                     }
                 }
             };
@@ -37,26 +40,37 @@ define([
                 view: DataTable,
                 context: this,
                 options: {
-                    className: 'table table-hover table-bordered',
+                    className: 'table table-hover table-bordered datatable',
                     selectable: true,
+                    hideColSetting: false,
+                    hideScroll: false,
                     thead: {
                         // hide: true
-                        bgColor: 'rgb(240, 240, 240)'
+                        textAlign: 'center'
                     },
                     columns: [{
-                        text: '名称',
-                        dataIndex: 'name',
-                        // editable: true,
-                        style: {
-                            // width: '100px'
-                        }
-                    }, {
-                        text: '尺寸',
-                        dataIndex: 'size',
-                        // hide: true
+                        text: '产品',
+                        children: [{
+                            text: '名称',
+                            dataIndex: 'name',
+                            style: {
+                                width: '100px'
+                            }
+                            // hide: true
+                        }, {
+                            text: '尺寸',
+                            dataIndex: 'size',
+                            style: {
+                                width: '100px'
+                            }
+                            // hide: true
+                        }]
                     }, {
                         text: '说明',
                         dataIndex: 'desc',
+                        style: {
+                            width: '500px'
+                        }
                     }],
                     data: [{
                         name: '玻璃心',

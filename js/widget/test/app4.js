@@ -12,7 +12,6 @@ define([
         initialize: function(option) {
             var defaults = {
                 options: {
-                    hideFooter: false,
                     header: {
                         html: '<h4 class="panel-title text-primary">面板标题' + option.key + '<span></span></h4>',
                         className: 'panel-heading border-light'
@@ -21,7 +20,8 @@ define([
                         html: '<p></p>'
                     },
                     footer: {
-                        html: '这是footer'
+                        html: '这是footer',
+                        hide: false
                     }
                 }
             };

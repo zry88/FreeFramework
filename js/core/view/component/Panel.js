@@ -4,8 +4,6 @@
  * @create: 2016/6/20
  * @update: 2016/6/20   `
  * {
-        hideHeader: false,
-        hideFooter: true,
         header: {
             className: 'panel-heading',
             text: '<h3 class="panel-title">Panel title</h3>',
@@ -32,13 +30,13 @@ define([
             var that = this,
                 defaults = {
                     options: {
-                        hideHeader: false,
-                        hideFooter: true,
                         header: {
                             className: 'panel-heading',
+                            hide: false
                         },
                         footer: {
                             className: 'panel-footer',
+                            hide: true
                         },
                         body: {
                             className: 'panel-body',
@@ -49,7 +47,7 @@ define([
             if(option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             var options = this.options;
-            if (!options.hideHeader) {
+            if (!options.header.hide) {
                 var theHeader = FUI.view.create({
                     key: this.id + '_header',
                     el: this.$el,
@@ -67,7 +65,7 @@ define([
                 options: options.body || {}
             });
 
-            if (!options.hideFooter) {
+            if (!options.footer.hide) {
                 var theFooter = FUI.view.create({
                     key: this.id + '_footer',
                     el: this.$el,

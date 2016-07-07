@@ -36,6 +36,7 @@ define([
                         selectable: false, //是否可选
                         thead: {
                             hide: false,
+                            textAlign: 'left',
                         },
                         tbody: {
                             hide: false,
@@ -122,7 +123,12 @@ define([
         },
         renderAll: function() {
             var that = this,
-                options = this.options;
+                options = this.options,
+                hasSub = _.pluck(options.columns, 'children'),
+                result = _.filter(hasSub, function(col) {
+                    return col;
+                }),
+                theChildren = result.length ? _.flatten(result) : [];
             if (!options.thead.hide) {
                 var theadEl = this.$('#' + this.id + '_thead').empty();
                 FUI.view.create({
@@ -138,10 +144,13 @@ define([
                         style: {
                             width: '30px',
                             textAlign: 'center'
+                        },
+                        attr: {
+                            rowspan: result.length ? 2 : undefined
                         }
                     });
                 }
-                _.each(options.columns, function(col, index) {
+                var makeTh = function(col, index, isSub){
                     if (col.hide) {
                         if (col.style) {
                             col.style.display = 'none';
@@ -149,14 +158,40 @@ define([
                             col.style = { display: 'none' }
                         }
                     }
+                    col.attr = col.attr || {};
+                    if (col.style) {
+                        col.style.textAlign = options.thead.textAlign;
+                    } else {
+                        col.style = { textAlign: options.thead.textAlign };
+                    }
+
+                    if (col.children) {
+                        col.attr.colspan = col.children.length;
+                    } else {
+                        col.attr.rowspan = result.length ? 2 : undefined;
+                    }
                     FUI.view.create({
-                        key: that.id + '_thead_th_' + index,
-                        el: that.$('#' + that.id + '_thead_tr'),
+                        key: that.id + '_thead_th_' + (isSub ? '1_' : '') + index,
+                        el: that.$('#' + that.id + '_thead_tr' + (isSub ? '_1' : '')),
                         view: Th,
                         context: that,
                         options: col
                     });
+                };
+                _.each(options.columns, function(col, index) {
+                    makeTh(col, index);
                 });
+                if (result.length) {
+                    FUI.view.create({
+                        key: this.id + '_thead_tr_1',
+                        el: theadEl,
+                        view: Tr,
+                        context: this,
+                    });
+                    _.each(theChildren, function(col, index) {
+                        makeTh(col, index, 1);
+                    });
+                }
             }
             if (!options.tfoot.hide) {
                 FUI.view.create({
@@ -196,8 +231,11 @@ define([
                                 }
                                 _.each(item, function(val, key) {
                                     if (key !== 'id') {
-                                        var theCol = _.findWhere(options.columns, { dataIndex: key }),
-                                            newOption = $.extend(true, {}, theCol);
+                                        var theCol = _.findWhere(options.columns, { dataIndex: key });
+                                        if(!theCol){
+                                            theCol = _.findWhere(theChildren, { dataIndex: key });
+                                        }
+                                        var newOption = $.extend(true, {}, theCol);
                                         newOption.html = val;
                                         if (newOption.hide) {
                                             if (newOption.style) {

@@ -20,12 +20,15 @@ define([
                     options: {
                         className: 'table table-hover',
                         style: {
-                            height: '100%'
+                            height: '100%',
+                            borderRadius: 0,
                         },
                         selectable: false, //是否可选
+                        hideColSetting: false,
+                        hideScroll: false,
                         thead: {
                             hide: false,
-                            bgColor: ''
+                            textAlign: 'left'
                         },
                         tbody: {
                             hide: false,
@@ -39,38 +42,28 @@ define([
                     }
                 };
             if (option) $.extend(true, defaults, option || {});
+            this.tableWidth = 0;
             this.parent(defaults);
             FUI.Events.off(null, null, this);
             FUI.Events.on(this.id + ':showHideCol', this._showHideCol, this);
+
+
+            var hasSub = _.pluck(this.options.columns, 'children');
+            this.headerHeight = hasSub.length ? '72px' : '37px';
+            this.settingHeight = hasSub.length ? '71px' : '36px';
             // 列宽
-            var colWidth = '20%',
-                colArr = _.filter(this.options.columns, function(val) {
-                    return !val.hide;
-                });
-            if (colArr.length) {
-                colWidth = ((100 / colArr.length) - 1) + '%';
-            }
-            _.each(colArr, function(val, index) {
-                if (!val.hide) {
-                    if (val.style) {
-                        if (!val.style.width) val.style.width = colWidth;
-                    } else {
-                        val.style = {
-                            width: colWidth
-                        }
-                    }
-                }
-            });
+            this._getColWidth();
             var dataTableStyle = {
                 marginBottom: 0,
                 height: '100%',
-                position: 'relative'
+                position: 'relative',
+                borderRadius: 0,
+                overflow: 'hidden'
             };
             if (this.options.style) {
                 _.extend(dataTableStyle, this.options.style);
             }
             // console.warn(dataTableStyle, this.options.style);
-            var bgColor = this.options.thead.bgColor || 'rgb(240, 240, 240)';
             FUI.view.create({
                 key: this.id + '_panel',
                 el: this.$el,
@@ -78,37 +71,19 @@ define([
                 context: this,
                 inset: 'html',
                 options: {
-                    hideHeader: this.options.thead.hide,
-                    hideFooter: this.options.tfoot.hide,
                     style: dataTableStyle,
                     header: {
-                        html: [{
-                            key: this.id + '_header',
-                            view: TableView,
-                            context: this,
-                            inset: 'html',
-                            options: {
-                                selectable: this.options.selectable, //是否可选
-                                tbody: {
-                                    hide: true,
-                                },
-                                tfoot: {
-                                    hide: true,
-                                },
-                                columns: this.options.columns,
-                                style: {
-                                    backgroundColor: '#f0f0f0',
-                                    marginBottom: 0
-                                }
-                            }
-                        }],
+                        html: '',
+                        hide: this.options.thead.hide,
                         className: 'panel-heading border-light',
                         style: {
                             padding: 0,
                             minHeight: 'inherit',
-                            paddingRight: '18px',
-                            borderTop: '1px solid #ddd',
-                            borderBottom: 'none',
+                            paddingRight: this.options.hideColSetting ? 0 : '17px',
+                            borderTop: '1px #ddd solid',
+                            borderBottom: '1px #ddd solid',
+                            overflowX: 'auto',
+                            borderRadius: 0,
                             position: 'relative'
                         }
                     },
@@ -116,10 +91,10 @@ define([
                         html: '',
                         style: {
                             padding: 0,
-                            overflowY: 'scroll',
+                            overflowY: this.options.hideScroll ? 'hidden' : 'scroll',
                             position: 'absolute',
-                            marginBottom: '48px',
-                            marginTop: '38px',
+                            marginBottom: (this.options.tfoot.hide ? 0 : 48) + 'px',
+                            marginTop: this.headerHeight,
                             top: 0,
                             right: 0,
                             left: 0,
@@ -128,9 +103,11 @@ define([
                     },
                     footer: {
                         html: '这是分页位置',
+                        hide: this.options.tfoot.hide,
                         style: {
                             // padding: 0
                             position: 'absolute',
+                            borderRadius: 0,
                             left: 0,
                             right: 0,
                             bottom: 0
@@ -138,7 +115,117 @@ define([
                     }
                 }
             });
-            // 显示隐藏列
+            // 显示和隐藏列
+            if (!this.options.hideColSetting && !hasSub.length) {
+                this._colSetting();
+            }
+            this.renderAll();
+            // 同步横向滚动
+            var heading = this.$('.panel-heading');
+            this.$('.panel-body').scroll(function() {
+                heading.scrollLeft($(this).scrollLeft());
+            });
+        },
+        renderAll: function() {
+            var tableWidth = 0;
+            _.each()
+            this.$('#' + this.id + '_header').remove();
+            FUI.view.create({
+                key: this.id + '_header',
+                el: this.$('.panel-heading'),
+                view: TableView,
+                context: this,
+                inset: 'html',
+                options: {
+                    selectable: this.options.selectable, //是否可选
+                    thead: {
+                        textAlign: this.options.thead.textAlign
+                    },
+                    tbody: {
+                        hide: true,
+                    },
+                    tfoot: {
+                        hide: true,
+                    },
+                    columns: this.options.columns,
+                    style: {
+                        backgroundColor: 'transparent',
+                        width: this.tableWidth || '100%',
+                        marginBottom: 0
+                    }
+                }
+            });
+            this.$('#' + this.id + '_bodyer').remove();
+            FUI.view.create({
+                key: this.id + '_bodyer',
+                el: this.$('.panel-body'),
+                view: TableView,
+                context: this,
+                inset: 'html',
+                options: {
+                    selectable: this.options.selectable, //是否可选
+                    thead: {
+                        hide: true,
+                    },
+                    tfoot: {
+                        hide: true,
+                    },
+                    columns: this.options.columns,
+                    data: this.options.data,
+                    style: {
+                        width: this.tableWidth || '100%',
+                        marginBottom: 0,
+                    }
+                }
+            });
+            return this;
+        },
+        // 获取列宽
+        _getColWidth: function() {
+            // console.warn(this.$el.width());
+            var colWidth = 20,
+                that = this,
+                colArr = _.filter(this.options.columns, function(val) {
+                    return !val.hide && !val.children;
+                }),
+                hasSub = _.pluck(this.options.columns, 'children'),
+                result = _.filter(hasSub, function(col) {
+                    return col;
+                }),
+                theChildren = result.length ? _.flatten(result) : [];
+            colArr = _.union(colArr, theChildren);
+            if (colArr.length) {
+                colWidth = ((100 / colArr.length) - 1);
+                if (colWidth < 20) colWidth = 20;
+            }
+            var getWidth = function(val){
+                if (!val.style) {
+                    that.tableWidth = '100%';
+                    val.style = {
+                        width: colWidth + '%'
+                    }
+                } else {
+                    if (val.style.width && that.tableWidth != '100%') {
+                        that.tableWidth += parseInt(val.style.width.replace(/px/, ''));
+                    } else {
+                        that.tableWidth = '100%';
+                        val.style.width = colWidth + '%';
+                    }
+                }
+            };
+            _.each(colArr, function(val, index) {
+                if(val.children){
+                    _.each(val.children, function(col, i){
+                        getWidth(col);
+                    });
+                }else{
+                    getWidth(val);
+                }
+            });
+        },
+        // 显示隐藏列下拉菜单
+        _colSetting: function() {
+            var that = this;
             var Dropdown = DropdownView.extend({
                 events: {
                     'click': '_clickItem',
@@ -163,15 +250,25 @@ define([
                     ' <%= html ? html : "" %></label></div></a>',
                 ].join('');
             _.each(this.options.columns, function(val, index) {
-                colsData.push({
-                    html: val.text,
-                    hide: val.hide || false,
-                    index: index
-                });
+                if (val.children) {
+                    _.each(val.children, function(col, i) {
+                        colsData.push({
+                            html: col.text,
+                            hide: col.hide || false,
+                            index: index + '_' + i
+                        });
+                    });
+                } else {
+                    colsData.push({
+                        html: val.text,
+                        hide: val.hide || false,
+                        index: index
+                    });
+                }
             });
             var colsSetting = FUI.view.create({
                 key: this.id + '_cols_setting',
-                el: this.$('.panel-heading'),
+                el: this.$el,
                 view: Dropdown,
                 context: this,
                 options: {
@@ -180,9 +277,9 @@ define([
                         right: 0,
                         top: 0,
                         width: '18px',
-                        height: '100%',
-                        borderBottom: '1px #ddd solid',
-                        borderLeft: '1px #ddd solid'
+                        height: this.settingHeight,
+                        borderLeft: '1px #ddd solid',
+                        // borderBottom: '1px #ddd solid'
                     },
                     className: 'dropdown cols_setting',
                     direction: 'down',
@@ -193,39 +290,13 @@ define([
                             borderRadius: 0,
                             padding: '6px 5px',
                             height: '100%',
-                            backgroundColor: bgColor
+                            backgroundColor: 'transparent',
                         }
                     }],
                     itemsTpl: itemsTpl,
                     data: colsData
                 }
             });
-
-            this.renderAll();
-        },
-        renderAll: function() {
-            FUI.view.create({
-                key: this.id + '_bodyer',
-                el: this.$('.panel-body'),
-                view: TableView,
-                context: this,
-                inset: 'html',
-                options: {
-                    selectable: this.options.selectable, //是否可选
-                    thead: {
-                        hide: true,
-                    },
-                    tfoot: {
-                        hide: true,
-                    },
-                    columns: this.options.columns,
-                    data: this.options.data,
-                    style: {
-                        marginBottom: 0,
-                    }
-                }
-            });
-            return this;
         },
         // 显示和隐藏列
         _showHideCol: function(data) {
