@@ -49,10 +49,10 @@ define([
             if (!_.isArray(this.options.data)) {
                 // 获取数据
                 this.stopListening(this.options.data);
-                this.listenTo(this.options.data, "remove", this.rendAll);
-                this.listenTo(this.options.data, "reset", this.rendAll);
+                this.listenTo(this.options.data, "remove", this.changeData);
+                this.listenTo(this.options.data, "reset", this.changeData);
                 FUI.Events.off(this.options.data.key);
-                FUI.Events.on(this.options.data.key, this.rendAll, this);
+                FUI.Events.on(this.options.data.key, this.changeData, this);
             }
             // 其他事件
             FUI.Events.off(null, null, this);
@@ -99,7 +99,8 @@ define([
                     borderRadius: 0,
                     left: 0,
                     right: 0,
-                    bottom: 0
+                    bottom: 0,
+                    height: '48px'
                 };
             FUI.view.create({
                 key: this.id + '_panel',
@@ -126,6 +127,20 @@ define([
                     }
                 }
             });
+            this.colsData = [];
+            _.each(this.options.columns, function(val, index) {
+                if (val.children) {
+                    _.each(val.children, function(col, i) {
+                        col.hide = col.hide || false;
+                        col.index = index + '_' + i;
+                        that.colsData.push(col);
+                    });
+                } else {
+                    val.hide = val.hide || false;
+                    val.index = index;
+                    that.colsData.push(val);
+                }
+            });
             // 显示和隐藏列
             if (!this.options.hideColSetting && !result.length) {
                 this._colSetting();
@@ -136,6 +151,15 @@ define([
             this.$('.panel-body').scroll(function() {
                 heading.scrollLeft($(this).scrollLeft());
             });
+        },
+        changeData: function(collection) {
+            var newData = [];
+            collection.each(function(model, index) {
+                newData.push(model.attributes);
+            });
+            this.options.data = newData;
+            console.warn(newData);
+            this.renderAll();
         },
         renderAll: function() {
             var tableWidth = 0;
@@ -159,6 +183,7 @@ define([
                             hide: true,
                         },
                         columns: this.options.columns,
+                        colsData: this.colsData,
                         style: {
                             backgroundColor: 'transparent',
                             width: this.tableWidth || '100%',
@@ -182,6 +207,7 @@ define([
                             hide: true,
                         },
                         columns: this.options.columns,
+                        colsData: this.colsData,
                         data: this.options.data,
                         style: {
                             width: this.tableWidth || '100%',
@@ -252,32 +278,18 @@ define([
                         theCheckbox = target.find('input[type="checkbox"]'),
                         index = target.data('index'),
                         isShow = theCheckbox.is(':checked') ? 1 : 0;
+                    var col = _.findWhere(this.colsData, { index: index });
+                    if (col) {
+                        col.hide = !isShow;
+                    }
                     FUI.Events.trigger(that.id + ':showHideCol', { show: isShow, index: index });
                 }
             });
-            var colsData = [],
-                itemsTpl = [
-                    '<a href="javascript:;"><div class="checkbox" style="margin:0" data-index="<%= index %>"><label>',
-                    '<input type="checkbox" value="" <%= !hide ? "checked=\'checked\'" : "" %>>',
-                    ' <%= html ? html : "" %></label></div></a>',
-                ].join('');
-            _.each(this.options.columns, function(val, index) {
-                if (val.children) {
-                    _.each(val.children, function(col, i) {
-                        colsData.push({
-                            html: col.text,
-                            hide: col.hide || false,
-                            index: index + '_' + i
-                        });
-                    });
-                } else {
-                    colsData.push({
-                        html: val.text,
-                        hide: val.hide || false,
-                        index: index
-                    });
-                }
-            });
+            var itemsTpl = [
+                '<a href="javascript:;"><div class="checkbox" style="margin:0" data-index="<%= index %>"><label>',
+                '<input type="checkbox" value="" <%= !hide ? "checked=\'checked\'" : "" %>>',
+                ' <%= text ? text : "" %></label></div></a>',
+            ].join('');
             var colsSetting = FUI.view.create({
                 key: this.id + '_cols_setting',
                 el: this.$el,
@@ -306,7 +318,7 @@ define([
                         }
                     }],
                     itemsTpl: itemsTpl,
-                    data: colsData
+                    data: this.colsData
                 }
             });
         },

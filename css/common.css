@@ -21,7 +21,10 @@ body {
 a:hover {
     text-decoration: none;
 }
-
+/*分页*/
+.pagination {
+    margin: 0;
+}
 
 /*表格*/
 

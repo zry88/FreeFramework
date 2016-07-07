@@ -11,7 +11,7 @@ define([
     "core/view/View",
     "text!widget/pagination/app.html"
 ], function(BaseView, template) {
-    var AppView = BaseView.extend({
+    FUI.widgets.pagination = BaseView.extend({
         template: _.template(template),
         events: {
             "click li.page": "loadPage",
@@ -24,6 +24,7 @@ define([
                 return;
             }
             this.collection = option.collection;
+            console.warn('aaaaaaaaaaaaaaa', this.collection);
             this.stopListening(this.collection);
             this.listenTo(this.collection, "reset", this.renderAll);
             this.renderAll();
@@ -65,5 +66,5 @@ define([
             this.collection.prevPage();
         }
     });
-    return AppView;
+    return FUI.widgets.pagination;
 });

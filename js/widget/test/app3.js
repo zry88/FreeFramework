@@ -2,13 +2,16 @@ define([
     'core/view/View',
     'core/view/component/DataTable',
     'core/view/element/Button',
-], function(BaseView, DataTable, BtnView) {
+    'src/test/collection/Test',
+    'widget/pagination/App',
+], function(BaseView, DataTable, BtnView, TestCollection) {
     FUI.widgets.test3 = BaseView.extend({
         events: {
             'click th': 'onClickBtn',
             // 'click .li_item_css': 'onResultItem'
         },
         initialize: function(option) {
+            var that = this;
             var defaults = {
                 options: {
                     style: {
@@ -50,6 +53,9 @@ define([
                     },
                     tfoot: {
                         // hide: true
+                        style: {
+                            padding: 0
+                        }
                     },
                     columns: [
                         // {
@@ -70,64 +76,46 @@ define([
                         // },
                         {
                             text: '名称',
-                            dataIndex: 'name',
+                            dataIndex: 'reportName',
                             style: {
                                 width: '200px'
                             }
                         }, {
-                            text: '尺寸',
-                            dataIndex: 'size',
+                            text: '批阅人',
+                            dataIndex: 'reporter',
                             style: {
                                 width: '200px'
                             }
-                        },
-                        {
-                            text: '说明',
-                            dataIndex: 'desc',
+                        }, {
+                            text: '创建日期',
+                            dataIndex: 'createdDate',
                             style: {
                                 width: 'auto'
                             }
                         }
                     ],
-                    data: [{
-                        name: '玻璃心',
-                        size: 100,
-                        desc: '小心轻放'
-                    }, {
-                        name: '爱心',
-                        size: 800,
-                        desc: '玩不起就别玩'
-                    }, {
-                        name: '苹果',
-                        size: 200,
-                        desc: '很好吃'
-                    }, {
-                        name: '玻璃心',
-                        size: 100,
-                        desc: '小心轻放'
-                    }, {
-                        name: '爱心',
-                        size: 800,
-                        desc: '玩不起就别玩'
-                    }, {
-                        name: '苹果',
-                        size: 200,
-                        desc: '很好吃'
-                    }, {
-                        name: '玻璃心',
-                        size: 100,
-                        desc: '小心轻放'
-                    }, {
-                        name: '爱心',
-                        size: 800,
-                        desc: '玩不起就别玩'
-                    }, {
-                        name: '苹果',
-                        size: 200,
-                        desc: '很好吃'
-                    }]
+                    data: TestCollection
+                },
+                // onInitAfter: function(key) {
+                //     console.warn(that[key]);
+                // }
+            });
+            // 分页
+            FUI.view.create({
+                key: this.id + '_paging',
+                el: this.$('.panel-footer'),
+                context: this,
+                inset: 'html',
+                view: FUI.widgets.pagination,
+                collection: TestCollection,
+                options: {
+                    style: {
+                        margin: '10px'
+                    }
                 }
             });
+            TestCollection.loadData();
+            // console.warn(TestCollection);
         },
         onClickBtn: function(event) {
             console.warn('数据表格已被选中行: ', this.theView.getSelectedRow());

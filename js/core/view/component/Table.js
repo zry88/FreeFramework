@@ -45,6 +45,7 @@ define([
                             hide: true,
                         },
                         columns: [],
+                        colsData: [], //列字段字典
                         pageSize: 40,
                         data: []
                     }
@@ -77,6 +78,24 @@ define([
                     context: this,
                     options: this.options.tfoot || {},
                 });
+            }
+            this.colsData = [];
+            if (!this.options.colsData.length) {
+                _.each(this.options.columns, function(val, index) {
+                    if (val.children) {
+                        _.each(val.children, function(col, i) {
+                            col.hide = col.hide || false;
+                            col.index = index + '_' + i;
+                            that.colsData.push(col);
+                        });
+                    } else {
+                        val.hide = val.hide || false;
+                        val.index = index;
+                        that.colsData.push(val);
+                    }
+                });
+            } else {
+                this.colsData = this.options.colsData;
             }
             this.renderAll();
         },
@@ -150,7 +169,7 @@ define([
                         }
                     });
                 }
-                var makeTh = function(col, index, isSub){
+                var makeTh = function(col, index, isSub) {
                     if (col.hide) {
                         if (col.style) {
                             col.style.display = 'none';
@@ -229,14 +248,11 @@ define([
                                         }
                                     });
                                 }
-                                _.each(item, function(val, key) {
-                                    if (key !== 'id') {
-                                        var theCol = _.findWhere(options.columns, { dataIndex: key });
-                                        if(!theCol){
-                                            theCol = _.findWhere(theChildren, { dataIndex: key });
-                                        }
-                                        var newOption = $.extend(true, {}, theCol);
-                                        newOption.html = val;
+                                // console.warn(options.columns);
+                                _.each(that.colsData, function(col, key) {
+                                    if (key !== 'id' && !col.hide) {
+                                        var newOption = $.extend(true, {}, col);
+                                        newOption.html = item[col.dataIndex];
                                         if (newOption.hide) {
                                             if (newOption.style) {
                                                 newOption.style.display = 'none';
