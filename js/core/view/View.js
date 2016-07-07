@@ -11,9 +11,9 @@ define([
         initialize: function(option) {
             var that = this;
             if (option.key) this.el.id = this.id = option.key;
-            this.options = _.extend(this.options || {}, option.options || {});
+            this.options = option.options || {};
             if (!this.template && this.options.template) {
-                if (typeof this.tpl == 'string') {
+                if (typeof this.options.template == 'string') {
                     this.template = _.template(this.options.template);
                 } else {
                     if (this.options.template instanceof jQuery){

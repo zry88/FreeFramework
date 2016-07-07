@@ -2,26 +2,15 @@
  * 远程数据集基类
  * @author: yrh
  * @create: 2015/1/29
- * @update: 2015/9/6
+ * @update: 2016/7/7
  * ===============================
- * 配置参数options: {
- *     urlRoot: '', //根地址
- *     urlType: 1, //1为“/page/1”,2为“?page=1”
- *     totalPage: 1, //总页数
- *     pageSize: 20, //每页记录数
- *     currentPage: 1, //当前页码
- *     pageOffset: 5, //页码偏移量
- *     pageDisplay: 5, //页码显示数
- *     filterData: {} //筛选参数
- * }
  * //加载数据方法
  * collection.loadData({
  *      reset: true, //重置数据集
- *      param: {    //分页参数  可选
+ *      params: {    //分页参数  可选
  *          limit: 20,
  *          page: 1
- *      },
- *      filter: {}   //url地址参数  可选
+ *      }
  * });
  * ===============================
  */
@@ -30,25 +19,22 @@ define([
 ], function(BaseCollection) {
     var AppCollection = BaseCollection.extend({
         initialize: function(models, option, callback) {
-            option = option || {};
-            if (!this.pageConfig) this.initConfig(option);
-            BaseCollection.prototype.initialize.call(this, models, option, callback);
-        },
-        initConfig: function(option) {
-            var defaults = {
+            this.loadOption = {
                 reset: true, //重置数据集
                 type: 'GET',
                 dataType: 'json',
                 headers: null,
                 params: {},
             };
-            this.pageConfig = _.extend(defaults, option.pageConfig || {});
+            _.extend(this.loadOption, option);
+            this.parent(models, this.loadOption, callback);
         },
+        // 组装接口地址
         url: function(dataStr, datatype) {
             var dataStr = dataStr || {},
                 newUrl = this.urlRoot || "";
             var urlStr = $.param(dataStr, true);
-            if (this.pageConfig.type == 'GET') {
+            if (this.loadOption.type == 'GET') {
                 switch (this.urlType) {
                     case 1:
                         newUrl += ((this.urlRoot.indexOf("?") === -1) ? "?" : ((this.urlRoot.indexOf("&") === -1) ? "" : "&")) + urlStr;
@@ -61,6 +47,7 @@ define([
             }
             return newUrl;
         },
+        // 重写请求方法
         sync: function(method, model, option) {
             var theUrl = "";
             if (typeof this.url === "function") {
@@ -71,12 +58,14 @@ define([
             option.url = theUrl || "";
             return Backbone.sync(method, model, option);
         },
+        // 解析结果
         parse: function(response, option) {
             if (!response) return null;
             if (!response.data && response.data !== null) {
                 --this.currentPage;
                 return this.changeData(response);
             }
+            if (response.totalCount) this.totalCount = response.totalCount;
             if (response.totalPage) this.totalPage = response.totalPage;
             if (response.currentPage) this.currentPage = response.currentPage;
             return this.changeData(response.data);
@@ -85,11 +74,11 @@ define([
         changeData: function(data) {
             return data;
         },
+        // 触发数据加载
         loadData: function(option) {
-            option = option || {};
-            _.extend(this.pageConfig, option);
-            if (this.pageConfig.type == 'POST') this.pageConfig.data = $.extend(true, {}, this.pageConfig.params);
-            BaseCollection.prototype.loadData.call(this, this.pageConfig);
+            _.extend(this.loadOption, option || {});
+            if (this.loadOption.type == 'POST') this.loadOption.data = $.extend(true, {}, this.loadOption.params);
+            this.parent(this.loadOption);
         },
         //删除某条记录
         deleteOne: function(id) {

@@ -108,10 +108,10 @@ define([
                     item.selected = isChecked ? true : false;
                 });
                 $.each(this.$('td > input[type="checkbox"]'), function(i, el) {
-                    if (!!isChecked) {
-                        $(el).attr('checked', 'checked').parent().parent().addClass('warning');
+                    if (isChecked) {
+                        $(el).prop('checked', true).parent().parent().addClass('warning');
                     } else {
-                        $(el).removeAttr('checked').parent().parent().removeClass('warning');
+                        $(el).prop("checked", false).parent().parent().removeClass('warning');
                     }
                 });
             }

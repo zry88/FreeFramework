@@ -1,51 +1,58 @@
 /**
  * # 描述
  * 分页类
- *
- * @class AppView
+ * @author: yrh
+ * @create: 2016/7/7
+ * @update: 2016/7/7
+ * pagingType: 1,    //分页风格
+ * collection: 数据集对象
  */
 define([
-    "core/FUI",
+    "core/view/View",
     "text!widget/pagination/app.html"
-], function(FUI, template) {
-    var AppView = FUI.View.extend({
+], function(BaseView, template) {
+    var AppView = BaseView.extend({
         template: _.template(template),
         events: {
             "click li.page": "loadPage",
             "click li.prev:not(.disabled)": "prevPage",
             "click li.next:not(.disabled)": "nextPage",
         },
-        initialize: function(collection) {
-            this.collection = collection;
+        initialize: function(option) {
+            this.parent(option);
+            if(!option.collection){
+                return;
+            }
+            this.collection = option.collection;
             this.stopListening(this.collection);
-            this.listenTo(this.collection, "reset", this.render);
-            this.render();
+            this.listenTo(this.collection, "reset", this.renderAll);
+            this.renderAll();
         },
-        render: function() {
+        renderAll: function() {
             var that = this;
-            var baseTimes = Math.floor((this.collection.currentPage - 1) / this.collection.pageDisplay),
-                startPage = baseTimes * this.collection.pageDisplay + 1,
-                endPage = startPage + this.collection.pageDisplay - 1,
+            var baseTimes = Math.floor((this.collection.currentPage - 1) / this.collection.pageNums),
+                startPage = baseTimes * this.collection.pageNums + 1,
+                endPage = startPage + this.collection.pageNums - 1,
                 showEllipsis = 1;
             if (startPage < 1) startPage = 1;
             if (endPage > this.collection.totalPage) {
                 showEllipsis = 0;
                 endPage = this.collection.totalPage;
             }
-
             this.$el.html(this.template({
-                pageOffset: this.collection.pageOffset,
-                pageDisplay: this.collection.pageDisplay,
-                totalPage: this.collection.totalPage,
-                pageSize: this.collection.pageSize,
-                currentPage: this.collection.currentPage,
-                startPage: startPage,
-                endPage: endPage,
-                showEllipsis: showEllipsis
+                pagingType: this.collection.pagingType,
+                pageOffset: this.collection.pageOffset,  //页数偏移值
+                pageNums: this.collection.pageNums,  //页码显示数
+                totalPage: this.collection.totalPage,  //总页数
+                pageSize: this.collection.pageSize,  //每页数
+                currentPage: this.collection.currentPage,  //当前页
+                startPage: startPage,  //开始页
+                endPage: endPage,  //结束页
+                showEllipsis: showEllipsis  //省略号
             }));
             return this;
         },
-        loadPage: function(event) {
+        gotoPage: function(event) {
             var target = $(event.currentTarget);
             target.addClass("active").siblings(".active").removeClass("active");
             this.collection.currentPage = target.data("page");

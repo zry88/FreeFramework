@@ -1,19 +1,21 @@
-<div class="pull-left" style="margin-top:25px;">
-    <span>第 <%= currentPage%> 页&nbsp;&nbsp;共 <%= totalPage%> 页</span>
-</div>
-<ul class="pagination">
-	<li class="prev <% if(currentPage<=1){%>disabled<% } %>" data-page="prev">
-	    <a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a>
-	</li>
-	<% for(var i=startPage; i<=endPage; i++) { %>
-	<li data-page="<%= i%>" class="page <% if(i==currentPage){%>active<% } %>">
-	    <a href="javascript:void(0)"><%= i%></a>
-	</li>
-	<% } %>
-	<% if(showEllipsis){ %>
-	<li class="disabled"><span>...</span></li>
-	<% } %>
-	<li class="next <% if(currentPage>=totalPage){%>disabled<% } %>" data-page="next">
-	    <a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a>
-	</li>
-</ul>
+<% if(pagingType == 1){ %>
+	<div class="pull-left" style="margin-top:25px;">
+	    <span>第 <%= currentPage%> 页&nbsp;&nbsp;共 <%= totalPage%> 页</span>
+	</div>
+	<ul class="pagination">
+		<li class="prev <% if(currentPage<=1){%>disabled<% } %>" data-page="prev">
+		    <a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a>
+		</li>
+		<% for(var i=startPage; i<=endPage; i++) { %>
+		<li data-page="<%= i%>" class="page <% if(i==currentPage){%>active<% } %>">
+		    <a href="javascript:void(0)"><%= i%></a>
+		</li>
+		<% } %>
+		<% if(showEllipsis){ %>
+		<li class="disabled"><span>...</span></li>
+		<% } %>
+		<li class="next <% if(currentPage>=totalPage){%>disabled<% } %>" data-page="next">
+		    <a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a>
+		</li>
+	</ul>
+<% } %>

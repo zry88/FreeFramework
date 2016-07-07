@@ -5,7 +5,7 @@ define([
 ], function(BaseView, DataTable, BtnView) {
     FUI.widgets.test3 = BaseView.extend({
         events: {
-            'click button': 'onClickBtn',
+            'click th': 'onClickBtn',
             // 'click .li_item_css': 'onResultItem'
         },
         initialize: function(option) {
@@ -45,33 +45,50 @@ define([
                     hideColSetting: false,
                     hideScroll: false,
                     thead: {
-                        // hide: true
-                        textAlign: 'center'
+                        // hide: true,
+                        // textAlign: 'center'
                     },
-                    columns: [{
-                        text: '产品',
-                        children: [{
+                    tfoot: {
+                        // hide: true
+                    },
+                    columns: [
+                        // {
+                        //     text: '产品',
+                        //     children: [{
+                        //         text: '名称',
+                        //         dataIndex: 'name',
+                        //         style: {
+                        //             width: '100px'
+                        //         }
+                        //     }, {
+                        //         text: '尺寸',
+                        //         dataIndex: 'size',
+                        //         style: {
+                        //             width: '100px'
+                        //         }
+                        //     }]
+                        // },
+                        {
                             text: '名称',
                             dataIndex: 'name',
                             style: {
-                                width: '100px'
+                                width: '200px'
                             }
-                            // hide: true
                         }, {
                             text: '尺寸',
                             dataIndex: 'size',
                             style: {
-                                width: '100px'
+                                width: '200px'
                             }
-                            // hide: true
-                        }]
-                    }, {
-                        text: '说明',
-                        dataIndex: 'desc',
-                        style: {
-                            width: '500px'
+                        },
+                        {
+                            text: '说明',
+                            dataIndex: 'desc',
+                            style: {
+                                width: 'auto'
+                            }
                         }
-                    }],
+                    ],
                     data: [{
                         name: '玻璃心',
                         size: 100,
@@ -113,7 +130,7 @@ define([
             });
         },
         onClickBtn: function(event) {
-            console.warn('ggggggggggggggg', this.theView.getSelectedRow());
+            console.warn('数据表格已被选中行: ', this.theView.getSelectedRow());
         },
     });
     return FUI.widgets.test3;

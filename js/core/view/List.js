@@ -2,42 +2,30 @@
  * 列表视图基类
  * @author: yrh
  * @create: 2015/1/29
- * @update: 2015/9/6
+ * @update: 2016/7/7
  * ===============================
  * 初始化参数obj: {
- *     tpl: ''/$('')/'html',    //模板 视图类里有时可不用
- *     collection: object/class, //数据集类或实例 必须
+ *     itemEl: '', //条目模板 必须
  *     itemView: class, //单条视图类 必须
-        option: {
-            data: {
-                id: options.option.id
-            },
-            type: 'GET',
-        }
+        option: {}
  * }
  * ===============================
  */
 define([
-    'core/FUI',
     'core/view/View',
-], function(FUI, BaseView) {
+], function(BaseView) {
     var View = BaseView.extend({
         itemEl: '',
         itemView: null,
-        pagingEl: '', //分页容器选择符
         initialize: function(option) {
             this.parent(option);
-            if (option) this.initConfig(option);
-            // this.pagesStart = false;
-            // this.pagesEnd = false;
             this.insertPosition = 'after'; //记录插入位置after or before
             if (this.template) this.$el.html(this.template(this.options));
             if (!this.itemView || !this.itemEl) {
                 debug.error('视图' + option.key + '的itemEl和itemView不能为空');
                 return false;
             }
-            this.collection = option.collection || this.collection || {};
-            // if (!this.collection) this.rendAll();
+            this.collection = this.options.collection || {};
             // 获取数据
             this.stopListening(this.collection);
             this.listenTo(this.collection, "add", this.addOne);
@@ -45,9 +33,6 @@ define([
             this.listenTo(this.collection, "reset", this.rendAll);
             FUI.Events.off(this.collection.key);
             FUI.Events.on(this.collection.key, this.rendAll, this);
-        },
-        initConfig: function(option) {
-            this.collection = option.collection || this.collection || {};
         },
         addOne: function(model) {
             var theItemEl = (this.itemEl == '#' + this.el.id) ? this.$el : this.$(this.itemEl);
