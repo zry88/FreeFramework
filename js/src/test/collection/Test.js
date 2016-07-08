@@ -3,19 +3,20 @@ define([
     // "src/test/model/Chat"
 ], function(RemoteCollection) {
     var Collection = RemoteCollection.extend({
-        urlType: 2,
+        urlType: 1,
         // model: Model,
         pageSize: 20,
         urlRoot: '/test/datatable/',
         initialize: function(option) {
             var defaults = {
+                reload: true,
                 params: {
                     currentPage: 1,
                     limit: 20
                 }
             };
             if(option) $.extend(true, defaults, option);
-            this.parent(defaults)
+            this.parent({}, defaults)
         },
         parse: function(response, option) {
             if (!response) return null;
@@ -24,10 +25,10 @@ define([
                 return this.changeData(response);
             }
             if (response.data.totalCount) this.totalCount = response.data.totalCount;
-            if (response.data.totalPage) this.totalPage = response.data.totalPages;
+            if (response.data.totalPages) this.totalPages = response.data.totalPages;
             if (response.data.currentPage) this.currentPage = response.data.currentPage;
             if(!response.data.items) return [];
-            console.warn(response.data);
+            // console.warn(response.data, this.currentPage, this.totalPages, this.totalCount);
             return this.changeData(response.data.items);
         },
         changeData: function(data) {

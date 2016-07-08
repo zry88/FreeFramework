@@ -1,8 +1,5 @@
 <% if(pagingType == 1){ %>
 <!-- 分页风格1 -->
-	<div class="pull-left">
-	    <span>第 <%= currentPage%> 页&nbsp;&nbsp;共 <%= totalPage%> 页</span>
-	</div>
 	<ul class="pagination">
 		<li class="prev <% if(currentPage<=1){%>disabled<% } %>" data-page="prev">
 		    <a href="javascript:void(0)"><i class="fa fa-chevron-left"></i></a>
@@ -15,8 +12,11 @@
 		<% if(showEllipsis){ %>
 		<li class="disabled"><span>...</span></li>
 		<% } %>
-		<li class="next <% if(currentPage>=totalPage){%>disabled<% } %>" data-page="next">
+		<li class="next <% if(currentPage>=totalPages){%>disabled<% } %>" data-page="next">
 		    <a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a>
+		</li>
+		<li>
+		    <span>第 <%= currentPage %> 页&nbsp;&nbsp;共 <%= totalPages %> 页</span>
 		</li>
 	</ul>
 <% } %>
@@ -24,7 +24,7 @@
 <% if(pagingType == 2){ %>
 <!-- 分页风格2 -->
 	<div class="pull-left" style="margin-top:25px;">
-	    <span>第 <%= currentPage%> 页&nbsp;&nbsp;共 <%= totalPage%> 页</span>
+	    <span>第 <%= currentPage %> 页&nbsp;&nbsp;共 <%= totalPages %> 页</span>
 	</div>
 	<ul class="pagination">
 		<li class="prev <% if(currentPage<=1){%>disabled<% } %>" data-page="prev">
@@ -38,7 +38,7 @@
 		<% if(showEllipsis){ %>
 		<li class="disabled"><span>...</span></li>
 		<% } %>
-		<li class="next <% if(currentPage>=totalPage){%>disabled<% } %>" data-page="next">
+		<li class="next <% if(currentPage>=totalPages){%>disabled<% } %>" data-page="next">
 		    <a href="javascript:void(0)"><i class="fa fa-chevron-right"></i></a>
 		</li>
 	</ul>

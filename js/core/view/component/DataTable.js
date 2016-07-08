@@ -158,7 +158,6 @@ define([
                 newData.push(model.attributes);
             });
             this.options.data = newData;
-            console.warn(newData);
             this.renderAll();
         },
         renderAll: function() {

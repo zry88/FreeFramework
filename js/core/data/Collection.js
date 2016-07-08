@@ -13,7 +13,7 @@ define([
         pagingType: 1, //分页风格
         urlRoot: '', //接口根地址
         urlType: 1, //1为“?page=1” 只对GET请求有效,2为“/page/1”,
-        totalPage: 0, //总页数
+        totalPages: 0, //总页数
         totalCount: 0, //总纪录数
         pageSize: 40, //每页记录数
         currentPage: 1, //当前页码
@@ -34,6 +34,7 @@ define([
         loadData: function(option) {
             var that = this;
             _.extend(this.loadOption, option || {});
+            // console.warn('ppppppppp', this.loadOption);
             if (!this.isLoaded || this.loadOption.reload) {
                 this.isLoaded = true;
                 this.fetch(this.loadOption);

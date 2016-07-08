@@ -66,8 +66,8 @@ define([
                 return this.changeData(response);
             }
             if (response.totalCount) this.totalCount = response.totalCount;
-            if (response.totalPage) this.totalPage = response.totalPage;
-            if (response.currentPage) this.currentPage = response.currentPage;
+            if (response.totalPages) this.totalPages = response.totalPages;
+            // if (response.currentPage) this.currentPage = response.currentPage;
             return this.changeData(response.data);
         },
         //修改数据

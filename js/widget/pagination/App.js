@@ -14,7 +14,7 @@ define([
     FUI.widgets.pagination = BaseView.extend({
         template: _.template(template),
         events: {
-            "click li.page": "loadPage",
+            "click li.page": "gotoPage",
             "click li.prev:not(.disabled)": "prevPage",
             "click li.next:not(.disabled)": "nextPage",
         },
@@ -24,7 +24,6 @@ define([
                 return;
             }
             this.collection = option.collection;
-            console.warn('aaaaaaaaaaaaaaa', this.collection);
             this.stopListening(this.collection);
             this.listenTo(this.collection, "reset", this.renderAll);
             this.renderAll();
@@ -40,11 +39,12 @@ define([
                 showEllipsis = 0;
                 endPage = this.collection.totalPage;
             }
+            console.warn(this.collection, this.collection.currentPage);
             this.$el.html(this.template({
                 pagingType: this.collection.pagingType,
                 pageOffset: this.collection.pageOffset,  //页数偏移值
                 pageNums: this.collection.pageNums,  //页码显示数
-                totalPage: this.collection.totalPage,  //总页数
+                totalPages: this.collection.totalPages,  //总页数
                 pageSize: this.collection.pageSize,  //每页数
                 currentPage: this.collection.currentPage,  //当前页
                 startPage: startPage,  //开始页
@@ -55,8 +55,8 @@ define([
         },
         gotoPage: function(event) {
             var target = $(event.currentTarget);
+            this.collection.currentPage = parseInt(target.data("page"));
             target.addClass("active").siblings(".active").removeClass("active");
-            this.collection.currentPage = target.data("page");
             this.collection.loadData();
         },
         nextPage: function(event) {
