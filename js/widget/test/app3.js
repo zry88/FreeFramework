@@ -3,7 +3,6 @@ define([
     'core/view/component/DataTable',
     'core/view/element/Button',
     'src/test/collection/Test',
-    'widget/pagination/App',
 ], function(BaseView, DataTable, BtnView, TestCollection) {
     FUI.widgets.test3 = BaseView.extend({
         events: {
@@ -101,18 +100,29 @@ define([
                 // }
             });
             // 分页
-            FUI.view.create({
-                key: this.id + '_paging',
-                el: this.$('.panel-footer'),
-                context: this,
-                inset: 'html',
-                view: FUI.widgets.pagination,
-                collection: TestCollection,
-                options: {
-                    style: {
-                        margin: '10px'
+            require(['widget/pagination/App'], function() {
+                FUI.view.create({
+                    key: that.id + '_paging',
+                    el: that.$('.panel-footer'),
+                    context: that,
+                    inset: 'html',
+                    view: FUI.widgets.pagination,
+                    collection: TestCollection,
+                    options: {
+                        style: {
+                            margin: '10px'
+                        },
+                        onGoto: function(event) {
+                            console.warn('跳至页');
+                        },
+                        onPrev: function(event) {
+                            console.warn('上一页');
+                        },
+                        onNext: function(event) {
+                            console.warn('下一页');
+                        }
                     }
-                }
+                });
             });
             TestCollection.loadData();
             // console.warn(TestCollection);

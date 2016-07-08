@@ -219,7 +219,6 @@ define([
         },
         // 获取列宽
         _getColWidth: function() {
-            // console.warn(this.$el.width());
             var colWidth = 20,
                 that = this,
                 colArr = _.filter(this.options.columns, function(val) {

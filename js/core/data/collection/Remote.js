@@ -19,28 +19,28 @@ define([
 ], function(BaseCollection) {
     var AppCollection = BaseCollection.extend({
         initialize: function(models, option, callback) {
-            this.loadOption = {
+            this.ajaxOption = {
                 reset: true, //重置数据集
                 type: 'GET',
                 dataType: 'json',
                 headers: null,
                 params: {},
             };
-            _.extend(this.loadOption, option);
-            this.parent(models, this.loadOption, callback);
+            _.extend(this.ajaxOption, option);
+            this.parent(models, this.ajaxOption, callback);
         },
         // 组装接口地址
-        url: function(dataStr, datatype) {
-            var dataStr = dataStr || {},
-                newUrl = this.urlRoot || "";
-            var urlStr = $.param(dataStr, true);
-            if (this.loadOption.type == 'GET') {
+        url: function(params, datatype) {
+            var params = params || {},
+                newUrl = this.urlRoot || "",
+                urlParams = $.param(params, true);
+            if (this.ajaxOption.type == 'GET') {
                 switch (this.urlType) {
                     case 1:
-                        newUrl += ((this.urlRoot.indexOf("?") === -1) ? "?" : ((this.urlRoot.indexOf("&") === -1) ? "" : "&")) + urlStr;
+                        newUrl += ((this.urlRoot.indexOf("?") === -1) ? "?" : ((this.urlRoot.indexOf("&") === -1) ? "" : "&")) + urlParams;
                         break;
                     case 2:
-                        newUrl += (this.urlRoot.substr(this.urlRoot.length - 1, 1) == "/" ? "" : "/") + urlStr.replace(/=/g, "/").replace(/&/g, "/");
+                        newUrl += (this.urlRoot.substr(this.urlRoot.length - 1, 1) == "/" ? "" : "/") + urlParams.replace(/=/g, "/").replace(/&/g, "/");
                         break;
                 }
                 if (datatype == "jsonp") newUrl += ((newUrl.indexOf("?") === -1) ? "?" : "&") + "callback=?";
@@ -74,11 +74,16 @@ define([
         changeData: function(data) {
             return data;
         },
+        // 组装接口参数
+        makeParams: function(){
+            // this.ajaxOption.params
+        },
         // 触发数据加载
         loadData: function(option) {
-            _.extend(this.loadOption, option || {});
-            if (this.loadOption.type == 'POST') this.loadOption.data = $.extend(true, {}, this.loadOption.params);
-            this.parent(this.loadOption);
+            this.makeParams();
+            if(option) _.extend(this.ajaxOption, option || {});
+            if (this.ajaxOption.type == 'POST') this.ajaxOption.data = $.extend(true, {}, this.ajaxOption.params);
+            this.parent(this.ajaxOption);
         },
         //删除某条记录
         deleteOne: function(id) {

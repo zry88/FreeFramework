@@ -6,17 +6,20 @@ define([
         urlType: 1,
         // model: Model,
         pageSize: 20,
+        // pageNums: 5, //页码显示数
         urlRoot: '/test/datatable/',
         initialize: function(option) {
             var defaults = {
-                reload: true,
-                params: {
-                    currentPage: 1,
-                    limit: 20
-                }
+                reload: true
             };
-            if(option) $.extend(true, defaults, option);
+            if (option) $.extend(true, defaults, option);
             this.parent({}, defaults)
+        },
+        makeParams: function() {
+            this.ajaxOption.params = {
+                currentPage: this.currentPage,
+                limit: this.pageSize
+            };
         },
         parse: function(response, option) {
             if (!response) return null;
@@ -26,9 +29,7 @@ define([
             }
             if (response.data.totalCount) this.totalCount = response.data.totalCount;
             if (response.data.totalPages) this.totalPages = response.data.totalPages;
-            if (response.data.currentPage) this.currentPage = response.data.currentPage;
-            if(!response.data.items) return [];
-            // console.warn(response.data, this.currentPage, this.totalPages, this.totalCount);
+            if (!response.data.items) return [];
             return this.changeData(response.data.items);
         },
         changeData: function(data) {

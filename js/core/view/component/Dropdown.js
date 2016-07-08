@@ -46,7 +46,8 @@ define([
                         }],
                         currentItem: 0,
                         itemsTpl: Template,
-                        data: []
+                        data: [],
+                        onClickItem: function(){}
                     }
                 };
             if (option) $.extend(true, defaults, option);
@@ -176,7 +177,7 @@ define([
             event.stopPropagation();
             var target = $(event.currentTarget),
                 theSub = target.children('ul');
-            if (target.hasClass('dropdown') || target.hasClass('btn-group')) {
+            if (target.hasClass('dropdown') || target.hasClass('dropup') || target.hasClass('btn-group')) {
                 if (this.options.button) {
                     if (target[0].tagName !== 'DIV') {
                         theSub.addClass(this._getDirection(target));
@@ -198,6 +199,7 @@ define([
                     target.addClass('active').siblings('li').removeClass('active');
                 }
                 FUI.Events.trigger(this.context.id + ':clickItem', { from: this.id, data: target });
+                    if(typeof this.options.onClickItem == 'function') this.options.onClickItem(event);
             }
         }
     });

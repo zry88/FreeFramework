@@ -22,22 +22,21 @@ define([
         initialize: function(models, option, callback) {
             this.callback = callback;
             this.key = option.key || this.key || null;
-            this.loadOption = {
+            this.ajaxOption = {
                 reload: false,
                 context: this,
                 success: this.successFun,
                 error: this.errorFun
             };
-            _.extend(this.loadOption, option || {});
+            _.extend(this.ajaxOption, option || {});
         },
         // 加载数据
         loadData: function(option) {
             var that = this;
-            _.extend(this.loadOption, option || {});
-            // console.warn('ppppppppp', this.loadOption);
-            if (!this.isLoaded || this.loadOption.reload) {
+            if(option) _.extend(this.ajaxOption, option);
+            if (!this.isLoaded || this.ajaxOption.reload) {
                 this.isLoaded = true;
-                this.fetch(this.loadOption);
+                this.fetch(this.ajaxOption);
             } else {
                 setTimeout(function() {
                     FUI.Events.trigger(that.key);
@@ -55,15 +54,23 @@ define([
             debug.log("Get data error:" + responseText);
         },
         //下一页
-        nextPage: function() {
+        gotoPage: function(event, callback) {
+            debug.log("gotoPage");
+            if(typeof callback == 'function') callback(event);
+            this.loadData();
+        },
+        //下一页
+        nextPage: function(event, callback) {
             debug.log("nextPage");
             ++this.currentPage;
+            if(typeof callback == 'function') callback(event);
             this.loadData();
         },
         //上一页
-        prevPage: function() {
+        prevPage: function(event, callback) {
             debug.log("prevPage");
             --this.currentPage;
+            if(typeof callback == 'function') callback(event);
             this.loadData();
         }
     });

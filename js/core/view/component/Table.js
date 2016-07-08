@@ -46,7 +46,7 @@ define([
                         },
                         columns: [],
                         colsData: [], //列字段字典
-                        pageSize: 40,
+                        // pageSize: 40,
                         data: []
                     }
                 };
@@ -225,59 +225,57 @@ define([
                 var showData = function(item, index) {
                     var theTrId = that.id + '_tbody_tr_' + index;
                     if (!item.id) item.id = theTrId;
-                    if (index < options.pageSize) {
-                        FUI.view.create({
-                            key: theTrId,
-                            el: tbodyEl,
-                            view: Tr,
-                            context: that,
-                            options: item,
-                            onInitAfter: function(theKey, context) {
-                                if (options.selectable) {
+                    FUI.view.create({
+                        key: theTrId,
+                        el: tbodyEl,
+                        view: Tr,
+                        context: that,
+                        options: item,
+                        onInitAfter: function(theKey, context) {
+                            if (options.selectable) {
+                                FUI.view.create({
+                                    key: that.id + '_tbody_td_checkbox',
+                                    el: that.$('#' + theTrId),
+                                    view: Td,
+                                    context: that,
+                                    options: {
+                                        html: '<input type="checkbox" value="' + theTrId + '">',
+                                        style: {
+                                            width: '30px',
+                                            textAlign: 'center'
+                                        }
+                                    }
+                                });
+                            }
+                            // console.warn(options.columns);
+                            _.each(that.colsData, function(col, key) {
+                                if (key !== 'id' && !col.hide) {
+                                    var newOption = $.extend(true, {}, col);
+                                    newOption.html = item[col.dataIndex];
+                                    if (newOption.hide) {
+                                        if (newOption.style) {
+                                            newOption.style.display = 'none';
+                                        } else {
+                                            newOption.style = { display: 'none' }
+                                        }
+                                    }
                                     FUI.view.create({
-                                        key: that.id + '_tbody_td_checkbox',
+                                        key: that.id + '_tbody_td_' + key,
                                         el: that.$('#' + theTrId),
                                         view: Td,
                                         context: that,
-                                        options: {
-                                            html: '<input type="checkbox" value="' + theTrId + '">',
-                                            style: {
-                                                width: '30px',
-                                                textAlign: 'center'
-                                            }
-                                        }
+                                        options: newOption
                                     });
                                 }
-                                // console.warn(options.columns);
-                                _.each(that.colsData, function(col, key) {
-                                    if (key !== 'id' && !col.hide) {
-                                        var newOption = $.extend(true, {}, col);
-                                        newOption.html = item[col.dataIndex];
-                                        if (newOption.hide) {
-                                            if (newOption.style) {
-                                                newOption.style.display = 'none';
-                                            } else {
-                                                newOption.style = { display: 'none' }
-                                            }
-                                        }
-                                        FUI.view.create({
-                                            key: that.id + '_tbody_td_' + key,
-                                            el: that.$('#' + theTrId),
-                                            view: Td,
-                                            context: that,
-                                            options: newOption
-                                        });
-                                    }
-                                });
-                                // 添加已选中样式
-                                if (options.selectable) {
-                                    if (item.selected) {
-                                        that[theKey].$el.addClass('warning').find('checkbox').eq(0).attr('checked', 'checked');
-                                    }
+                            });
+                            // 添加已选中样式
+                            if (options.selectable) {
+                                if (item.selected) {
+                                    that[theKey].$el.addClass('warning').find('checkbox').eq(0).attr('checked', 'checked');
                                 }
                             }
-                        });
-                    }
+                        }
+                    });
                 };
                 if (_.isArray(options.data)) {
                     _.each(options.data, function(item, index) {

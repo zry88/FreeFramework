@@ -25,7 +25,29 @@ a:hover {
 .pagination {
     margin: 0;
 }
-
+.pagination .info{
+    border: none;
+    cursor: inherit;
+    color: #333;
+}
+.pagination .info:hover{
+    background-color: transparent;
+    color: #333;
+}
+.pagination button{
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.pagination button .caret{
+    margin-left: 3px;
+}
+.pagination .dropdown-menu{
+    width: 50px;
+    min-width: 50px;
+}
+.pagination .dropdown-menu a{
+    padding: 2px 10px;
+}
 /*表格*/
 
 .table > thead > tr > th {
