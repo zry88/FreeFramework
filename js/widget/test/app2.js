@@ -38,7 +38,7 @@ define([
                 context: this,
                 options: {
                     className: 'table table-hover table-bordered',
-                    selectable: true,
+                    selectAble: true,
                     thead: {
                         // hide: true
                     },

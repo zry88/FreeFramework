@@ -33,7 +33,7 @@ define([
                 defaults = {
                     options: {
                         className: 'table table-hover',
-                        selectable: false, //是否可选
+                        selectAble: false, //是否可选
                         thead: {
                             hide: false,
                             textAlign: 'left',
@@ -103,7 +103,7 @@ define([
         selectOne: function(event) {
             var target = $(event.currentTarget),
                 that = this;
-            if (this.options.selectable) {
+            if (this.options.selectAble) {
                 var isChecked = target.is(':checked'),
                     theRowId = target.parents('tr').attr('id'),
                     dataItem = _.findWhere(that.options.data, { id: theRowId });
@@ -121,7 +121,7 @@ define([
         selectAll: function(event) {
             var target = $(event.currentTarget),
                 that = this;
-            if (this.options.selectable) {
+            if (this.options.selectAble) {
                 var isChecked = target.is(':checked');
                 _.each(that.options.data, function(item, index) {
                     item.selected = isChecked ? true : false;
@@ -156,7 +156,7 @@ define([
                     view: Tr,
                     context: this,
                 });
-                if (options.selectable) {
+                if (options.selectAble) {
                     options.columns.unshift({
                         html: '<input type="checkbox" value="">',
                         dataIndex: 'checkbox',
@@ -232,7 +232,7 @@ define([
                         context: that,
                         options: item,
                         onInitAfter: function(theKey, context) {
-                            if (options.selectable) {
+                            if (options.selectAble) {
                                 FUI.view.create({
                                     key: that.id + '_tbody_td_checkbox',
                                     el: that.$('#' + theTrId),
@@ -269,7 +269,7 @@ define([
                                 }
                             });
                             // 添加已选中样式
-                            if (options.selectable) {
+                            if (options.selectAble) {
                                 if (item.selected) {
                                     that[theKey].$el.addClass('warning').find('checkbox').eq(0).attr('checked', 'checked');
                                 }

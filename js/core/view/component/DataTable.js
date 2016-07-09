@@ -2,7 +2,7 @@
  * 数据表格列元素类
  * @author: yrh
  * @create: 2016/6/28
- * @update: 2016/7/7
+ * @update: 2016/7/9
  */
 define([
     'core/view/View',
@@ -14,6 +14,8 @@ define([
         events: {
             'change th > input[type="checkbox"]': 'selectAll',
             'change td > input[type="checkbox"]': 'selectOne',
+            'mousemove th': '_mousemoveTh',
+            'mousedown th': '_mousedownTh',
         },
         initialize: function(option) {
             var that = this,
@@ -24,7 +26,8 @@ define([
                             height: '100%',
                             borderRadius: 0,
                         },
-                        selectable: false, //是否可选
+                        selectAble: false, //是否可选
+                        changeWidthAble: false, //是否可以拖动改变列宽
                         hideColSetting: false,
                         hideScroll: false,
                         thead: {
@@ -127,18 +130,25 @@ define([
                     }
                 }
             });
-            this.colsData = [];
+            this.colsData = [],
+            this.dropdownData = [];
             _.each(this.options.columns, function(val, index) {
                 if (val.children) {
                     _.each(val.children, function(col, i) {
                         col.hide = col.hide || false;
                         col.index = index + '_' + i;
                         that.colsData.push(col);
+                        var _col = $.extend({}, col);
+                        delete _col.style;
+                        that.dropdownData.push(_col);
                     });
                 } else {
                     val.hide = val.hide || false;
                     val.index = index;
+                    var _val = $.extend({}, val);
+                    delete _val.style;
                     that.colsData.push(val);
+                    that.dropdownData.push(_val);
                 }
             });
             // 显示和隐藏列
@@ -151,6 +161,14 @@ define([
             this.$('.panel-body').scroll(function() {
                 heading.scrollLeft($(this).scrollLeft());
             });
+            // 拖拉改变列宽
+            // this.lineMove = true;
+            // currTh = null;
+            if (this.options.changeWidthAble) {
+                heading.on("selectstart", function() {
+                    return false;
+                });
+            }
         },
         changeData: function(collection) {
             var newData = [];
@@ -171,7 +189,7 @@ define([
                     context: this,
                     inset: 'html',
                     options: {
-                        selectable: this.options.selectable, //是否可选
+                        selectAble: this.options.selectAble, //是否可选
                         thead: {
                             textAlign: this.options.thead.textAlign
                         },
@@ -190,6 +208,17 @@ define([
                         }
                     }
                 });
+                // 小黑线
+                var theLine = $('<div id="line"></div>');
+                theLine.css({
+                    width: '1px',
+                    height: '100%',
+                    borderLeft: '1px solid #000000',
+                    position: 'absolute',
+                    top: 0,
+                    display: 'none'
+                });
+                this.$('.panel-heading').append(theLine);
                 this.$('#' + this.id + '_bodyer').remove();
                 this.listView = FUI.view.create({
                     key: this.id + '_bodyer',
@@ -198,7 +227,7 @@ define([
                     context: this,
                     inset: 'html',
                     options: {
-                        selectable: this.options.selectable, //是否可选
+                        selectAble: this.options.selectAble, //是否可选
                         thead: {
                             hide: true,
                         },
@@ -216,6 +245,62 @@ define([
                 });
             }
             return this;
+        },
+        // 拖动列宽
+        _mousemoveTh: function(event) {
+            if (this.options.changeWidthAble) {
+                var th = $(event.currentTarget);
+                //不给第一列和最后一列添加效果
+                if (th.prevAll().length <= 0 || th.nextAll().length < 1) {
+                    return;
+                }
+                var left = th.offset().left,
+                    thWidth = th.width() + parseInt(th.css('padding')) * 2 + 1;
+                //距离表头边框线左右4像素才触发效果
+                if (event.clientX - left < 0 || (thWidth - (event.clientX - left)) < 5) {
+                    th.css({ 'cursor': 'move' });
+                } else {
+                    th.css({ 'cursor': 'default' });
+                }
+            }
+        },
+        // 按下拖动列宽
+        _mousedownTh: function(event) {
+            var that = this,
+                lineEl = this.$("#line");
+            currTh = $(event.currentTarget),
+                isMove = 0;
+            if (this.options.changeWidthAble) {
+                $('body').on("mousemove", function(e) {
+                    isMove = 1;
+                    var pos = that.$('.panel-heading').offset();
+                    lineEl.css({ "left": e.clientX - pos.left }).show();
+                }).on('mouseup', function(e) {
+                    $(this).off('mousemove').off('mouseup');
+                    if (isMove) {
+                        isMove = 0;
+                        lineEl.hide();
+                        var pos = currTh.offset(),
+                            index = currTh.prevAll().length,
+                            colWidth = e.clientX - pos.left,
+                            theCol = that.colsData[that.options.selectAble ? (index - 1) : index];
+                        // console.warn(theCol);
+                        if(theCol){
+                            if(theCol.style){
+                                theCol.style.width = colWidth + 'px';
+                            }else{
+                                theCol.style = {
+                                    width: colWidth + 'px'
+                                }
+                            }
+                        }
+                        // console.warn(currTh, pos.left, colWidth, e.clientX);
+                        that.$("tr").each(function(i, el) {
+                            $(el).children().eq(index).width(colWidth);
+                        });
+                    }
+                });
+            }
         },
         // 获取列宽
         _getColWidth: function() {
@@ -316,7 +401,7 @@ define([
                         }
                     }],
                     itemsTpl: itemsTpl,
-                    data: this.colsData
+                    data: this.dropdownData
                 }
             });
         },

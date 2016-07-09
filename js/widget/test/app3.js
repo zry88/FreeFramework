@@ -43,7 +43,8 @@ define([
                 context: this,
                 options: {
                     className: 'table table-hover table-bordered datatable',
-                    selectable: true,
+                    selectAble: true,
+                    changeWidthAble: true,
                     hideColSetting: false,
                     hideScroll: false,
                     thead: {
