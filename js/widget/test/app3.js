@@ -44,6 +44,7 @@ define([
                 options: {
                     className: 'table table-hover table-bordered datatable',
                     selectAble: true,
+                    sortAble: true,
                     changeWidthAble: true,
                     hideColSetting: false,
                     hideScroll: false,
@@ -53,24 +54,21 @@ define([
                     },
                     tfoot: {
                         // hide: true
-                        style: {
-                            padding: 0
-                        }
                     },
                     columns: [
                         // {
                         //     text: '产品',
                         //     children: [{
                         //         text: '名称',
-                        //         dataIndex: 'name',
+                        //         dataIndex: 'reportName',
                         //         style: {
-                        //             width: '100px'
+                        //             width: '200px'
                         //         }
                         //     }, {
-                        //         text: '尺寸',
-                        //         dataIndex: 'size',
+                        //         text: '批阅人',
+                        //         dataIndex: 'reporter',
                         //         style: {
-                        //             width: '100px'
+                        //             width: '200px'
                         //         }
                         //     }]
                         // },
@@ -86,7 +84,8 @@ define([
                             style: {
                                 width: '200px'
                             }
-                        }, {
+                        },
+                        {
                             text: '创建日期',
                             dataIndex: 'createdDate',
                             style: {
@@ -95,10 +94,7 @@ define([
                         }
                     ],
                     data: TestCollection
-                },
-                // onInitAfter: function(key) {
-                //     console.warn(that[key]);
-                // }
+                }
             });
             // 分页
             require(['widget/pagination/App'], function() {

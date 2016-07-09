@@ -162,7 +162,7 @@ define([
                             className: 'panel panel-white',
                             style: {
                                 border: 'none',
-                                height: '300px'
+                                height: '600px'
                             },
                         }
                     }]

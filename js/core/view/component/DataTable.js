@@ -1,5 +1,5 @@
 /*
- * 数据表格列元素类
+ * 数据表格通用组件类
  * @author: yrh
  * @create: 2016/6/28
  * @update: 2016/7/9
@@ -12,10 +12,10 @@ define([
 ], function(BaseView, PanelView, TableView, DropdownView) {
     var View = BaseView.extend({
         events: {
-            'change th > input[type="checkbox"]': 'selectAll',
-            'change td > input[type="checkbox"]': 'selectOne',
+            'change th input[type="checkbox"]': 'selectAll',
             'mousemove th': '_mousemoveTh',
-            'mousedown th': '_mousedownTh',
+            'mousedown .colHandler': '_mousedownTh',
+            'click th > div': 'sortData'
         },
         initialize: function(option) {
             var that = this,
@@ -28,17 +28,24 @@ define([
                         },
                         selectAble: false, //是否可选
                         changeWidthAble: false, //是否可以拖动改变列宽
-                        hideColSetting: false,
-                        hideScroll: false,
+                        sortAble: false, //是否可排序
+                        hideColSetting: false, //隐藏列设置
+                        hideScroll: false, //隐藏竖滚动条
                         thead: {
                             hide: false,
-                            textAlign: 'left'
+                            colStyle: {
+                                textAlign: 'left',
+                                padding: 0
+                            }
                         },
                         tbody: {
                             hide: false,
                         },
                         tfoot: {
                             hide: false,
+                            style: {
+                                padding: 0
+                            }
                         },
                         columns: [],
                         pageSize: 40,
@@ -48,25 +55,18 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.tableWidth = 0;
             this.listView = null;
+            this.collection = null;
             this.parent(defaults);
-            if (!_.isArray(this.options.data)) {
-                // 获取数据
-                this.stopListening(this.options.data);
-                this.listenTo(this.options.data, "remove", this.changeData);
-                this.listenTo(this.options.data, "reset", this.changeData);
-                FUI.Events.off(this.options.data.key);
-                FUI.Events.on(this.options.data.key, this.changeData, this);
-            }
             // 其他事件
             FUI.Events.off(null, null, this);
             FUI.Events.on(this.id + ':showHideCol', this._showHideCol, this);
 
-            var hasSub = _.pluck(this.options.columns, 'children'),
-                result = _.filter(hasSub, function(col) {
-                    return col;
-                });
-            this.headerHeight = !this.options.thead.hide ? (result.length ? '72px' : '39px') : 0;
-            this.settingHeight = !this.options.thead.hide ? (result.length ? '71px' : '38px') : 0;
+            var hasSub = _.pluck(this.options.columns, 'children');
+            this.result = _.filter(hasSub, function(col) {
+                return col;
+            });
+            this.headerHeight = !this.options.thead.hide ? (this.result.length ? '72px' : '39px') : 0;
+            this.settingHeight = !this.options.thead.hide ? (this.result.length ? '71px' : '38px') : 0;
             // 列宽
             this._getColWidth();
             var dataTableStyle = {
@@ -131,7 +131,7 @@ define([
                 }
             });
             this.colsData = [],
-            this.dropdownData = [];
+                this.dropdownData = [];
             _.each(this.options.columns, function(val, index) {
                 if (val.children) {
                     _.each(val.children, function(col, i) {
@@ -152,35 +152,46 @@ define([
                 }
             });
             // 显示和隐藏列
-            if (!this.options.hideColSetting && !result.length) {
+            if (!this.options.hideColSetting && !this.result.length) {
                 this._colSetting();
             }
-            this.renderAll();
+            if (!_.isArray(this.options.data)) {
+                // 获取数据
+                this.stopListening(this.options.data);
+                // this.listenTo(this.options.data, "remove", this._makeData);
+                this.listenTo(this.options.data, "reset", this._makeData);
+                FUI.Events.off(this.options.data.key);
+                FUI.Events.on(this.options.data.key, this._makeData, this);
+            }else{
+                this.renderAll();
+            }
             // 同步横向滚动
             var heading = this.$('.panel-heading');
             this.$('.panel-body').scroll(function() {
                 heading.scrollLeft($(this).scrollLeft());
             });
-            // 拖拉改变列宽
-            // this.lineMove = true;
-            // currTh = null;
+            // 禁止选中
             if (this.options.changeWidthAble) {
                 heading.on("selectstart", function() {
                     return false;
                 });
             }
         },
-        changeData: function(collection) {
+        // 组装数据集数据
+        _makeData: function(collection) {
             var newData = [];
+            this.collection = collection;
             collection.each(function(model, index) {
                 newData.push(model.attributes);
             });
             this.options.data = newData;
             this.renderAll();
         },
+        // 渲染视图
         renderAll: function() {
             var tableWidth = 0;
             if (this.options.data.length) {
+                // 表头
                 this.$('#' + this.id + '_header').remove();
                 FUI.view.create({
                     key: this.id + '_header',
@@ -190,8 +201,11 @@ define([
                     inset: 'html',
                     options: {
                         selectAble: this.options.selectAble, //是否可选
+                        sortAble: this.options.sortAble,
+                        changeWidthAble: this.options.changeWidthAble,
                         thead: {
-                            textAlign: this.options.thead.textAlign
+                            style: this.options.thead.style,
+                            colStyle: this.options.thead.colStyle,
                         },
                         tbody: {
                             hide: true,
@@ -208,8 +222,8 @@ define([
                         }
                     }
                 });
-                // 小黑线
-                var theLine = $('<div id="line"></div>');
+                // 光标小竖线
+                var theLine = $('<div id="line"/>');
                 theLine.css({
                     width: '1px',
                     height: '100%',
@@ -219,6 +233,7 @@ define([
                     display: 'none'
                 });
                 this.$('.panel-heading').append(theLine);
+                // 表体
                 this.$('#' + this.id + '_bodyer').remove();
                 this.listView = FUI.view.create({
                     key: this.id + '_bodyer',
@@ -248,35 +263,34 @@ define([
         },
         // 拖动列宽
         _mousemoveTh: function(event) {
-            if (this.options.changeWidthAble) {
+            if (this.options.changeWidthAble && !this.result.length) {
                 var th = $(event.currentTarget);
                 //不给第一列和最后一列添加效果
                 if (th.prevAll().length <= 0 || th.nextAll().length < 1) {
                     return;
                 }
-                var left = th.offset().left,
-                    thWidth = th.width() + parseInt(th.css('padding')) * 2 + 1;
+                var left = th.offset().left;
                 //距离表头边框线左右4像素才触发效果
-                if (event.clientX - left < 0 || (thWidth - (event.clientX - left)) < 5) {
-                    th.css({ 'cursor': 'move' });
+                if (event.clientX - left < 0 || (th.width() - (event.clientX - left)) < 5) {
+                    th.find('.colHandler').css({ 'cursor': 'col-resize' });
                 } else {
-                    th.css({ 'cursor': 'default' });
+                    th.find('.colHandler').css({ 'cursor': 'default' });
                 }
             }
         },
         // 按下拖动列宽
         _mousedownTh: function(event) {
             var that = this,
-                lineEl = this.$("#line");
-            currTh = $(event.currentTarget),
+                lineEl = this.$("#line"),
+                currTh = $(event.currentTarget).parent().parent(),
                 isMove = 0;
-            if (this.options.changeWidthAble) {
-                $('body').on("mousemove", function(e) {
+            if (this.options.changeWidthAble && !this.result.length) {
+                this.$('.panel-heading').on("mousemove.datatable", function(e) {
                     isMove = 1;
-                    var pos = that.$('.panel-heading').offset();
+                    var pos = $(this).offset();
                     lineEl.css({ "left": e.clientX - pos.left }).show();
-                }).on('mouseup', function(e) {
-                    $(this).off('mousemove').off('mouseup');
+                }).on('mouseup.datatable', function(e) {
+                    $(this).off('mousemove.datatable');
                     if (isMove) {
                         isMove = 0;
                         lineEl.hide();
@@ -284,20 +298,20 @@ define([
                             index = currTh.prevAll().length,
                             colWidth = e.clientX - pos.left,
                             theCol = that.colsData[that.options.selectAble ? (index - 1) : index];
-                        // console.warn(theCol);
-                        if(theCol){
-                            if(theCol.style){
+                        if (theCol) {
+                            if (theCol.style) {
                                 theCol.style.width = colWidth + 'px';
-                            }else{
+                            } else {
                                 theCol.style = {
                                     width: colWidth + 'px'
                                 }
                             }
                         }
-                        // console.warn(currTh, pos.left, colWidth, e.clientX);
-                        that.$("tr").each(function(i, el) {
-                            $(el).children().eq(index).width(colWidth);
+                        currTh.width(colWidth);
+                        that.$(".panel-body tr").each(function(i, el) {
+                            $(el).children().eq(index).width(colWidth - 17);
                         });
+                        $(this).off('mouseup.datatable');
                     }
                 });
             }
@@ -309,11 +323,7 @@ define([
                 colArr = _.filter(this.options.columns, function(val) {
                     return !val.hide && !val.children;
                 }),
-                hasSub = _.pluck(this.options.columns, 'children'),
-                result = _.filter(hasSub, function(col) {
-                    return col;
-                }),
-                theChildren = result.length ? _.flatten(result) : [];
+                theChildren = this.result.length ? _.flatten(this.result) : [];
             colArr = _.union(colArr, theChildren);
             if (colArr.length) {
                 colWidth = ((100 / colArr.length) - 1);
@@ -426,19 +436,33 @@ define([
                 }
             });
         },
-        // 选中一条
-        selectOne: function(event) {
-            this.listView.selectOne(event);
-        },
-        // 选择全部
+        // 选择全部行
         selectAll: function(event) {
             this.listView.selectAll(event);
         },
-        // 获取
+        // 获取选中行
         getSelectedRow: function() {
             var rows = _.where(this.listView.options.data, { selected: true });
             return rows ? rows : [];
         },
+        // 排序
+        sortData: function(event) {
+            if (this.options.sortAble && !this.result.length) {
+                var target = $(event.currentTarget),
+                    th = target.parent(),
+                    columns = this.options.columns,
+                    theCol = columns[th[0].cellIndex - (this.options.selectAble ? 1 : 0)];
+                        // console.warn('ddddddddddd', this.collection);
+                if(theCol){
+                    theCol.sortOrder = theCol.sortOrder == 'up' ? 'down' : 'up';
+                    if(this.collection){
+                        this.collection.loadData();
+                    }else{
+                        // this.renderAll();
+                    }
+                }
+            }
+        }
     });
     return View;
 });

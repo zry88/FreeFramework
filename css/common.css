@@ -57,15 +57,37 @@ a:hover {
     border-bottom: none;
     border-right: 1px solid #ddd;
 }
-/*.datatable thead > tr > th:last-child {
-    border-right: none;
-}*/
 .datatable thead > tr > th[colspan]{
     border-bottom: 1px solid #ddd;
 }
-/*.crm-wrapper .crm-home-right{
-    overflow-y: scroll;
-}*/
+.datatable thead > tr > th .colHandler{
+    position: absolute;
+    top:0;
+    right:0;
+    width:5px;
+    height:100%;
+    margin-right: -5px;
+}
+.datatable thead > tr > th .caret{
+    position: absolute;
+    top:50%;
+    right: 5px;
+    border: 5px solid transparent;
+}
+.datatable thead > tr > th .caret.up{
+    margin-top: -10px;
+    border-bottom: 5px dashed #ccc;
+}
+.datatable thead > tr > th .caret.up.active{
+    border-bottom: 5px dashed #007AFF;
+}
+.datatable thead > tr > th .caret.down{
+    margin-top:3px;
+    border-top: 5px dashed #ccc;
+}
+.datatable thead > tr > th .caret.down.active{
+    border-top: 5px dashed #007AFF;
+}
 
 
 /*头部*/

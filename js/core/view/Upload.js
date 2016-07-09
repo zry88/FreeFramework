@@ -1,5 +1,7 @@
 /**
- * chat uploadfile View
+ * 上传视图类
+ * @author: yrh
+ * @update: 2016/4/1
  */
 define([
     'core/FUI',

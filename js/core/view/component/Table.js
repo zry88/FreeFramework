@@ -8,8 +8,9 @@
  *  html: '',
  *  hide: false,
  *  dataIndex: 'name',
- *  sortable: false,
- *  editable: true,
+ *  sortAble: false,
+ *  editAble: true,
+ *  sortOrder: up升序,down降序
  *  style: {}
  * }],
  */
@@ -34,9 +35,11 @@ define([
                     options: {
                         className: 'table table-hover',
                         selectAble: false, //是否可选
+                        changeWidthAble: false,
+                        sortAble: false, //可排序
                         thead: {
                             hide: false,
-                            textAlign: 'left',
+                            colStyle: {},
                         },
                         tbody: {
                             hide: false,
@@ -106,10 +109,10 @@ define([
             if (this.options.selectAble) {
                 var isChecked = target.is(':checked'),
                     theRowId = target.parents('tr').attr('id'),
-                    dataItem = _.findWhere(that.options.data, { id: theRowId });
+                    dataItem = _.findWhere(that.options.data, { _id: theRowId });
                 if (dataItem) {
-                    dataItem.selected = !!isChecked ? true : false;
-                    if (!!isChecked) {
+                    dataItem.selected = isChecked ? true : false;
+                    if (isChecked) {
                         target.parent().parent().addClass('warning');
                     } else {
                         target.parent().parent().removeClass('warning');
@@ -148,6 +151,7 @@ define([
                     return col;
                 }),
                 theChildren = result.length ? _.flatten(result) : [];
+            // 表头
             if (!options.thead.hide) {
                 var theadEl = this.$('#' + this.id + '_thead').empty();
                 FUI.view.create({
@@ -157,7 +161,7 @@ define([
                     context: this,
                 });
                 if (options.selectAble) {
-                    options.columns.unshift({
+                    var selectColOption = {
                         html: '<input type="checkbox" value="">',
                         dataIndex: 'checkbox',
                         style: {
@@ -167,22 +171,19 @@ define([
                         attr: {
                             rowspan: result.length ? 2 : undefined
                         }
-                    });
+                    };
+                    selectColOption.style = $.extend({}, options.thead.colStyle, selectColOption.style);
+                    options.columns.unshift(selectColOption);
                 }
                 var makeTh = function(col, index, isSub) {
-                    if (col.hide) {
-                        if (col.style) {
-                            col.style.display = 'none';
-                        } else {
-                            col.style = { display: 'none' }
-                        }
-                    }
                     col.attr = col.attr || {};
+                    var theKey = that.id + '_thead_th_' + (isSub ? '1_' : '') + index;
                     if (col.style) {
-                        col.style.textAlign = options.thead.textAlign;
+                        _.extend(col.style, options.thead.colStyle);
                     } else {
-                        col.style = { textAlign: options.thead.textAlign };
+                        col.style = options.thead.colStyle;
                     }
+                    if (col.hide) col.style.display = 'none';
 
                     if (col.children) {
                         col.attr.colspan = col.children.length;
@@ -190,7 +191,7 @@ define([
                         col.attr.rowspan = result.length ? 2 : undefined;
                     }
                     FUI.view.create({
-                        key: that.id + '_thead_th_' + (isSub ? '1_' : '') + index,
+                        key: theKey,
                         el: that.$('#' + that.id + '_thead_tr' + (isSub ? '_1' : '')),
                         view: Th,
                         context: that,
@@ -198,6 +199,7 @@ define([
                     });
                 };
                 _.each(options.columns, function(col, index) {
+                    // if (!col._id) col._id = that.id + '_thead_th_' + index;
                     makeTh(col, index);
                 });
                 if (result.length) {
@@ -208,10 +210,44 @@ define([
                         context: this,
                     });
                     _.each(theChildren, function(col, index) {
+                        // if (!col._id) col._id = that.id + '_thead_th_1_' + index;
                         makeTh(col, index, 1);
                     });
                 }
+                // 拖动列宽和排序
+                if (options.changeWidthAble || options.sortAble) {
+                    this.$('th').html(function() {
+                        var contentDiv = $('<div style="padding: 8px; margin-right:5px; position: relative;"/>');
+                        contentDiv.html($(this).html());
+                        if ($(this)[0].cellIndex) {
+                            // 排序
+                            if (options.sortAble) {
+                                contentDiv.css('cursor', 'pointer');
+                                var sortUpEl = $('<span class="caret up"></span>'),
+                                    sortDownEl = $('<span class="caret down"></span>');
+                                var theCol = options.columns[$(this)[0].cellIndex];
+                                if(theCol){
+                                    if(theCol.sortOrder == 'up'){
+                                        sortUpEl.addClass('active');
+                                        sortDownEl.removeClass('active');
+                                    }
+                                    if(theCol.sortOrder == 'down'){
+                                        sortUpEl.removeClass('active');
+                                        sortDownEl.addClass('active');
+                                    }
+                                }
+                                contentDiv.append(sortUpEl).append(sortDownEl);
+                            }
+                            // 拖动
+                            if (!result.length) {
+                                contentDiv.append('<div class="colHandler"/>');
+                            }
+                        }
+                        return contentDiv;
+                    });
+                }
             }
+            // 表脚
             if (!options.tfoot.hide) {
                 FUI.view.create({
                     key: this.id + '_tfoot_tr',
@@ -220,11 +256,12 @@ define([
                     context: this,
                 });
             }
+            // 内容区
             if (!options.tbody.hide) {
                 var tbodyEl = this.$('#' + this.id + '_tbody').empty();
                 var showData = function(item, index) {
                     var theTrId = that.id + '_tbody_tr_' + index;
-                    if (!item.id) item.id = theTrId;
+                    if (!item._id) item._id = theTrId;
                     FUI.view.create({
                         key: theTrId,
                         el: tbodyEl,
