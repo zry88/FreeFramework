@@ -149,12 +149,9 @@ define([
                 revert: true,
                 zIndex: 999,
                 cursor: "move",
-                // helper: 'clone',
-                // opacity: 1,
                 start: function(event, ui) {
                     var th = ui.helper.parent();
                     that.draggableTh = th;
-                    // console.warn('开始拖动', ui);
                     ui.helper.css({
                         border: '1px dashed #ddd',
                         backgroundColor: '#f3f3f3',
@@ -163,7 +160,6 @@ define([
                     });
                 },
                 drag: function(event, ui) {
-                    // console.warn('正在拖动', ui);
                     ui.position.top = 0;
                 },
                 stop: function(event, ui) {
@@ -233,7 +229,6 @@ define([
                         dataIndex: 'checkbox',
                         style: {
                             width: '30px',
-                            textAlign: 'center'
                         },
                         attr: {
                             rowspan: subCols.length ? 2 : undefined
@@ -353,7 +348,6 @@ define([
                                         html: '<input type="checkbox" value="' + theTrId + '">',
                                         style: {
                                             width: '30px',
-                                            textAlign: 'center'
                                         }
                                     }
                                 });

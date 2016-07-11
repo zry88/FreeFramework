@@ -53,12 +53,21 @@ define([
                 height: '100%',
                 overflow: 'hidden',
                 zIndex: 100000,
-                backgroundCcolor: 'transparent',
+                backgroundColor: 'transparent',
+            };
+        if(navigator.userAgent.indexOf("Firefox") > 0){
+            _.extend(elCss, {
                 backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'width:100%; height:50px; opacity: 0.6;\'><rect fill=\'#000\' x=\'0\' y=\'0\' width=\'100%\' height=\'100%\'/></svg>")',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: '100% 100%',
                 backgroundSize: 'cover',
-            };
+            });
+        }else{
+            _.extend(elCss, {
+                backgroundImage: 'url("' + static_url + '/img/guide_bg.png")',
+                backgroundRepeat: 'repeat'
+            });
+        }
         if (!options.mask) elCss.backgroundImage = '';
         this.$el.css(elCss);
         // 容器层

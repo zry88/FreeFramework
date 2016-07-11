@@ -49,34 +49,34 @@ var CONFIG = {
             localstorage: 'js/vendor/system/data/backbone.localstorage',
             indexeddb: 'js/vendor/system/data/backbone.indexeddb',
             cookie: 'js/vendor/system/data/jquery.cookie',
-            uuid: 'js/vendor/util/Math.uuid',
-            jquery: 'js/vendor/library/jquery/jquery-2.1.3.min',
-            jqueryui: 'js/vendor/library/jquery/jquery-ui-1.10.4',
+            jquery: 'js/vendor/library/jquery/jquery-2.2.1.min',
+            jqueryui: 'js/vendor/library/jquery/jquery-ui-1.10.4.min',
             util: 'js/core/util/Util',
             uxUtil: 'js/core/ux/util/Util',
             socket: 'js/core/data/Socket',
 
-            // yunxin_base: 'lib/vendor/system/yunxin/Web_SDK_Base_v2.2.0',
-            // yunxin_nim: 'lib/vendor/system/yunxin/Web_SDK_NIM_v2.2.0',
-            // yunxin_chatroom: 'lib/vendor/system/yunxin/Web_SDK_Chatroom_v2.2.0',
             mOxie: 'js/vendor/components/plupload/moxie',
             plupload: 'js/vendor/components/plupload/plupload.dev',
-            qiniu: 'js/vendor/library/qiniu/qiniuSDK',
+            qiniu: 'js/vendor/system/qiniu/qiniuSDK',
             toastr: 'js/vendor/components/toastr/toastr',
-            artDialog: "js/vendor/components/artdialog/src/dialog",
             ztree: "js/vendor/components/zTree/js/jquery.ztree.all-3.5",
             eventEmitter: 'js/vendor/media/image/imagesloaded/eventEmitter/EventEmitter',
             eventie: 'js/vendor/media/image/imagesloaded/eventie/eventie',
             imagesloaded: 'js/vendor/media/image/imagesloaded/imagesloaded',
             exif: "lib/vendor/media/image/exif",
             localResizeIMG: "lib/vendor/media/image/localResizeIMG",
-            chartjs: "lib/vendor/components/chart/Chart_old",
-            iscroll: 'lib/vendor/components/iscroll/iscroll',
-            fastclick: 'lib/vendor/events/fastclick/fastclick',
             qrcode: "js/vendor/components/qrcode/jquery.qrcode.min",
             zeroClipboard: "js/vendor/components/zeroClipboard/ZeroClipboard.min",
             slimscroll: 'js/vendor/components/jquery-slimScroll/jquery.slimscroll.min',
             jMarquee: 'js/vendor/components/jquery-marquee/jquery-marquee',
+
+            // artDialog: "js/vendor/components/artdialog/src/dialog",
+            // yunxin_base: 'lib/vendor/system/yunxin/Web_SDK_Base_v2.2.0',
+            // yunxin_nim: 'lib/vendor/system/yunxin/Web_SDK_NIM_v2.2.0',
+            // yunxin_chatroom: 'lib/vendor/system/yunxin/Web_SDK_Chatroom_v2.2.0',
+            // chartjs: "lib/vendor/components/chart/Chart_old",
+            // iscroll: 'lib/vendor/components/iscroll/iscroll',
+            // fastclick: 'lib/vendor/events/fastclick/fastclick',
             // audioplayer: "js/vendor/media/audio/audioplayer/js/audioplayer",
         },
         shim: {
@@ -108,12 +108,9 @@ var CONFIG = {
                 deps: ['eventEmitter', 'eventie'],
                 exports: 'imagesloaded'
             },
-            fastclick: {
-                deps: ['jquery']
-            },
-            uuid: {
-                deps: ["jquery"]
-            },
+            // fastclick: {
+            //     deps: ['jquery']
+            // },
             // yunxin_nim: {
             //     deps: ['yunxin_base'],
             //     exports: 'NIM'

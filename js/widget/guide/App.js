@@ -18,18 +18,18 @@ options: {
 define([
     'core/view/View'
 ], function(BaseView) {
-    FUI.widgets.guide = BaseView.extend({
+    HBY.widgets.guide = BaseView.extend({
         initialize: function(option) {
             var that = this;
             this.currentItem = 0;
             var defaults = {
                 options: {
-                    key: '',        //引导插件ID(新框架不用)
-                    el: '',         //引导插入dom节点(新框架不用)
-                    mask: true,     //是否显示遮罩层
-                    type: 'step',   //类型
-                    root: static_url + '/img/guide/',   //图片根路径
-                    module: FUI.getCurrentModule ? FUI.getCurrentModule() : '',     //当前模块名(新框架不用)
+                    key: '', //引导插件ID(新框架不用)
+                    el: '', //引导插入dom节点(新框架不用)
+                    mask: true, //是否显示遮罩层
+                    type: 'step', //类型
+                    root: CONFIG.ROOT_URI + '/img/guide/', //图片根路径
+                    module: HBY.getCurrentModule ? HBY.getCurrentModule() : '', //当前模块名(新框架不用)
                     steps: [{
                         html: '',
                         buttons: {}
@@ -51,12 +51,21 @@ define([
                     height: '100%',
                     overflow: 'hidden',
                     zIndex: 100000,
-                    backgroundCcolor: 'transparent',
-                    backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'width:100%; height:50px; opacity: 0.5;\'><rect fill=\'#000\' x=\'0\' y=\'0\' width=\'100%\' height=\'100%\'/></svg>")',
+                    backgroundColor: 'transparent'
+                };
+            if (navigator.userAgent.indexOf("Firefox") > 0) {
+                _.extend(elCss, {
+                    backgroundImage: 'url("' + CONFIG.ROOT_URI + '/img/guide_bg.png")',
+                    backgroundRepeat: 'repeat'
+                });
+            } else {
+                _.extend(elCss, {
+                    backgroundImage: 'url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' style=\'width:100%; height:50px; opacity: 0.6;\'><rect fill=\'#000\' x=\'0\' y=\'0\' width=\'100%\' height=\'100%\'/></svg>")',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: '100% 100%',
-                    backgroundSize: 'cover',
-                };
+                    backgroundSize: 'cover'
+                });
+            }
             if (!options.mask) elCss.backgroundImage = '';
             this.$el.css(elCss);
             // 容器层
@@ -179,5 +188,5 @@ define([
             this.remove();
         }
     });
-    return FUI.widgets.guide;
+    return HBY.widgets.guide;
 });

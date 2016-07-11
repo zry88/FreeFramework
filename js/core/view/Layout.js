@@ -120,26 +120,23 @@ define([
             }
             // 绑定事件
             _.each(this.bindEvent, function(val, key) {
-                var newkey = that.id + ':' + key;
-                var method = newkey.replace(/\:/, '_');
-                if (!that[method]) {
-                    that[method] = function(data) {
+                if (!that[key]) {
+                    that[key] = function(data) {
                         _.each(that.bindEvent[key], function(val, index) {
                             var newVal = that.id + ':' + val;
                             FUI.Events.trigger(newVal, data);
                         });
                     };
                 }
-                FUI.Events.on(newkey, that[method], that);
+                FUI.Events.on(that.id + ':' + key, that[key], that);
             });
             // console.warn(this);
         },
         trigger: function() {
             var thisId = this.id,
                 data = arguments.callee.caller.arguments,
-                method = arguments.callee.caller.__name,
-                eventName = method.substring(method.indexOf('_') + 1);
-            _.each(this.bindEvent[eventName], function(val, index) {
+                method = arguments.callee.caller.__name;
+            _.each(this.bindEvent[method], function(val, index) {
                 switch (data.length) {
                     case 1:
                         FUI.Events.trigger(thisId + ':' + val, data[0]);
