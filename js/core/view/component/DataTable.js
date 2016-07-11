@@ -27,10 +27,12 @@ define([
                             borderRadius: 0,
                         },
                         selectAble: false, //是否可选
+                        editAble: false,    //是否可编辑
                         changeWidthAble: false, //是否可以拖动改变列宽
                         sortAble: false, //是否可排序
+                        draggAble: false, //是否可拖动
                         hideColSetting: false, //隐藏列设置
-                        hideScroll: false, //隐藏竖滚动条
+                        hideScroll: false, //隐藏竖滚动条 
                         thead: {
                             hide: false,
                             colStyle: {
@@ -57,16 +59,17 @@ define([
             this.listView = null;
             this.collection = null;
             this.parent(defaults);
-            // 其他事件
+            // 自定义事件
             FUI.Events.off(null, null, this);
             FUI.Events.on(this.id + ':showHideCol', this._showHideCol, this);
-
+            FUI.Events.on(this.id + ':changeCol', this._changeCol, this);
+            // 是否有多级子列
             var hasSub = _.pluck(this.options.columns, 'children');
-            this.result = _.filter(hasSub, function(col) {
+            this.subCols = _.filter(hasSub, function(col) {
                 return col;
             });
-            this.headerHeight = !this.options.thead.hide ? (this.result.length ? '72px' : '39px') : 0;
-            this.settingHeight = !this.options.thead.hide ? (this.result.length ? '71px' : '38px') : 0;
+            this.headerHeight = !this.options.thead.hide ? (this.subCols.length ? '72px' : '39px') : 0;
+            this.settingHeight = !this.options.thead.hide ? (this.subCols.length ? '71px' : '38px') : 0;
             // 列宽
             this._getColWidth();
             var dataTableStyle = {
@@ -130,39 +133,31 @@ define([
                     }
                 }
             });
-            this.colsData = [],
-                this.dropdownData = [];
+            this.colsData = [];
             _.each(this.options.columns, function(val, index) {
                 if (val.children) {
                     _.each(val.children, function(col, i) {
                         col.hide = col.hide || false;
-                        col.index = index + '_' + i;
                         that.colsData.push(col);
-                        var _col = $.extend({}, col);
-                        delete _col.style;
-                        that.dropdownData.push(_col);
                     });
                 } else {
                     val.hide = val.hide || false;
-                    val.index = index;
-                    var _val = $.extend({}, val);
-                    delete _val.style;
                     that.colsData.push(val);
-                    that.dropdownData.push(_val);
                 }
             });
             // 显示和隐藏列
-            if (!this.options.hideColSetting && !this.result.length) {
+            if (!this.options.hideColSetting && !this.subCols.length) {
                 this._colSetting();
             }
-            if (!_.isArray(this.options.data)) {
+            if (option.collection) {
+                this.collection = option.collection;
                 // 获取数据
-                this.stopListening(this.options.data);
+                this.stopListening(this.collection);
                 // this.listenTo(this.options.data, "remove", this._makeData);
-                this.listenTo(this.options.data, "reset", this._makeData);
-                FUI.Events.off(this.options.data.key);
-                FUI.Events.on(this.options.data.key, this._makeData, this);
-            }else{
+                this.listenTo(this.collection, "reset", this._makeData);
+                FUI.Events.off(this.collection.key);
+                FUI.Events.on(this.collection.key, this._makeData, this);
+            } else {
                 this.renderAll();
             }
             // 同步横向滚动
@@ -180,8 +175,7 @@ define([
         // 组装数据集数据
         _makeData: function(collection) {
             var newData = [];
-            this.collection = collection;
-            collection.each(function(model, index) {
+            this.collection.each(function(model, index) {
                 newData.push(model.attributes);
             });
             this.options.data = newData;
@@ -202,6 +196,7 @@ define([
                     options: {
                         selectAble: this.options.selectAble, //是否可选
                         sortAble: this.options.sortAble,
+                        draggAble: this.options.draggAble,
                         changeWidthAble: this.options.changeWidthAble,
                         thead: {
                             style: this.options.thead.style,
@@ -263,7 +258,7 @@ define([
         },
         // 拖动列宽
         _mousemoveTh: function(event) {
-            if (this.options.changeWidthAble && !this.result.length) {
+            if (this.options.changeWidthAble && !this.subCols.length) {
                 var th = $(event.currentTarget);
                 //不给第一列和最后一列添加效果
                 if (th.prevAll().length <= 0 || th.nextAll().length < 1) {
@@ -280,11 +275,12 @@ define([
         },
         // 按下拖动列宽
         _mousedownTh: function(event) {
+            // event.stopPropagation();
             var that = this,
                 lineEl = this.$("#line"),
-                currTh = $(event.currentTarget).parent().parent(),
+                currTh = $(event.currentTarget).parent(),
                 isMove = 0;
-            if (this.options.changeWidthAble && !this.result.length) {
+            if (this.options.changeWidthAble && !this.subCols.length) {
                 this.$('.panel-heading').on("mousemove.datatable", function(e) {
                     isMove = 1;
                     var pos = $(this).offset();
@@ -323,8 +319,8 @@ define([
                 colArr = _.filter(this.options.columns, function(val) {
                     return !val.hide && !val.children;
                 }),
-                theChildren = this.result.length ? _.flatten(this.result) : [];
-            colArr = _.union(colArr, theChildren);
+                theChildren = this.subCols.length ? _.flatten(this.subCols) : [],
+                colArr = _.union(colArr, theChildren);
             if (colArr.length) {
                 colWidth = ((100 / colArr.length) - 1);
                 if (colWidth < 20) colWidth = 20;
@@ -356,7 +352,16 @@ define([
         },
         // 显示隐藏列下拉菜单
         _colSetting: function() {
-            var that = this;
+            var that = this,
+                dropdownData = [],
+                theKey = this.id + '_cols_setting';
+            if (this.$('#' + theKey).length) this.$('#' + theKey).remove();
+            _.each(this.colsData, function(val, index) {
+                var _val = $.extend({}, val);
+                _val.index = index;
+                delete _val.style;
+                dropdownData.push(_val);
+            });
             var Dropdown = DropdownView.extend({
                 events: {
                     'click': '_clickItem',
@@ -366,12 +371,11 @@ define([
                     this.parent(option);
                 },
                 _clickCheckbox: function(event) {
-                    event.stopPropagation();
                     var target = $(event.currentTarget),
                         theCheckbox = target.find('input[type="checkbox"]'),
                         index = target.data('index'),
                         isShow = theCheckbox.is(':checked') ? 1 : 0;
-                    var col = _.findWhere(this.colsData, { index: index });
+                    var col = that.colsData[index];
                     if (col) {
                         col.hide = !isShow;
                     }
@@ -383,8 +387,8 @@ define([
                 '<input type="checkbox" value="" <%= !hide ? "checked=\'checked\'" : "" %>>',
                 ' <%= text ? text : "" %></label></div></a>',
             ].join('');
-            var colsSetting = FUI.view.create({
-                key: this.id + '_cols_setting',
+            FUI.view.create({
+                key: theKey,
                 el: this.$el,
                 view: Dropdown,
                 context: this,
@@ -396,7 +400,6 @@ define([
                         width: '18px',
                         height: this.settingHeight,
                         borderLeft: '1px #ddd solid',
-                        // borderBottom: '1px #ddd solid'
                     },
                     className: 'dropdown cols_setting',
                     direction: 'down',
@@ -411,15 +414,14 @@ define([
                         }
                     }],
                     itemsTpl: itemsTpl,
-                    data: this.dropdownData
+                    data: dropdownData
                 }
             });
         },
         // 显示和隐藏列
         _showHideCol: function(data) {
             this.$('.table tr').each(function(index, el) {
-                var subCount = $(el).children().length,
-                    theTd = $(el).children().eq(data.index + 1);
+                var theTd = $(el).children().eq(data.index + 1);
                 if (theTd.length) {
                     if (data.show) {
                         theTd.show();
@@ -430,11 +432,36 @@ define([
                     } else {
                         theTd.hide();
                     }
-                    if ($(el).children(':visible').length > 1) {
-                        $(el).children(':visible').last().width('auto');
-                    }
+                    // if ($(el).children(':visible').length > 1) {
+                    //     var theLast = $(el).children(':visible').last();
+                    //     theLast.width('auto');
+                    // }
                 }
             });
+        },
+        // 改变列顺序
+        _changeCol: function(data) {
+            var index = data.index - (this.options.selectAble ? 1 : 0),
+                to = data.to - (this.options.selectAble ? 1 : 0),
+                theCol = this.colsData.splice(index, 1)[0];
+            if(index > to){
+                this.colsData.splice(to, 0, theCol);
+            }else if(index < to){
+                this.colsData.splice(to, 0, theCol);
+            }
+            this.options.columns = this.colsData;
+            this.$('.panel-body tr').each(function(i, tr) {
+                var theTd = $(tr).children().eq(data.index),
+                    toTd = $(tr).children().eq(data.to);
+                if (data.type == 'prev') {
+                    theTd.insertBefore(toTd);
+                } else if (data.type == 'next') {
+                    theTd.insertAfter(toTd);
+                }
+            });
+            if (!this.options.hideColSetting) {
+                this._colSetting();
+            }
         },
         // 选择全部行
         selectAll: function(event) {
@@ -447,17 +474,16 @@ define([
         },
         // 排序
         sortData: function(event) {
-            if (this.options.sortAble && !this.result.length) {
+            if (this.options.sortAble && !this.subCols.length) {
                 var target = $(event.currentTarget),
                     th = target.parent(),
                     columns = this.options.columns,
                     theCol = columns[th[0].cellIndex - (this.options.selectAble ? 1 : 0)];
-                        // console.warn('ddddddddddd', this.collection);
-                if(theCol){
+                if (theCol) {
                     theCol.sortOrder = theCol.sortOrder == 'up' ? 'down' : 'up';
-                    if(this.collection){
+                    if (this.collection) {
                         this.collection.loadData();
-                    }else{
+                    } else {
                         // this.renderAll();
                     }
                 }

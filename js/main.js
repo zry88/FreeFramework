@@ -1,11 +1,11 @@
 require.config(CONFIG.REQUIRE_CONFIG);
 require([
     'jquery',
-    // 'jqueryui',
     'core/FUI',
     // 'framework7',
     'src/main/app',
     // 'fastclick',
+    'jqueryui',
     'util',
     'uxUtil'
 ], function($, FUI, App) {

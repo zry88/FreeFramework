@@ -28,9 +28,9 @@ define([
             };
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
-            this.pageId = option.context.id;
+            this.parentId = option.context.id;
             FUI.Events.off(null, null, this);
-            FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            FUI.Events.on(this.parentId + ':onEvent', this.onevent, this);
             FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
 
             // var btnView = FUI.view.create();
@@ -184,7 +184,7 @@ define([
             });
         },
         onKeyClick: function(event) {
-            FUI.Events.trigger(this.pageId + ':triggerEvent', { num: 168 }, 100);
+            FUI.Events.trigger(this.parentId + ':triggerEvent', { num: 168 }, 100);
         },
         onevent: function(data) {
             this.$('#panel_2_header span').text(data.num);

@@ -16,7 +16,7 @@ define([
                 if (typeof this.options.template == 'string') {
                     this.template = _.template(this.options.template);
                 } else {
-                    if (this.options.template instanceof jQuery){
+                    if (this.options.template instanceof jQuery) {
                         this.template = _.template(this.options.template[0]);
                     }
                 }
@@ -33,15 +33,19 @@ define([
                             that.$el.append(view.render().el);
                         });
                     } else {
-                        var view = FUI.view.create(this.options.html);
-                        this.$el.html(view.render().el);
+                        if (_.isFunction(this.options.html)) {
+                            this.$el.html(this.options.html());
+                        } else {
+                            var view = FUI.view.create(this.options.html);
+                            this.$el.html(view.render().el);
+                        }
                     }
                 } else {
                     this.$el.html(this.options.html);
                 }
             }
             if (this.options.text && !this.options.html) this.$el.text(this.options.text);
-        },
+        }
     });
     return BaseView;
 });

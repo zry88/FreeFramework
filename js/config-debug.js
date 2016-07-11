@@ -51,7 +51,7 @@ var CONFIG = {
             cookie: 'js/vendor/system/data/jquery.cookie',
             uuid: 'js/vendor/util/Math.uuid',
             jquery: 'js/vendor/library/jquery/jquery-2.1.3.min',
-            jqueryui: 'js/vendor/library/jquery/jquery-ui.min',
+            jqueryui: 'js/vendor/library/jquery/jquery-ui-1.10.4',
             util: 'js/core/util/Util',
             uxUtil: 'js/core/ux/util/Util',
             socket: 'js/core/data/Socket',

@@ -56,6 +56,11 @@ a:hover {
 .datatable thead > tr > th {
     border-bottom: none;
     border-right: 1px solid #ddd;
+    position: relative;
+}
+.datatable thead > tr > th > div.selected{
+    /*border: 1px dashed #ccc;*/
+    visibility: hidden;
 }
 .datatable thead > tr > th[colspan]{
     border-bottom: 1px solid #ddd;

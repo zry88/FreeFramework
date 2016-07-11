@@ -41,9 +41,12 @@ define([
                 el: this.$el,
                 view: DataTable,
                 context: this,
+                collection: TestCollection,
                 options: {
                     className: 'table table-hover table-bordered datatable',
                     selectAble: true,
+                    editAble: false,
+                    draggAble: true,
                     sortAble: true,
                     changeWidthAble: true,
                     hideColSetting: false,
@@ -75,6 +78,10 @@ define([
                         {
                             text: '名称',
                             dataIndex: 'reportName',
+                            // sortAble: false,
+                            format: function(data){
+                                return data + 'aaa';
+                            },
                             style: {
                                 width: '200px'
                             }
@@ -88,12 +95,13 @@ define([
                         {
                             text: '创建日期',
                             dataIndex: 'createdDate',
+                            sortAble: false,
                             style: {
                                 width: 'auto'
                             }
                         }
                     ],
-                    data: TestCollection
+                    // data: TestCollection
                 }
             });
             // 分页

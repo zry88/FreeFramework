@@ -35,6 +35,7 @@ define([
                     options: {
                         className: 'table table-hover',
                         selectAble: false, //是否可选
+                        draggAble: false, //是否可拖动
                         changeWidthAble: false,
                         sortAble: false, //可排序
                         thead: {
@@ -48,13 +49,14 @@ define([
                             hide: true,
                         },
                         columns: [],
-                        colsData: [], //列字段字典
-                        // pageSize: 40,
+                        colsData: [], //列字段
                         data: []
                     }
                 };
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
+            this.parentId = option.context.id;
+            this.draggableTh = null;
             if (!this.options.thead.hide) {
                 FUI.view.create({
                     key: this.id + '_thead',
@@ -88,12 +90,10 @@ define([
                     if (val.children) {
                         _.each(val.children, function(col, i) {
                             col.hide = col.hide || false;
-                            col.index = index + '_' + i;
                             that.colsData.push(col);
                         });
                     } else {
                         val.hide = val.hide || false;
-                        val.index = index;
                         that.colsData.push(val);
                     }
                 });
@@ -143,14 +143,81 @@ define([
             var rows = _.where(this.options.data, { selected: true });
             return rows ? rows : [];
         },
+        onDraggable: function(draggObj) {
+            var that = this;
+            draggObj.draggable({
+                revert: true,
+                zIndex: 999,
+                cursor: "move",
+                // helper: 'clone',
+                // opacity: 1,
+                start: function(event, ui) {
+                    var th = ui.helper.parent();
+                    that.draggableTh = th;
+                    // console.warn('开始拖动', ui);
+                    ui.helper.css({
+                        border: '1px dashed #ddd',
+                        backgroundColor: '#f3f3f3',
+                        width: th.width(),
+                        height: th.height() - 2,
+                    });
+                },
+                drag: function(event, ui) {
+                    // console.warn('正在拖动', ui);
+                    ui.position.top = 0;
+                },
+                stop: function(event, ui) {
+                    ui.helper.css({
+                        border: 'none',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'transparent',
+                    });
+                }
+            });
+        },
+        onDroppable: function(droppObj) {
+            var that = this;
+            droppObj.droppable({
+                over: function(event, ui) {
+                    if(ui.helper != $(this)){
+                        $(this).addClass('selected');
+                    }
+                },
+                out: function(event, ui) {
+                    if(ui.helper != $(this)){
+                        $(this).removeClass('selected');
+                    }
+                },
+                drop: function(event, ui) {
+                    $(this).removeClass('selected');
+                    if(ui.helper != $(this)){
+                        var current = ui.helper.parent(),
+                            target = $(this).parent(),
+                            index = current[0].cellIndex,
+                            to = target[0].cellIndex,
+                            type = '';
+                        if(index > to){
+                            current.insertBefore(target);
+                            type = 'prev';
+                        }else if(index < to){
+                            current.insertAfter(target);
+                            type = 'next';
+                        }
+                        ui.helper.css('left', 0);
+                        FUI.Events.trigger(that.parentId + ':changeCol', { index: index, to: to, type: type });
+                    }
+                }
+            });
+        },
         renderAll: function() {
             var that = this,
                 options = this.options,
                 hasSub = _.pluck(options.columns, 'children'),
-                result = _.filter(hasSub, function(col) {
+                subCols = _.filter(hasSub, function(col) {
                     return col;
                 }),
-                theChildren = result.length ? _.flatten(result) : [];
+                theChildren = subCols.length ? _.flatten(subCols) : [];
             // 表头
             if (!options.thead.hide) {
                 var theadEl = this.$('#' + this.id + '_thead').empty();
@@ -169,7 +236,7 @@ define([
                             textAlign: 'center'
                         },
                         attr: {
-                            rowspan: result.length ? 2 : undefined
+                            rowspan: subCols.length ? 2 : undefined
                         }
                     };
                     selectColOption.style = $.extend({}, options.thead.colStyle, selectColOption.style);
@@ -188,7 +255,7 @@ define([
                     if (col.children) {
                         col.attr.colspan = col.children.length;
                     } else {
-                        col.attr.rowspan = result.length ? 2 : undefined;
+                        col.attr.rowspan = subCols.length ? 2 : undefined;
                     }
                     FUI.view.create({
                         key: theKey,
@@ -199,10 +266,9 @@ define([
                     });
                 };
                 _.each(options.columns, function(col, index) {
-                    // if (!col._id) col._id = that.id + '_thead_th_' + index;
                     makeTh(col, index);
                 });
-                if (result.length) {
+                if (subCols.length) {
                     FUI.view.create({
                         key: this.id + '_thead_tr_1',
                         el: theadEl,
@@ -210,41 +276,49 @@ define([
                         context: this,
                     });
                     _.each(theChildren, function(col, index) {
-                        // if (!col._id) col._id = that.id + '_thead_th_1_' + index;
                         makeTh(col, index, 1);
                     });
                 }
                 // 拖动列宽和排序
                 if (options.changeWidthAble || options.sortAble) {
                     this.$('th').html(function() {
-                        var contentDiv = $('<div style="padding: 8px; margin-right:5px; position: relative;"/>');
+                        var contentDiv = $('<div style="padding: 8px;"/>'),
+                            cellIndex = $(this)[0].cellIndex;
                         contentDiv.html($(this).html());
-                        if ($(this)[0].cellIndex) {
-                            // 排序
-                            if (options.sortAble) {
-                                contentDiv.css('cursor', 'pointer');
-                                var sortUpEl = $('<span class="caret up"></span>'),
-                                    sortDownEl = $('<span class="caret down"></span>');
-                                var theCol = options.columns[$(this)[0].cellIndex];
-                                if(theCol){
-                                    if(theCol.sortOrder == 'up'){
-                                        sortUpEl.addClass('active');
-                                        sortDownEl.removeClass('active');
+                        if (!subCols.length) {
+                            var isOk = options.selectAble ? cellIndex : 1;
+                            if(isOk){
+                                // 排序
+                                if (options.sortAble && options.columns[cellIndex].sortAble != false) {
+                                    contentDiv.css('cursor', 'pointer');
+                                    var sortUpEl = $('<span class="caret up"></span>'),
+                                        sortDownEl = $('<span class="caret down"></span>');
+                                    var theCol = options.columns[$(this)[0].cellIndex];
+                                    if (theCol) {
+                                        if (theCol.sortOrder == 'up') {
+                                            sortUpEl.addClass('active');
+                                            sortDownEl.removeClass('active');
+                                        }
+                                        if (theCol.sortOrder == 'down') {
+                                            sortUpEl.removeClass('active');
+                                            sortDownEl.addClass('active');
+                                        }
                                     }
-                                    if(theCol.sortOrder == 'down'){
-                                        sortUpEl.removeClass('active');
-                                        sortDownEl.addClass('active');
-                                    }
+                                    contentDiv.append(sortUpEl).append(sortDownEl);
                                 }
-                                contentDiv.append(sortUpEl).append(sortDownEl);
-                            }
-                            // 拖动
-                            if (!result.length) {
-                                contentDiv.append('<div class="colHandler"/>');
+                                if (options.draggAble) {
+                                    // 拖动列
+                                    that.onDraggable(contentDiv);
+                                    that.onDroppable(contentDiv);
+                                }
                             }
                         }
                         return contentDiv;
                     });
+                    // 拖动手柄
+                    if (!subCols.length) {
+                        this.$('th').append('<div class="colHandler"/>');
+                    }
                 }
             }
             // 表脚
@@ -284,11 +358,11 @@ define([
                                     }
                                 });
                             }
-                            // console.warn(options.columns);
                             _.each(that.colsData, function(col, key) {
                                 if (key !== 'id' && !col.hide) {
-                                    var newOption = $.extend(true, {}, col);
-                                    newOption.html = item[col.dataIndex];
+                                    var newOption = $.extend(true, {}, col),
+                                        val = item[col.dataIndex];
+                                    newOption.html = _.isFunction(col.format) ? col.format(val) : val;
                                     if (newOption.hide) {
                                         if (newOption.style) {
                                             newOption.style.display = 'none';
