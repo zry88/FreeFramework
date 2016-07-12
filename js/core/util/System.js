@@ -228,10 +228,7 @@ define(['jquery', 'toastr'], function($, toastr) {
                 height: 200,
                 modal: true,
                 open: function(event, ui) {
-                    $('.ui-widget-overlay:last').css({
-                        zIndex: zindex || 1001
-                    });
-                    $('.ui-dialog:last').css({
+                    $('.ui-dialog:last,.ui-widget-overlay:last').css({
                         zIndex: zindex || 1001
                     });
                     if (type == 'download') $('.ui-button').addClass('newclient-button, crm-common-button');
@@ -254,7 +251,6 @@ define(['jquery', 'toastr'], function($, toastr) {
                 key: 'dialog',
                 selector: "body",
                 insert: 'append',
-                isClean: true,
                 type: 'dialog',
                 view: content,
                 dialogConfig: option

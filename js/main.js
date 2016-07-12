@@ -2,23 +2,20 @@ require.config(CONFIG.REQUIRE_CONFIG);
 require([
     'jquery',
     'core/FUI',
-    // 'framework7',
     'src/main/app',
-    // 'fastclick',
-    'jqueryui',
-    'bootstrap',
-    // 'vendor/library/bootstrap/Popover',
     'util',
     'uxUtil'
+    // 'framework7',
+    // 'fastclick',
 ], function($, FUI, App) {
     "use strict";
     // FUI.fw7 = new Framework7(CONFIG.FW7_CONFIG || {});
+    // FastClick.attach(document.body);
 
     if (!CONFIG.IS_CORDOVA) {
         // PC端
         $(function() {
             App.init();
-            // FastClick.attach(document.body);
         });
     } else {
         // 移动端
@@ -28,6 +25,5 @@ require([
             }
             App.init();
         }, false);
-        // FastClick.attach(document.body);
     }
 });

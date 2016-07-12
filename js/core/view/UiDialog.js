@@ -3,11 +3,8 @@
  * 参数: key唯一标识,fireEl触发元素
  */
 define([
-    'jquery',
-    'jqueryui',
-    'underscore',
     'core/view/View',
-], function($, jqueryui, _, BaseView) {
+], function(BaseView) {
 	var view = BaseView.extend({
 		initialize: function(option){
             this.parent(option);

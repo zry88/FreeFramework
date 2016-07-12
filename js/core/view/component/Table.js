@@ -22,6 +22,8 @@ define([
     'core/view/element/Thead',
     'core/view/element/Tbody',
     'core/view/element/Tfoot',
+    'core/view/jqueryui/draggable',
+    'core/view/jqueryui/droppable'
 ], function(BaseView, Tr, Td, Th, Thead, Tbody, Tfoot) {
     var View = BaseView.extend({
         tagName: 'table',

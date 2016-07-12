@@ -2,6 +2,8 @@ define([
     'core/view/component/Panel',
     'core/view/component/Table',
     'core/view/element/Button',
+    'core/view/component/Tooltip',
+    'core/view/component/Popover'
 ], function(PanelView, TableView, BtnView) {
     FUI.widgets.test2 = PanelView.extend({
         events: {
