@@ -1,12 +1,11 @@
 /*
- * 弹出框通用组件类
+ * 弹出框
  * @author: bootstrap
  * @create: 2016/7/11
  */
 define([
-    'jquery',
-    'core/view/View'
-], function(jQuery, BaseView) {
+    'jquery'
+], function(jQuery) {
     'use strict';
     var _createClass = (function() {
         function defineProperties(target, props) {

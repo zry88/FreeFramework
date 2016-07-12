@@ -55,6 +55,9 @@ define([
                     }, {
                         text: '说明',
                         dataIndex: 'desc',
+                        // format: function(data){
+                        //     return '<a href="#" data-toggle="tooltip">' + data + '</a>';
+                        // }
                     }],
                     data: [{
                         name: '玻璃心',
@@ -72,7 +75,7 @@ define([
                             view: BtnView,
                             context: this,
                             options: {
-                                html: '首选项',
+                                html: '工具提示',
                                 className: 'btn btn-primary btn-xs',
                                 style: {
                                     marginRight: '10px'
@@ -83,13 +86,23 @@ define([
                             view: BtnView,
                             context: this,
                             options: {
-                                html: '我是按钮',
+                                html: '弹出框',
                                 className: 'btn btn-success btn-xs',
                             }
                         }]
                     }]
                 }
             });
+
+            this.$('.btn-primary').tooltip({
+                title: '工具提示',
+                placement: 'bottom'
+            });
+            this.$('.btn-success').popover({
+                container: 'body',
+                title: '测试一下',
+                content: 'Delay showing and hiding the popover (ms) - does not apply to manual trigger type'
+            })
         },
         onClickBtn: function(event) {
             console.warn('ggggggggggggggg', this.theView.getSelectedRow());

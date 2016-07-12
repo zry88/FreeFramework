@@ -6,6 +6,8 @@ require([
     'src/main/app',
     // 'fastclick',
     'jqueryui',
+    'bootstrap',
+    // 'vendor/library/bootstrap/Popover',
     'util',
     'uxUtil'
 ], function($, FUI, App) {

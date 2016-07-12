@@ -51,6 +51,7 @@ var CONFIG = {
             cookie: 'js/vendor/system/data/jquery.cookie',
             jquery: 'js/vendor/library/jquery/jquery-2.2.1.min',
             jqueryui: 'js/vendor/library/jquery/jquery-ui-1.10.4.min',
+            bootstrap: 'js/vendor/library/bootstrap/bootstrap',
             util: 'js/core/util/Util',
             uxUtil: 'js/core/ux/util/Util',
             socket: 'js/core/data/Socket',
