@@ -27,25 +27,25 @@ a:hover {
     text-decoration: none;
 }
 /*模态框*/
-.rightModal .modal-content {
+.right-modal .modal-content {
     height: 100%;
     border-radius: 0;
     border: none;
     background-color: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
 }
-.rightModal .modal-body {
+.right-modal .modal-body {
     position: absolute;
     top: 56px;
     bottom: 65px;
     overflow-y: auto;
 }
-.rightModal .modal-footer {
+.right-modal .modal-footer {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
-.rightModalBg .modal-backdrop{
+.right-modalBg .modal-backdrop{
     opacity: 0.01;
 }
 /*分页*/

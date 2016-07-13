@@ -33,9 +33,12 @@ define([
         className: 'modal',
         template: _.template(Template),
         events: {
-            'click': '_closeModal',
             'click [data-close]': '_closeModal',
-            'click .modal-footer button': '_onbutton'
+            'click .modal-footer button': '_onbutton',
+            'click .modal-header,.modal-body,.modal-footer': function(event){
+                event.stopPropagation();
+            },
+            'click': '_closeModal'
         },
         animate: {
             'fadeIn': 'fadeOut',
@@ -50,7 +53,6 @@ define([
                         isDialog: false, //类型 modal, dialog
                         position: '', //显示位置top,right,bottom,left,middle
                         keyboard: true,
-                        // remote: false, //远程内容
                         header: {
                             title: 'modal title',
                             hide: false
@@ -117,7 +119,7 @@ define([
             } else if (position == 'right' || position == 'left') {
                 this.noMask = true;
                 this.options.backdrop = false;
-                this.$el.addClass('rightModal');
+                this.$el.addClass('right-modal');
                 var headerHeight = $('header').height();
                 _.extend(style, {
                     position: 'absolute',
@@ -141,14 +143,9 @@ define([
                 }
             }
             modalDialog.css(style);
-
-            this.$el.children('.modal-dialog').click(function(event){
-                event.stopPropagation();
-            });
         },
         // 关闭窗口
         _closeModal: function(event) {
-            console.warn('ddddddddddd');
             var animateName = this.$el.data('animate'),
                 that = this;
             if (animateName) {
