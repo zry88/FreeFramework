@@ -2,7 +2,7 @@
  * 群组
  */
 define([
-    "core/data/Collection",
+    "lib/data/Collection",
     "src/im/model/Team"
 ], function(BaseCollection, Model) {
     var Collection = BaseCollection.extend({
@@ -11,17 +11,17 @@ define([
         pageSize: 20,
         initialize: function(models, option) {
             this.parent(models, option);
-            FUI.Events.off(null, null, this);
+            HBY.Events.off(null, null, this);
             // 添加数据
-            FUI.Events.on('im:collection:teams:onAdd', this.onAdd, this);
+            HBY.Events.on('im:collection:teams:onAdd', this.onAdd, this);
             // 重置数据
-            FUI.Events.on('im:collection:teams:onReset', this.onReset, this);
+            HBY.Events.on('im:collection:teams:onReset', this.onReset, this);
             // 更新群组
-            // FUI.Events.on('im:collection:teams:onUpdateTeam', this.onUpdateTeam, this);
+            // HBY.Events.on('im:collection:teams:onUpdateTeam', this.onUpdateTeam, this);
             // 解散群组
-            FUI.Events.on('im:collection:teams:onDismissTeam', this.onDismissTeam, this);
+            HBY.Events.on('im:collection:teams:onDismissTeam', this.onDismissTeam, this);
             // 更新组名
-            FUI.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
+            HBY.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
         },
         onAdd: function(data) {
             debug.warn('添加组', data);
@@ -31,7 +31,7 @@ define([
             this.reset(data);
         },
         // onUpdateTeam: function(data) {
-        //     FUI.Events.trigger('im:getTeams');
+        //     HBY.Events.trigger('im:getTeams');
         //     debug.warn('更新群组');
         // },
         onUpdateTeamName: function(data) {

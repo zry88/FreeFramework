@@ -1,5 +1,5 @@
 define([
-    "core/data/collection/Remote",
+    "lib/data/collection/Remote",
     // "src/test/model/Chat"
 ], function(RemoteCollection) {
     var Collection = RemoteCollection.extend({

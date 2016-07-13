@@ -6,29 +6,29 @@ define([
     'underscore',
     'yunxin_nim',
 ], function(_, NIM) {
-    var yunxinConfig = FUI.Base.extend({
+    var yunxinConfig = HBY.Base.extend({
         initialize: function() {
             var that = this;
             // 事件接口
-            FUI.Events.off(null, null, this);
-            FUI.Events.on('im:sendMessage', this.onSendMessage, this);
-            FUI.Events.on('im:setUnread', this.onSetUnread, this);
-            FUI.Events.on('im:reSetUnread', this.onReSetUnread, this);
-            FUI.Events.on('im:delLocSession', this.onDelLocSession, this); //删除本地会话
-            FUI.Events.on('im:addOneTeam', this.onAddOneTeam, this); //创建群
-            FUI.Events.on('im:leaveTeam', this.onLeaveTeam, this); //离开群
-            FUI.Events.on('im:dismissTeam', this.onDismissTeam, this); //解散群
-            FUI.Events.on('im:updateTeam', this.onUpdateTeam, this); //解散群
-            FUI.Events.on('im:getTeamMembers', this.getTeamMembers, this); //取群成员
-            FUI.Events.on('im:getTeams', this.getTeams, this); //取群列表
-            FUI.Events.on('im:getTeam', this.getTeam, this); //取群
-            FUI.Events.on('im:delTeamMembers', this.onDelTeamMembers, this); //移除成员
-            FUI.Events.on('im:addTeamMembers', this.onAddTeamMembers, this); //拉人入群
-            FUI.Events.on('im:getLocalMsgs', this.getLocalMsgs, this); //取本地历史记录
-            FUI.Events.on('im:getHistoryMsgs', this.getHistoryMsgs, this); //取云端历史记录
+            HBY.Events.off(null, null, this);
+            HBY.Events.on('im:sendMessage', this.onSendMessage, this);
+            HBY.Events.on('im:setUnread', this.onSetUnread, this);
+            HBY.Events.on('im:reSetUnread', this.onReSetUnread, this);
+            HBY.Events.on('im:delLocSession', this.onDelLocSession, this); //删除本地会话
+            HBY.Events.on('im:addOneTeam', this.onAddOneTeam, this); //创建群
+            HBY.Events.on('im:leaveTeam', this.onLeaveTeam, this); //离开群
+            HBY.Events.on('im:dismissTeam', this.onDismissTeam, this); //解散群
+            HBY.Events.on('im:updateTeam', this.onUpdateTeam, this); //解散群
+            HBY.Events.on('im:getTeamMembers', this.getTeamMembers, this); //取群成员
+            HBY.Events.on('im:getTeams', this.getTeams, this); //取群列表
+            HBY.Events.on('im:getTeam', this.getTeam, this); //取群
+            HBY.Events.on('im:delTeamMembers', this.onDelTeamMembers, this); //移除成员
+            HBY.Events.on('im:addTeamMembers', this.onAddTeamMembers, this); //拉人入群
+            HBY.Events.on('im:getLocalMsgs', this.getLocalMsgs, this); //取本地历史记录
+            HBY.Events.on('im:getHistoryMsgs', this.getHistoryMsgs, this); //取云端历史记录
 
             this.data = {};
-            FUI.nim = new NIM({
+            HBY.nim = new NIM({
                 // 初始化SDK
                 // debug: true,
                 // appKey: 'afbb6962ef852f2b731412d2435bde78', //开发环境
@@ -82,16 +82,16 @@ define([
                 // 数据源
                 dataSource: {
                     getUser: function(account) {
-                        return FUI.nim.findUser(that.data.users, account);
+                        return HBY.nim.findUser(that.data.users, account);
                     },
                     getSession: function(sessionId) {
-                        return FUI.nim.findSession(that.data.sessions, sessionId);
+                        return HBY.nim.findSession(that.data.sessions, sessionId);
                     },
                     getMsg: function(msg) {
-                        return FUI.nim.findMsg(that.data.msgs && that.data.msgs[msg.sessionId], msg.idClient);
+                        return HBY.nim.findMsg(that.data.msgs && that.data.msgs[msg.sessionId], msg.idClient);
                     },
                     getSysMsg: function(sysMsg) {
-                        return FUI.nim.findSysMsg(that.data.sysMsgs, sysMsg.idServer);
+                        return HBY.nim.findSysMsg(that.data.sysMsgs, sysMsg.idServer);
                     }
                 }
             });
@@ -118,7 +118,7 @@ define([
                         break;
                         // 被踢, 请提示错误后跳转到登录页面
                     case 'kicked':
-                        FUI.util.System.showDialog('alert', '您的帐号在另一个地点登录，您被迫下线。<br>如果这不是您本人的操作，那么您的密码可能已泄露。<br>建议您修改密码。', {
+                        HBY.util.System.showDialog('alert', '您的帐号在另一个地点登录，您被迫下线。<br>如果这不是您本人的操作，那么您的密码可能已泄露。<br>建议您修改密码。', {
                             '确定': function(event) {
                                 window.location.reload();
                             }
@@ -140,8 +140,8 @@ define([
 
         onBlacklist: function(blacklist) {
             debug.log('收到黑名单', blacklist);
-            this.data.blacklist = FUI.nim.mergeRelations(this.data.blacklist, blacklist);
-            this.data.blacklist = FUI.nim.cutRelations(this.data.blacklist, blacklist.invalid);
+            this.data.blacklist = HBY.nim.mergeRelations(this.data.blacklist, blacklist);
+            this.data.blacklist = HBY.nim.cutRelations(this.data.blacklist, blacklist.invalid);
             this.refreshBlacklistUI();
         },
 
@@ -156,12 +156,12 @@ define([
         },
 
         addToBlacklist: function(obj) {
-            this.data.blacklist = FUI.nim.mergeRelations(this.data.blacklist, obj.record);
+            this.data.blacklist = HBY.nim.mergeRelations(this.data.blacklist, obj.record);
             this.refreshBlacklistUI();
         },
 
         removeFromBlacklist: function(obj) {
-            this.data.blacklist = FUI.nim.cutRelations(this.data.blacklist, obj.record);
+            this.data.blacklist = HBY.nim.cutRelations(this.data.blacklist, obj.record);
             this.refreshBlacklistUI();
         },
 
@@ -171,8 +171,8 @@ define([
 
         onMutelist: function(mutelist) {
             debug.log('收到静音列表', mutelist);
-            this.data.mutelist = FUI.nim.mergeRelations(this.data.mutelist, mutelist);
-            this.data.mutelist = FUI.nim.cutRelations(this.data.mutelist, mutelist.invalid);
+            this.data.mutelist = HBY.nim.mergeRelations(this.data.mutelist, mutelist);
+            this.data.mutelist = HBY.nim.cutRelations(this.data.mutelist, mutelist.invalid);
             this.refreshMutelistUI();
         },
 
@@ -187,12 +187,12 @@ define([
         },
 
         addToMutelist: function(obj) {
-            this.data.mutelist = FUI.nim.mergeRelations(this.data.mutelist, obj.record);
+            this.data.mutelist = HBY.nim.mergeRelations(this.data.mutelist, obj.record);
             this.refreshMutelistUI();
         },
 
         removeFromMutelist: function(obj) {
-            this.data.mutelist = FUI.nim.cutRelations(this.data.mutelist, obj.record);
+            this.data.mutelist = HBY.nim.cutRelations(this.data.mutelist, obj.record);
             this.refreshMutelistUI();
         },
 
@@ -202,8 +202,8 @@ define([
 
         onFriends: function(friends) {
             debug.log('收到好友列表', friends);
-            this.data.friends = FUI.nim.mergeFriends(this.data.friends, friends);
-            this.data.friends = FUI.nim.cutFriends(this.data.friends, friends.invalid);
+            this.data.friends = HBY.nim.mergeFriends(this.data.friends, friends);
+            this.data.friends = HBY.nim.cutFriends(this.data.friends, friends.invalid);
             this.refreshFriendsUI();
         },
 
@@ -236,17 +236,17 @@ define([
         },
 
         onAddFriend: function(friend) {
-            this.data.friends = FUI.nim.mergeFriends(this.data.friends, friend);
+            this.data.friends = HBY.nim.mergeFriends(this.data.friends, friend);
             this.refreshFriendsUI();
         },
 
         onDeleteFriend: function(account) {
-            this.data.friends = FUI.nim.cutFriendsByAccounts(this.data.friends, account);
+            this.data.friends = HBY.nim.cutFriendsByAccounts(this.data.friends, account);
             this.refreshFriendsUI();
         },
 
         onUpdateFriend: function(friend) {
-            this.data.friends = FUI.nim.mergeFriends(this.data.friends, friend);
+            this.data.friends = HBY.nim.mergeFriends(this.data.friends, friend);
             this.refreshFriendsUI();
         },
 
@@ -272,35 +272,35 @@ define([
 
         onUsers: function(users) {
             debug.log('收到用户名片列表');
-            this.data.users = FUI.nim.mergeUsers(this.data.users, users);
+            this.data.users = HBY.nim.mergeUsers(this.data.users, users);
         },
 
         onUpdateUser: function(user) {
             debug.log('用户名片更新了');
-            this.data.users = FUI.nim.mergeUsers(this.data.users, user);
+            this.data.users = HBY.nim.mergeUsers(this.data.users, user);
         },
 
         onTeams: function(teams) {
             debug.log('群列表', teams);
-            this.data.teams = FUI.nim.mergeTeams(this.data.teams, teams);
+            this.data.teams = HBY.nim.mergeTeams(this.data.teams, teams);
             this.onInvalidTeams(teams.invalid);
         },
 
         onInvalidTeams: function(teams) {
-            this.data.teams = FUI.nim.cutTeams(this.data.teams, teams);
-            this.data.invalidTeams = FUI.nim.mergeTeams(this.data.invalidTeams, teams);
+            this.data.teams = HBY.nim.cutTeams(this.data.teams, teams);
+            this.data.invalidTeams = HBY.nim.mergeTeams(this.data.invalidTeams, teams);
             this.refreshTeamsUI();
         },
 
         onCreateTeam: function(team) {
             debug.log('你创建了一个群', team);
-            this.data.teams = FUI.nim.mergeTeams(this.data.teams, team);
+            this.data.teams = HBY.nim.mergeTeams(this.data.teams, team);
             this.refreshTeamsUI();
             this.onTeamMembers({
                 teamId: team.teamId,
                 members: team.owner
             });
-            FUI.Events.trigger('im:collection:currentContacts:onAddOne', {
+            HBY.Events.trigger('im:collection:currentContacts:onAddOne', {
                 chatId: team.teamId,
                 photoUrl: '',
                 name: '讨论组',
@@ -311,7 +311,7 @@ define([
 
         refreshTeamsUI: function() {
             // 刷新界面
-            FUI.Events.trigger('im:collection:teams:onReset', this.data.teams);
+            HBY.Events.trigger('im:collection:teams:onReset', this.data.teams);
         },
 
         onTeamMembers: function(obj) {
@@ -320,8 +320,8 @@ define([
             // debug.log('群id', teamId, '群成员', members);
             // onDismissTeam(obj.teamId);
             this.data.teamMembers = this.data.teamMembers || {};
-            this.data.teamMembers[teamId] = FUI.nim.mergeTeamMembers(this.data.teamMembers[teamId], members);
-            this.data.teamMembers[teamId] = FUI.nim.cutTeamMembers(this.data.teamMembers[teamId], members.invalid);
+            this.data.teamMembers[teamId] = HBY.nim.mergeTeamMembers(this.data.teamMembers[teamId], members);
+            this.data.teamMembers[teamId] = HBY.nim.cutTeamMembers(this.data.teamMembers[teamId], members.invalid);
             this.refreshTeamMembersUI(teamId);
         },
 
@@ -339,12 +339,12 @@ define([
 
         refreshTeamMembersUI: function(teamId) {
             // 刷新界面
-            FUI.Events.trigger('im:collection:teamMembers_' + teamId + ':onReset', this.data.teamMembers[teamId]);
+            HBY.Events.trigger('im:collection:teamMembers_' + teamId + ':onReset', this.data.teamMembers[teamId]);
         },
 
         onSessions: function(sessions) {
             debug.log('收到会话列表', sessions);
-            this.data.sessions = FUI.nim.mergeSessions(this.data.sessions, sessions);
+            this.data.sessions = HBY.nim.mergeSessions(this.data.sessions, sessions);
             this.updateSessionsUI();
         },
 
@@ -352,11 +352,11 @@ define([
             debug.log('会话更新了', session);
             // if(session.lastMsg){
             //     if(session.lastMsg.type !== 'notification'){
-            //         this.data.sessions = FUI.nim.mergeSessions(this.data.sessions, session);
+            //         this.data.sessions = HBY.nim.mergeSessions(this.data.sessions, session);
             //         this.updateSessionsUI();
             //     }
             // }else{
-            this.data.sessions = FUI.nim.mergeSessions(this.data.sessions, session);
+            this.data.sessions = HBY.nim.mergeSessions(this.data.sessions, session);
             this.updateSessionsUI();
             // }
         },
@@ -396,7 +396,7 @@ define([
                 }
             }
             // debug.warn(data.sessions, newSessions);
-            FUI.Events.trigger('im:collection:session:onReset', newSessions);
+            HBY.Events.trigger('im:collection:session:onReset', newSessions);
         },
 
         onRoamingMsgs: function(obj) {
@@ -416,60 +416,60 @@ define([
                 option = {},
                 isOwner = false;
             if (msg.scene == 'p2p') {
-                var user = FUI.ux.util.IM.getOneContacter({ imAccountId: msg.target });
+                var user = HBY.ux.util.IM.getOneContacter({ imAccountId: msg.target });
                 theTitle = user ? user.displayName : '';
                 option.icon = user.photoUrl ? (picServerHost + user.photoUrl) : '';
             } else {
-                var theTeam = FUI.ux.util.IM.getOneTeam({ teamId: msg.target });
+                var theTeam = HBY.ux.util.IM.getOneTeam({ teamId: msg.target });
                 theTitle = theTeam ? (theTeam.name || '讨论组') : '讨论组';
                 isOwner = window.imUser.imAccountId == msg.from ? true : false;
             }
             if (msg.type == 'notification') {
                 switch (msg.attach.type) {
                     case 'addTeamMembers':
-                        FUI.Events.trigger('im:collection:teamMembers_' + msg.target + ':onAdd', msg.attach.accounts);
-                        FUI.nim.getTeam({
+                        HBY.Events.trigger('im:collection:teamMembers_' + msg.target + ':onAdd', msg.attach.accounts);
+                        HBY.nim.getTeam({
                             teamId: msg.target,
                             done: function(error, obj) {
-                                FUI.Events.trigger('im:collection:teams:onAdd', obj);
+                                HBY.Events.trigger('im:collection:teams:onAdd', obj);
                             }
                         });
-                        FUI.nim.resetSessionUnread(msg.sessionId);
-                        msg.text = FUI.ux.util.IM.getNotifyText(msg);
+                        HBY.nim.resetSessionUnread(msg.sessionId);
+                        msg.text = HBY.ux.util.IM.getNotifyText(msg);
                         isOwner = window.imUser.imAccountId == msg.attach.team.owner ? true : false;
                         break;
                     case 'removeTeamMembers':
-                        msg.text = FUI.ux.util.IM.getNotifyText(msg);
+                        msg.text = HBY.ux.util.IM.getNotifyText(msg);
                         isOwner = window.imUser.imAccountId == msg.attach.team.owner ? true : false;
-                        FUI.Events.trigger('im:collection:teamMembers_' + msg.target + ':onRemove', msg.attach.accounts);
+                        HBY.Events.trigger('im:collection:teamMembers_' + msg.target + ':onRemove', msg.attach.accounts);
                         break;
                     case 'leaveTeam':
-                        msg.text = FUI.ux.util.IM.getNotifyText(msg);
-                        FUI.Events.trigger('im:collection:teamMembers_' + msg.target + ':onLeaveTeam', _.pluck(msg.attach.users, 'account'));
-                        if (window.imUser.imAccountId == msg.attach.team.owner && FUI.datas['teamMembers_' + msg.target].length <= 1) {
-                            FUI.Events.trigger('im:dismissTeam', msg.target);
+                        msg.text = HBY.ux.util.IM.getNotifyText(msg);
+                        HBY.Events.trigger('im:collection:teamMembers_' + msg.target + ':onLeaveTeam', _.pluck(msg.attach.users, 'account'));
+                        if (window.imUser.imAccountId == msg.attach.team.owner && HBY.datas['teamMembers_' + msg.target].length <= 1) {
+                            HBY.Events.trigger('im:dismissTeam', msg.target);
                         }
                         break;
                     case 'dismissTeam':
-                        FUI.Events.trigger('im:collection:teamMembers_' + msg.target + ':onRemove', msg.attach.accounts);
-                        FUI.Events.trigger('im:view:chatPanel:closeChat', msg.target);
-                        FUI.Events.trigger('im:dismissTeam', msg.target);
+                        HBY.Events.trigger('im:collection:teamMembers_' + msg.target + ':onRemove', msg.attach.accounts);
+                        HBY.Events.trigger('im:view:chatPanel:closeChat', msg.target);
+                        HBY.Events.trigger('im:dismissTeam', msg.target);
                         if (window.imUser.imAccountId !== msg.attach.users[0].account) {
                             option.body = '解散了组: ' + (theTeam ? theTeam.get('name') : '');
-                            FUI.util.System.notify('来自: ' + theTitle, option);
+                            HBY.util.System.notify('来自: ' + theTitle, option);
                             return false;
                         }
                         // this.onDelLocSession(msg.sessionId);
                         break;
                     case 'updateTeam':
-                        msg.text = FUI.ux.util.IM.getNotifyText(msg);
-                        FUI.Events.trigger('im:collection:teams:updateTeamName', msg.attach.team);
+                        msg.text = HBY.ux.util.IM.getNotifyText(msg);
+                        HBY.Events.trigger('im:collection:teams:updateTeamName', msg.attach.team);
                         break;
                 }
             }
-            FUI.Events.trigger('im:collection:chat_' + msg.target + ':onMsg', msg);
+            HBY.Events.trigger('im:collection:chat_' + msg.target + ':onMsg', msg);
             // 显示桌面提醒
-            if (msg.target !== FUI.currentChatId || !FUI.view.get('im').isPanelShow || !FUI.datas['chat_' + msg.target].hasScrollEnd) {
+            if (msg.target !== HBY.currentChatId || !HBY.view.get('im').isPanelShow || !HBY.datas['chat_' + msg.target].hasScrollEnd) {
                 if (msg.type == 'custom') {
                     var contentObj = JSON.parse(msg.content);
                     switch (contentObj.fileType) {
@@ -483,9 +483,9 @@ define([
                             option.body = '[文件]';
                     }
                 } else {
-                    if (!isOwner) option.body = FUI.ux.util.IM.faceToText(msg.text);
+                    if (!isOwner) option.body = HBY.ux.util.IM.faceToText(msg.text);
                 }
-                if (option.body && window.imUser.imAccountId != msg.from) FUI.util.System.notify('来自: ' + theTitle, option);
+                if (option.body && window.imUser.imAccountId != msg.from) HBY.util.System.notify('来自: ' + theTitle, option);
             }
         },
 
@@ -495,7 +495,7 @@ define([
             }
             var sessionId = msgs[0].sessionId;
             this.data.msgs = this.data.msgs || {};
-            this.data.msgs[sessionId] = FUI.nim.mergeMsgs(this.data.msgs[sessionId], msgs);
+            this.data.msgs[sessionId] = HBY.nim.mergeMsgs(this.data.msgs[sessionId], msgs);
         },
 
         onOfflineSysMsgs: function(sysMsgs) {
@@ -513,7 +513,7 @@ define([
         },
 
         pushSysMsgs: function(sysMsgs) {
-            this.data.sysMsgs = FUI.nim.mergeSysMsgs(this.data.sysMsgs, sysMsgs);
+            this.data.sysMsgs = HBY.nim.mergeSysMsgs(this.data.sysMsgs, sysMsgs);
             this.refreshSysMsgsUI();
         },
 
@@ -540,7 +540,7 @@ define([
 
         onCustomSysMsg: function(sysMsg) {
             debug.log('收到自定义系统通知', sysMsg);
-            FUI.Events.trigger('global:onCustomSysMsg', sysMsg);
+            HBY.Events.trigger('global:onCustomSysMsg', sysMsg);
         },
 
         onSyncDone: function() {
@@ -561,26 +561,26 @@ define([
                         default:
                             msgObj.pushContent = '[文件]';
                     }
-                    FUI.nim.sendCustomMsg(msgObj);
+                    HBY.nim.sendCustomMsg(msgObj);
                     break;
                 default:
                     msgObj.text = msgObj.content;
-                    FUI.nim.sendText(msgObj);
+                    HBY.nim.sendText(msgObj);
             }
         },
         // 设置未读数
         onSetUnread: function(sessionId) {
             // debug.warn('设置未读数', sessionId);
-            FUI.nim.setCurrSession(sessionId);
+            HBY.nim.setCurrSession(sessionId);
         },
         // 设置未读数
         onReSetUnread: function(sessionId) {
             // debug.warn('重置未读数', sessionId);
-            FUI.nim.resetSessionUnread(sessionId);
+            HBY.nim.resetSessionUnread(sessionId);
         },
         //删除本地会话
         onDelLocSession: function(sessionId) {
-            FUI.nim.deleteLocalSession({
+            HBY.nim.deleteLocalSession({
                 id: sessionId,
                 done: deleteLocalSessionDone
             });
@@ -591,7 +591,7 @@ define([
         },
         //删除服务器会话
         onDelSession: function(data) {
-            FUI.nim.deleteSession({
+            HBY.nim.deleteSession({
                 scene: data.scene,
                 to: data.account,
                 done: deleteSessionDone
@@ -612,7 +612,7 @@ define([
                     that.onCreateTeam(obj.team, obj.owner);
                 }
             }
-            FUI.nim.createTeam({
+            HBY.nim.createTeam({
                 type: 'normal',
                 name: '讨论组',
                 accounts: accounts,
@@ -623,12 +623,12 @@ define([
         // 离开群
         onLeaveTeam: function(teamId) {
             debug.warn('离开群');
-            FUI.nim.leaveTeam({
+            HBY.nim.leaveTeam({
                 teamId: teamId,
                 done: function(error, obj) {
                     debug.log('主动退群' + (!error ? '成功' : '失败'), error, obj);
                     if (!error) {
-                        FUI.Events.trigger('im:view:currentItem:removeOne', teamId);
+                        HBY.Events.trigger('im:view:currentItem:removeOne', teamId);
                     }
                 }
             });
@@ -637,7 +637,7 @@ define([
         onDismissTeam: function(teamId) {
             var that = this;
             debug.warn('解散群');
-            FUI.nim.dismissTeam({
+            HBY.nim.dismissTeam({
                 teamId: teamId,
                 done: function(error, obj) {
                     debug.log('解散群' + (!error ? '成功' : '失败'), error, obj);
@@ -646,8 +646,8 @@ define([
                             scene: 'team',
                             account: obj.teamId
                         });
-                        FUI.Events.trigger('im:view:currentItem:removeOne', obj.teamId);
-                        FUI.Events.trigger('im:collection:teams:onDismissTeam', obj.teamId);
+                        HBY.Events.trigger('im:view:currentItem:removeOne', obj.teamId);
+                        HBY.Events.trigger('im:collection:teams:onDismissTeam', obj.teamId);
                     }
                 }
             });
@@ -656,14 +656,14 @@ define([
         onUpdateTeam: function(data) {
             debug.warn('更新群');
             if (!data.teamId || !data.name) return false;
-            FUI.nim.updateTeam({
+            HBY.nim.updateTeam({
                 teamId: data.teamId,
                 name: data.name,
                 done: function(error, obj) {
                     debug.log('修改自己的群属性' + (!error ? '成功' : '失败'), error, obj);
                     if (!error) {
-                        FUI.Events.trigger('im:collection:teams:updateTeamName', obj);
-                        // FUI.Events.trigger('im:collection:currentContacts:onUpdateTeamName', obj);
+                        HBY.Events.trigger('im:collection:teams:updateTeamName', obj);
+                        // HBY.Events.trigger('im:collection:currentContacts:onUpdateTeamName', obj);
                     }
                 }
             });
@@ -671,7 +671,7 @@ define([
         // 取群
         getTeam: function(data) {
             var that = this;
-            FUI.nim.getTeam({
+            HBY.nim.getTeam({
                 teamId: data.teamId,
                 done: getTeamDone
             });
@@ -680,14 +680,14 @@ define([
                 debug.log('获取群' + (!error ? '成功' : '失败'), error, obj);
                 if (!error) {
                     // data.collection.groupId = obj.custom;
-                    // FUI.Events.trigger('im:getGroupId', data);
+                    // HBY.Events.trigger('im:getGroupId', data);
                 }
             }
         },
         // 取群列表
         getTeams: function() {
             var that = this;
-            FUI.nim.getTeams({
+            HBY.nim.getTeams({
                 done: getTeamsDone
             });
 
@@ -701,7 +701,7 @@ define([
         // 取群成员
         getTeamMembers: function(teamId) {
             var that = this;
-            FUI.nim.getTeamMembers({
+            HBY.nim.getTeamMembers({
                 teamId: teamId,
                 done: getTeamMembersDone
             });
@@ -716,7 +716,7 @@ define([
         //移除成员
         onDelTeamMembers: function(data) {
             if (!data.teamId || !data.accounts) return false;
-            FUI.nim.removeTeamMembers({
+            HBY.nim.removeTeamMembers({
                 teamId: data.teamId,
                 accounts: data.accounts,
                 done: removeTeamMembersDone
@@ -729,7 +729,7 @@ define([
         //拉人入群
         onAddTeamMembers: function(data) {
             if (!data.teamId || !data.accounts) return false;
-            FUI.nim.addTeamMembers({
+            HBY.nim.addTeamMembers({
                 teamId: data.teamId,
                 accounts: data.accounts,
                 ps: '加入我们的群吧',
@@ -751,12 +751,12 @@ define([
                 done: getLocalMsgsDone
             };
             _.extend(defaults, option);
-            FUI.nim.getLocalMsgs(defaults);
+            HBY.nim.getLocalMsgs(defaults);
 
             function getLocalMsgsDone(error, obj) {
                 debug.log('获取本地历史记录' + (!error ? '成功' : '失败'), error, obj);
                 if (!error) {
-                    FUI.Events.trigger('im:collection:chat_' + defaults.to + ':onReset', obj.msgs);
+                    HBY.Events.trigger('im:collection:chat_' + defaults.to + ':onReset', obj.msgs);
                 }
             }
         },
@@ -774,12 +774,12 @@ define([
                 done: getHistoryMsgsDone
             };
             _.extend(defaults, option);
-            FUI.nim.getHistoryMsgs(defaults);
+            HBY.nim.getHistoryMsgs(defaults);
 
             function getHistoryMsgsDone(error, obj) {
                 debug.log('获取云端历史记录' + (!error ? '成功' : '失败'), error, obj);
                 if (!error) {
-                    FUI.Events.trigger('im:collection:chat_' + defaults.to + ':onReset', obj.msgs);
+                    HBY.Events.trigger('im:collection:chat_' + defaults.to + ':onReset', obj.msgs);
                 }
             }
         }

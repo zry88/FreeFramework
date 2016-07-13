@@ -2,7 +2,7 @@
  * 组成员
  */
 define([
-    "core/view/List",
+    "lib/view/List",
     'src/im/view/TeamMembersItem',
 ], function(ListView, TeamMembersItem) {
     var View = ListView.extend({

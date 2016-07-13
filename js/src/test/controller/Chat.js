@@ -1,5 +1,5 @@
 define([
-    'core/base/Router',
+    'lib/base/Router',
     'src/test/view/Chat'
 ], function(BaseController, ChatView) {
     var Controller = BaseController.extend({
@@ -11,7 +11,7 @@ define([
         },
         home: function(id) {
             debug.warn('bbbbbb');
-            FUI.view.create({
+            HBY.view.create({
                 key: "test",
                 view: ChatView,
                 isClean: true

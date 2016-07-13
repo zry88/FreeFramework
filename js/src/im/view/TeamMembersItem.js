@@ -2,7 +2,7 @@
  * 组成员条目
  */
 define([
-    "core/view/Item",
+    "lib/view/Item",
     "text!src/im/template/team-members-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({
@@ -25,7 +25,7 @@ define([
                 event.stopPropagation();
                 return false;
             }
-            FUI.ux.util.IM.openChat({
+            HBY.ux.util.IM.openChat({
                 chatId: chatId,
                 userId: this.model.get('userId')
             });
@@ -37,15 +37,15 @@ define([
                     teamId: this.options.chatId,
                     accounts: [this.model.get('id')]
                 };
-            FUI.util.System.showDialog('warning', '你确定删除该讨论组成员数据吗？', {
+            HBY.util.System.showDialog('warning', '你确定删除该讨论组成员数据吗？', {
                 '确定': function(event) {
-                    FUI.datas['teamMembers_' + that.options.chatId].remove(that.model);
+                    HBY.datas['teamMembers_' + that.options.chatId].remove(that.model);
                     that.remove();
-                    if (!FUI.datas['teamMembers_' + that.options.chatId].length) {
+                    if (!HBY.datas['teamMembers_' + that.options.chatId].length) {
                         // 解散组
-                        FUI.Events.trigger('im:dismissTeam', that.options.chatId);
+                        HBY.Events.trigger('im:dismissTeam', that.options.chatId);
                     } else {
-                        FUI.Events.trigger('im:delTeamMembers', data);
+                        HBY.Events.trigger('im:delTeamMembers', data);
                     }
                     $(this).dialog("close");
                 },

@@ -2,7 +2,7 @@
  * 群成员
  */
 define([
-    "core/data/Collection",
+    "lib/data/Collection",
     "src/im/model/TeamMember"
 ], function(BaseCollection, Model) {
     var Collection = BaseCollection.extend({
@@ -10,18 +10,18 @@ define([
         initialize: function(models, option) {
             this.parent(models, option);
             this.theTeam = null;
-            FUI.Events.off(null, null, this);
-            FUI.Events.on('im:collection:' + this.key + ':onReset', this.onReset, this);
+            HBY.Events.off(null, null, this);
+            HBY.Events.on('im:collection:' + this.key + ':onReset', this.onReset, this);
             // 添加成员
-            FUI.Events.on('im:collection:' + this.key + ':onAdd', this.onAdd, this);
+            HBY.Events.on('im:collection:' + this.key + ':onAdd', this.onAdd, this);
             // 离开群
-            FUI.Events.on('im:collection:' + this.key + ':onLeaveTeam', this.onRemove, this);
+            HBY.Events.on('im:collection:' + this.key + ':onLeaveTeam', this.onRemove, this);
             // 删除成员
-            FUI.Events.on('im:collection:' + this.key + ':onRemove', this.onRemove, this);
+            HBY.Events.on('im:collection:' + this.key + ':onRemove', this.onRemove, this);
 
             if (this.options.scene == 'team' && !this.length) {
                 this.theTeam = this.options.team || null;
-                FUI.Events.trigger('im:getTeamMembers', this.options.chatId);
+                HBY.Events.trigger('im:getTeamMembers', this.options.chatId);
             }
         },
         onReset: function(data) {
@@ -34,7 +34,7 @@ define([
                 if (account) {
                     // 系统返回数据
                     if (!parseInt(account)) continue;
-                    var theUser = FUI.datas['allUsers'].get(account);
+                    var theUser = HBY.datas['allUsers'].get(account);
                     if (theUser) {
                         dataObj = {
                             id: account,
@@ -73,7 +73,7 @@ define([
             var that = this;
             data = _.isArray(data) ? data : [data];
             _.each(data, function(theId, i) {
-                var theUser = FUI.ux.util.IM.getOneContacter({
+                var theUser = HBY.ux.util.IM.getOneContacter({
                     imAccountId: theId
                 });
                 if (theUser) {
@@ -96,8 +96,8 @@ define([
                 }
             }
             if(_.indexOf(data, window.imUser.imAccountId) >= 0){
-                FUI.Events.trigger('im:collection:session:onRemove', this.options.team.teamId);
-                FUI.Events.trigger('im:view:currentItem:removeOne', this.options.team.teamId);
+                HBY.Events.trigger('im:collection:session:onRemove', this.options.team.teamId);
+                HBY.Events.trigger('im:view:currentItem:removeOne', this.options.team.teamId);
             }
         },
     });

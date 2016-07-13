@@ -1,10 +1,10 @@
 define([
-    'core/view/component/Panel',
-    'core/view/component/Dropdown',
-    'core/view/component/DropdownBtn',
-    'core/view/component/BtnGroup',
+    'lib/view/component/Panel',
+    'lib/view/component/Dropdown',
+    'lib/view/component/DropdownBtn',
+    'lib/view/component/BtnGroup',
 ], function(PanelView, DropdownView, DropdownBtnView, BtnGroupView) {
-    FUI.widgets.test4 = PanelView.extend({
+    HBY.widgets.test4 = PanelView.extend({
         events: {
             // 'click button': 'onClickBtn',
             // 'click .li_item_css': 'onResultItem'
@@ -28,11 +28,11 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.pageId = option.context.id;
-            // FUI.Events.off(null, null, this);
-            // FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
-            // FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
+            // HBY.Events.off(null, null, this);
+            // HBY.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            // HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            FUI.view.create({
+            HBY.view.create({
                 key: this.id + '_menu',
                 el: this.$('.panel-body p'),
                 view: DropdownView,
@@ -80,7 +80,7 @@ define([
                     }]
                 }
             });
-            FUI.view.create({
+            HBY.view.create({
                 key: this.id + '_btngroup',
                 el: this.$('.panel-body p'),
                 view: BtnGroupView,
@@ -101,7 +101,7 @@ define([
                     }]
                 }
             });
-            FUI.view.create({
+            HBY.view.create({
                 key: this.id + '_dropdownBtn',
                 el: this.$('.panel-body p'),
                 view: DropdownBtnView,
@@ -158,5 +158,5 @@ define([
             // console.warn('ggggggggggggggg', this.theView.getSelectedRow());
         },
     });
-    return FUI.widgets.test4;
+    return HBY.widgets.test4;
 });

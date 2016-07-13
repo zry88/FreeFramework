@@ -1,5 +1,5 @@
 @import url(bootstrap.css?v=1);
-@import url(jquery-ui.min.css?v=1);
+@import url(jquery-ui.css?v=1);
 @import url(font-awesome.min.css?v=1);
 @import url(themify-icons.min.css?v=1);
 @import url(animate.css?v=1);
@@ -12,7 +12,12 @@ html,
 body {
     font-family: 'Microsoft Yahei'
 }
-
+/*#container{
+    height: 100%;
+    overflow-y: scroll;
+    bottom: 0;
+    position: absolute;
+}*/
 .wrap-content {
     padding-right: 0;
     padding-left: 0;
@@ -20,6 +25,28 @@ body {
 
 a:hover {
     text-decoration: none;
+}
+/*模态框*/
+.rightModal .modal-content {
+    height: 100%;
+    border-radius: 0;
+    border: none;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+}
+.rightModal .modal-body {
+    position: absolute;
+    top: 56px;
+    bottom: 65px;
+    overflow-y: auto;
+}
+.rightModal .modal-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.rightModalBg .modal-backdrop{
+    opacity: 0.01;
 }
 /*分页*/
 .pagination {

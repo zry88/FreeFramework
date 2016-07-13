@@ -9,7 +9,7 @@
         <% }else{ %>
         <span class="add_chat_member" id="slideGroupName">
             <i class="group_icon">
-            <%= FUI.ux.util.IM.getImage(user.photoUrl, user.displayName, 's', {
+            <%= HBY.ux.util.IM.getImage(user.photoUrl, user.displayName, 's', {
                 'css': {
                     'position': 'inherit',
                     'display': 'inline-block'
@@ -32,13 +32,13 @@
             <h1>讨论组成员</h1>
             <div class="member_lists">
                 <a href="javascript:;" class="member" id="currentUserInGroup">
-                    <%= FUI.ux.util.IM.getImage(window.imUser.photoUrl, window.imUser.displayName) %>
+                    <%= HBY.ux.util.IM.getImage(window.imUser.photoUrl, window.imUser.displayName) %>
                     <p class="right_member_name mySelfName" id="mySelfName"><%= window.imUser.displayName %></p>
                 </a>
                 <span class="new_member" id="newMember">
                     <% if(scene == 'p2p'){ %>
                     <a href="javascript:;" class="member">
-                        <%= FUI.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
+                        <%= HBY.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
                         <p class="right_member_name"><%= user.displayName %></p>
                     </a>
                     <% } %>

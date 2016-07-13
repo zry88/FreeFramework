@@ -1,15 +1,16 @@
 define([
-    'core/view/component/Panel',
-    'core/view/component/Table',
-    'core/view/element/Button',
-    'core/view/Modal',
-    'core/view/component/Tooltip',
-    'core/view/component/Popover'
-], function(PanelView, TableView, BtnView, DialogView) {
-    FUI.widgets.test2 = PanelView.extend({
+    'lib/view/component/Panel',
+    'lib/view/component/Table',
+    'lib/view/element/Button',
+    'lib/view/Modal',
+    'vendor/bootstrap/Tooltip',
+    'vendor/bootstrap/Popover'
+], function(PanelView, TableView, BtnView, ModalView) {
+    HBY.widgets.test2 = PanelView.extend({
         events: {
             'click button': 'onClickBtn',
-            'click .btn-danger': 'onModal'
+            'click .btn-danger': 'onModal',
+            'click .btn-warning': 'onDialog'
         },
         initialize: function(option) {
             var defaults = {
@@ -30,11 +31,11 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.pageId = option.context.id;
-            // FUI.Events.off(null, null, this);
-            // FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
-            // FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
+            // HBY.Events.off(null, null, this);
+            // HBY.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            // HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            this.theView = FUI.view.create({
+            this.theView = HBY.view.create({
                 key: this.id + '_table',
                 el: this.$('.panel-body p'),
                 view: TableView,
@@ -68,7 +69,18 @@ define([
                         desc: '小心轻放'
                     }, {
                         name: '爱心',
-                        size: 800,
+                        size: [{
+                            key: '0_btn',
+                            view: BtnView,
+                            context: this,
+                            options: {
+                                html: '对话框',
+                                className: 'btn btn-warning btn-xs',
+                                style: {
+                                    marginRight: '10px'
+                                },
+                            }
+                        }],
                         desc: '玩不起就别玩'
                     }, {
                         name: '苹果',
@@ -100,7 +112,7 @@ define([
                             view: BtnView,
                             context: this,
                             options: {
-                                html: '模态框',
+                                html: '详情页',
                                 className: 'btn btn-danger btn-xs',
                             }
                         }]
@@ -121,16 +133,116 @@ define([
         onClickBtn: function(event) {
             console.warn('ggggggggggggggg', this.theView.getSelectedRow());
         },
-        onModal: function(event){
-            FUI.view.create({
-                key: this.id + '_modal',
-                view: DialogView,
-                type: 'dialog',
+        onDialog: function(event) {
+            HBY.view.create({
+                key: this.id + '_dialog',
+                view: ModalView,
+                type: 'modal',
+                animate: {
+                    name: 'fadeIn'
+                },
                 options: {
-                    title: '模态框标题'
+                    backdrop: true,
+                    isDialog: true,
+                    // size: 'lg',
+                    header: {
+                        title: '对话框标题',
+                        hide: false
+                    },
+                    body: {
+                        html: {
+                            key: '6_btn',
+                            view: BtnView,
+                            context: this,
+                            options: {
+                                html: '内容为视图',
+                                className: 'btn btn-orange'
+                            }
+                        }
+                    },
+                    footer: {
+                        style: {
+                            // textAlign: 'center'
+                        },
+                        buttons: [{
+                            text: '确定',
+                            className: 'btn btn-primary',
+                            isClose: true,
+                            click: function(e) {
+                                console.warn('确定', e);
+                            }
+                        }, {
+                            text: '取消',
+                            className: 'btn btn-warning',
+                            isClose: true,
+                            click: function(e) {
+                                console.warn('取消', e);
+                            }
+                        }]
+                    }
+                }
+            });
+        },
+        onModal: function(event) {
+            HBY.view.create({
+                key: this.id + '_modal',
+                view: ModalView,
+                type: 'modal',
+                animate: {
+                    name: 'slideInRight'
+                        // name: 'fadeIn'
+                },
+                options: {
+                    backdrop: true,
+                    // isDialog: true,
+                    position: 'right',
+                    // size: 'lg',
+                    width: 700,
+                    height: '100%',
+                    header: {
+                        title: '模态框标题',
+                        hide: false
+                    },
+                    body: {
+                        // html: {
+                        //     key: '5_btn',
+                        //     view: BtnView,
+                        //     context: this,
+                        //     options: {
+                        //         html: '内容为视图',
+                        //         className: 'btn btn-orange'
+                        //     }
+                        // }
+                        html: {
+                            url: '/ajax2.html'
+                        }
+                    },
+                    footer: {
+                        style: {
+                            // textAlign: 'center'
+                        },
+                        buttons: [{
+                            // text: 'cancel',
+                            click: function(e) {
+                                console.warn('关闭', e);
+                            }
+                        }, {
+                            text: '确定',
+                            className: 'btn btn-primary',
+                            click: function(e) {
+                                console.warn('确定', e);
+                            }
+                        }, {
+                            text: '取消',
+                            className: 'btn btn-warning',
+                            click: function(e) {
+                                console.warn('取消', e);
+                            }
+                        }]
+                    }
                 }
             });
         }
     });
-    return FUI.widgets.test2;
+    return HBY.widgets.test2;
 });

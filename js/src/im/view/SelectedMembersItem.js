@@ -2,7 +2,7 @@
  * 已选人员条目
  */
 define([
-    "core/view/Item",
+    "lib/view/Item",
     "text!src/im/template/selected-members-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({
@@ -23,9 +23,9 @@ define([
         // 删除当前人员
         delOne: function(event){
             var target = $(event.currentTarget);
-            FUI.datas['selectedMembers_' + this.options.chatId].remove(this.model);
+            HBY.datas['selectedMembers_' + this.options.chatId].remove(this.model);
             this.remove();
-            FUI.Events.trigger('view:memberTree:clearChecked', {treeId: this.model.get('id')});
+            HBY.Events.trigger('view:memberTree:clearChecked', {treeId: this.model.get('id')});
             event.stopPropagation();
         },
     });

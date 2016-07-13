@@ -2,7 +2,7 @@
  * 选择讨论组人员视图
  */
 define([
-    'core/view/UiDialog',
+    'lib/view/UiDialog',
     'text!src/im/template/addmember-dialog.html',
     "src/im/dataproxy/IM",
     "src/im/view/MemberTree",
@@ -32,7 +32,7 @@ define([
                 theMember.name = theMember.displayName;
                 theTeamMembers = [this.options.user];
             }else{
-                theTeamMembers = _.pluck(FUI.datas['teamMembers_' + this.options.chatId].models, 'attributes');
+                theTeamMembers = _.pluck(HBY.datas['teamMembers_' + this.options.chatId].models, 'attributes');
             }
             if(theTeamMembers){
                 _.each(theTeamMembers, function(user, i){
@@ -50,14 +50,14 @@ define([
             this.options.teamMembers = teamMembers;
             this.selectedMembers.reset(teamMembers);
             // 初始化搜索人员数据
-            var theArr = FUI.datas.imDeparts.pluck('children');
+            var theArr = HBY.datas.imDeparts.pluck('children');
             if (theArr.length) {
                 for (var i = 0; i < theArr.length; i++) {
                     this.allMembers = _.union(this.allMembers, theArr[i]);
                 }
             }
             // 实例化人员树视图
-            FUI.view.create({
+            HBY.view.create({
                 key: "dialog_tree",
                 el: '#left_list_display',
                 context: this,
@@ -65,7 +65,7 @@ define([
                 options: this.options
             });
             // 实例化已选人员视图
-            FUI.view.create({
+            HBY.view.create({
                 key: "selectedMembers",
                 el: '.right_list_con',
                 context: this,

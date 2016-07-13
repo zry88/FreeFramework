@@ -26,7 +26,7 @@ define([
                         'X-CSRF-Token': localStorage.getItem('token')
                     },
                     params: {
-                        fuid: window.account.get('uid')
+                        HBYd: window.account.get('uid')
                     },
                 }
             });

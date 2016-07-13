@@ -2,7 +2,7 @@
  * 会话视图
  */
 define([
-    "core/view/List",
+    "lib/view/List",
     'src/im/view/SessionItem',
 ], function(ListView, SessionItem) {
     var View = ListView.extend({
@@ -11,7 +11,7 @@ define([
         itemView: SessionItem,
         initialize: function(option) {
             this.parent(option);
-            FUI.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
+            HBY.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
         },
         onChangeBg: function(data){
             var selector = _.isObject(data) ? this.$('#sessionItem_' + data.chatId) : this.$('#' + data);

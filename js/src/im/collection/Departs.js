@@ -2,7 +2,7 @@
  * im部门
  */
 define([
-    "core/data/collection/Remote",
+    "lib/data/collection/Remote",
     "src/im/model/Depart"
 ], function(RemoteCollection, Model) {
     var Collection = RemoteCollection.extend({
@@ -20,7 +20,7 @@ define([
         },
         changeData: function(data) {
             _.each(data, function(val, index){
-                var theValSubArr = FUI.datas['allDepart'].where({departId: val.id});
+                var theValSubArr = HBY.datas['allDepart'].where({departId: val.id});
                 var SubArr = _.pluck(theValSubArr, 'attributes'),
                     subData = [];
                 if(SubArr.length){

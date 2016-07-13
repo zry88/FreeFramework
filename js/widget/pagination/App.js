@@ -11,11 +11,11 @@
  * onPrev: 上一页方法
  */
 define([
-    "core/view/View",
+    "lib/view/View",
     "text!widget/pagination/app.html",
-    'core/view/component/Dropdown',
+    'lib/view/component/Dropdown',
 ], function(BaseView, template, DropdownView) {
-    FUI.widgets.pagination = BaseView.extend({
+    HBY.widgets.pagination = BaseView.extend({
         template: _.template(template),
         events: {
             "click li.page": "gotoPage",
@@ -58,7 +58,7 @@ define([
                 showEllipsis: showEllipsis //省略号
             }));
             if (this.$('.pageSize').length) {
-                FUI.view.create({
+                HBY.view.create({
                     key: this.id + '_dropdown',
                     el: this.$('.pageSize > .info'),
                     view: DropdownView,
@@ -121,5 +121,5 @@ define([
             this.collection.prevPage(event, this.options.onPrev);
         }
     });
-    return FUI.widgets.pagination;
+    return HBY.widgets.pagination;
 });

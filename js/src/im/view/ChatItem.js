@@ -3,7 +3,7 @@
  * 聊天窗口
  */
 define([
-    "core/view/Item",
+    "lib/view/Item",
     "text!src/im/template/chat-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({
@@ -34,7 +34,7 @@ define([
             if (type !== 'text' && content && !this.model.get('is_uploading')) {
                 this.options.filePreviewArr = this.options.filePreviewArr || [];
                 var contentObj = typeof content == 'string' ? JSON.parse(content) : content,
-                    canPreview = FUI.ux.util.Qiniu.isCanPreview(contentObj.name);
+                    canPreview = HBY.ux.util.Qiniu.isCanPreview(contentObj.name);
                 if (contentObj.fileType !== 'audio') {
                     var hasOne = _.findWhere(this.options.filePreviewArr, { msgId: idClient });
                     if (!hasOne && canPreview) {
@@ -55,10 +55,10 @@ define([
             var target = $(event.currentTarget),
                 userId = target.data('userid'),
                 chatId = target.data('chatid');
-            if (chatId == window.imUser.imAccountId || !chatId || chatId == FUI.currentChatId) {
+            if (chatId == window.imUser.imAccountId || !chatId || chatId == HBY.currentChatId) {
                 return false;
             }
-            FUI.ux.util.IM.openChat({
+            HBY.ux.util.IM.openChat({
                 chatId: chatId,
                 userId: userId
             });
@@ -110,7 +110,7 @@ define([
             $.createFilePreview({
                 items: that.options.filePreviewArr,
                 type: 'IM',
-                context: FUI,
+                context: HBY,
                 callback: function(oFilePreview) {
                     oFilePreview.openFilePreViewDialog(target.attr('data-id'), that.options.chatId);
                 }
@@ -131,12 +131,12 @@ define([
                 content = target.data('content');
             require(['widget/selectPersonnel/app'], function() {
                 // 选择转发人员
-                FUI.view.create({
+                HBY.view.create({
                     key: 'selectPersonnel',
                     el: "body",
                     options: {},
                     type: 'dialog',
-                    view: FUI.widgets.selectPersonnel,
+                    view: HBY.widgets.selectPersonnel,
                     dialogConfig: {
                         title: '请选择人员',
                         modal: true,
@@ -161,7 +161,7 @@ define([
                         buttons: {
                             '确定': function(e) {
                                 _.extend(content,$(e.currentTarget).data('forward'));
-                                FUI.Events.trigger('im:view:chatPanel:relaySend', content);
+                                HBY.Events.trigger('im:view:chatPanel:relaySend', content);
                                 $(this).dialog("close");
                             },
                             '取消': function() {

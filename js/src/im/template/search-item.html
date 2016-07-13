@@ -5,7 +5,7 @@
             <img src="/public/style/images/im/im_group_icon.png" class="list_user_icon" width="20" height="20">
         </span>
     <% }else{ %>
-        <%= FUI.ux.util.IM.getImage(photoUrl, displayName) %>
+        <%= HBY.ux.util.IM.getImage(photoUrl, displayName) %>
     <% } %>
     </a>
     <p class="userNickname"><%= scene == 'team' ? (displayName || '讨论组') : displayName %></p>

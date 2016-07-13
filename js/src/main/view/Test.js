@@ -1,9 +1,9 @@
 define([
-    'core/view/Layout',
+    'lib/view/Layout',
 ], function(LayoutView) {
     var View = LayoutView.extend({
         initialize: function(option) {
-            FUI.Events.off(null, null, this);
+            HBY.Events.off(null, null, this);
             var defaults = {
                 options: {
                     style: {

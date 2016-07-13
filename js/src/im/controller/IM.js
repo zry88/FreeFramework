@@ -1,5 +1,5 @@
 define([
-    'core/router/Router',
+    'lib/router/Router',
     "src/im/dataproxy/IM",
     'src/im/view/IM',
     'src/im/view/Contacts',
@@ -17,7 +17,7 @@ define([
         },
         home: function() {
             var that = this;
-            FUI.view.create({
+            HBY.view.create({
                 key: "crm_im",
                 el: 'body',
                 view: IMView,
@@ -30,23 +30,23 @@ define([
         // 初始化im功能
         init: function(key, context) {
             // 右边联系人
-            FUI.view.create({
+            HBY.view.create({
                 key: 'listMemberAndGroup',
-                context: FUI.views[key],
+                context: HBY.views[key],
                 view: ContactsView,
                 collection: ImDataproxy.getImdeparts()
             });
             // 左边当前联系人
-            FUI.view.create({
+            HBY.view.create({
                 key: 'currentContacts',
-                context: FUI.views[key],
+                context: HBY.views[key],
                 view: CurrentContacts,
                 collection: ImDataproxy.getCurrentContacts()
             });
             // 会话列表
-            FUI.view.create({
+            HBY.view.create({
                 key: 'departMember_p',
-                context: FUI.views[key],
+                context: HBY.views[key],
                 view: Session,
                 collection: ImDataproxy.getSession()
             }).rendAll();
@@ -63,8 +63,8 @@ define([
             };
             // 获取上传token
             ImDataproxy.getUploadToken(null, function(resp) {
-                FUI.uploadToken = resp;
-                FUI.view.create({
+                HBY.uploadToken = resp;
+                HBY.view.create({
                     key: "chatpanel",
                     el: '#imContainer',
                     view: ChatPanel,

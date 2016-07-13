@@ -2,7 +2,7 @@
  * 部门
  */
 define([
-    "core/data/model/Remote"
+    "lib/data/model/Remote"
 ], function(RemoteModel) {
     var Model = RemoteModel.extend({
         idAttribute: 'id',

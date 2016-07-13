@@ -29,15 +29,23 @@ define([
                     if (_.isArray(this.options.html)) {
                         this.$el.empty();
                         _.each(this.options.html, function(val, index) {
-                            var view = FUI.view.create(val);
-                            that.$el.append(view.render().el);
+                            if (val.key) {
+                                var view = FUI.view.create(val);
+                                that.$el.html(view.render().el);
+                            } else {
+                                that.$el.html(val);
+                            }
                         });
                     } else {
                         if (_.isFunction(this.options.html)) {
                             this.$el.html(this.options.html());
                         } else {
-                            var view = FUI.view.create(this.options.html);
-                            this.$el.html(view.render().el);
+                            if (this.options.html.key) {
+                                var view = FUI.view.create(this.options.html);
+                                this.$el.html(view.render().el);
+                            } else {
+                                this.$el.html(this.options.html);
+                            }
                         }
                     }
                 } else {

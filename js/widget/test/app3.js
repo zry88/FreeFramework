@@ -1,10 +1,10 @@
 define([
-    'core/view/View',
-    'core/view/component/DataTable',
-    'core/view/element/Button',
+    'lib/view/View',
+    'lib/view/component/DataTable',
+    'lib/view/element/Button',
     'src/test/collection/Test',
 ], function(BaseView, DataTable, BtnView, TestCollection) {
-    FUI.widgets.test3 = BaseView.extend({
+    HBY.widgets.test3 = BaseView.extend({
         events: {
             'click th': 'onClickBtn',
             // 'click .li_item_css': 'onResultItem'
@@ -32,11 +32,11 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.pageId = option.context.id;
-            // FUI.Events.off(null, null, this);
-            // FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
-            // FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
+            // HBY.Events.off(null, null, this);
+            // HBY.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            // HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            this.theView = FUI.view.create({
+            this.theView = HBY.view.create({
                 key: this.id + '_datatable',
                 el: this.$el,
                 view: DataTable,
@@ -106,12 +106,12 @@ define([
             });
             // 分页
             require(['widget/pagination/App'], function() {
-                FUI.view.create({
+                HBY.view.create({
                     key: that.id + '_paging',
                     el: that.$('.panel-footer'),
                     context: that,
                     inset: 'html',
-                    view: FUI.widgets.pagination,
+                    view: HBY.widgets.pagination,
                     collection: TestCollection,
                     options: {
                         style: {
@@ -136,5 +136,5 @@ define([
             console.warn('数据表格已被选中行: ', this.theView.getSelectedRow());
         },
     });
-    return FUI.widgets.test3;
+    return HBY.widgets.test3;
 });

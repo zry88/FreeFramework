@@ -4,7 +4,7 @@
  * 2016/1/8 update 2016/1/8
  */
 define([
-    'core/router/Router',
+    'lib/router/Router',
     'src/main/view/Main',
     // "src/main/dataproxy/Main",
 ], function(BaseController, MainView) {
@@ -19,7 +19,7 @@ define([
             personalsetting: 'js/addressBook/app.js'
         },
         initialize: function() {
-            // FUI.currentModule = 'home';
+            // HBY.currentModule = 'home';
             // 创建布局框架
             new MainView();
         },

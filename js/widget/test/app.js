@@ -1,11 +1,11 @@
 define([
-    'core/view/component/Panel',
-    'core/view/element/Button',
-    'core/view/component/Nav',
-    'core/view/component/Tab',
-    'core/view/component/Dropdown',
+    'lib/view/component/Panel',
+    'lib/view/element/Button',
+    'lib/view/component/Nav',
+    'lib/view/component/Tab',
+    'lib/view/component/Dropdown',
 ], function(PanelView, BtnView, NavView, TabView, DropdownView) {
-    FUI.widgets.test = PanelView.extend({
+    HBY.widgets.test = PanelView.extend({
         events: {
             'click button': 'onKeyClick',
             // 'click .li_item_css': 'onResultItem'
@@ -29,12 +29,12 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.parentId = option.context.id;
-            FUI.Events.off(null, null, this);
-            FUI.Events.on(this.parentId + ':onEvent', this.onevent, this);
-            FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
+            HBY.Events.off(null, null, this);
+            HBY.Events.on(this.parentId + ':onEvent', this.onevent, this);
+            HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            // var btnView = FUI.view.create();
-            FUI.view.create({
+            // var btnView = HBY.view.create();
+            HBY.view.create({
                 key: this.id + '_menu',
                 el: this.$('.panel-body p'),
                 view: NavView,
@@ -78,7 +78,7 @@ define([
                     }]
                 }
             });
-            FUI.view.create({
+            HBY.view.create({
                 key: this.id + '_tab',
                 el: this.$('.tt'),
                 view: TabView,
@@ -107,7 +107,7 @@ define([
                         html: '菜单2',
                         target: 'tabPanel2',
                         content: {
-                            url: 'http://freeui.com/ajax.html'
+                            url: '/ajax.html'
                         }
                     }, {
                         url: 'javascript:;',
@@ -184,7 +184,7 @@ define([
             });
         },
         onKeyClick: function(event) {
-            FUI.Events.trigger(this.parentId + ':triggerEvent', { num: 168 }, 100);
+            HBY.Events.trigger(this.parentId + ':triggerEvent', { num: 168 }, 100);
         },
         onevent: function(data) {
             this.$('#panel_2_header span').text(data.num);
@@ -194,5 +194,5 @@ define([
             console.warn(data.attr('id'));
         }
     });
-    return FUI.widgets.test;
+    return HBY.widgets.test;
 });

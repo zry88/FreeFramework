@@ -2,7 +2,7 @@
  * 当前联系人
  */
 define([
-    "core/data/Collection",
+    "lib/data/Collection",
     "src/im/model/CurrentUser"
 ], function(BaseCollection, Model) {
     var Collection = BaseCollection.extend({
@@ -11,9 +11,9 @@ define([
         pageSize: 20,
         initialize: function(models, option){
             this.parent(models, option);
-            FUI.Events.off(null, null, this);
-            FUI.Events.on('im:collection:currentContacts:onAddOne', this.onAddOne, this);
-            FUI.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
+            HBY.Events.off(null, null, this);
+            HBY.Events.on('im:collection:currentContacts:onAddOne', this.onAddOne, this);
+            HBY.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
         },
         onAddOne: function(data) {
             this.add(data);

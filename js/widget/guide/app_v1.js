@@ -83,9 +83,9 @@ define([
             $(this.options.el).append(this.$el);
         }
         $(this.options.el).append(this.$el);
-        $('.tabpanel-container').css({
-            overflowY: 'scroll'
-        });
+        // $('.tabpanel-container').css({
+        //     overflowY: 'scroll'
+        // });
         this.renderAll();
     };
     Guide.prototype = {

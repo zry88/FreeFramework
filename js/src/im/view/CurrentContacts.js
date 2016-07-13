@@ -2,7 +2,7 @@
  * 当前联系人
  */
 define([
-    "core/view/List",
+    "lib/view/List",
     'src/im/view/CurrentContactsItem'
 ], function(ListView, CurrentContactsItem) {
     var View = ListView.extend({
@@ -15,10 +15,10 @@ define([
         initialize: function(option) {
             this.parent(option);
             // ListView.prototype.initialize.call(this, option);
-            FUI.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
+            HBY.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
         },
         renderBefore: function(){
-            if(FUI.datas.currentContacts.length <= 1){
+            if(HBY.datas.currentContacts.length <= 1){
                 this.hideSelf();
             }
         },
@@ -32,7 +32,7 @@ define([
         },
         addOne: function(model) {
             ListView.prototype.addOne.call(this, model);
-            if(FUI.datas.currentContacts.length > 1){
+            if(HBY.datas.currentContacts.length > 1){
                 this.showSelf();
             }
             this.changeBg();

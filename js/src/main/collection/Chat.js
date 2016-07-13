@@ -2,7 +2,7 @@
  * chat Collection
  */
 define([
-    "core/data/collection/Remote",
+    "lib/data/collection/Remote",
     // "src/main/model/Main"
 ], function(RemoteCollection) {
     var AppCollection = RemoteCollection.extend({

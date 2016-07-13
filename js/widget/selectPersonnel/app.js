@@ -2,11 +2,11 @@
  * 选择讨论组人员视图
  */
 define([
-    'core/view/UiDialog',
+    'lib/view/UiDialog',
     'text!widget/selectPersonnel/select-personnel.html',
     "widget/selectPersonnel/MemberTree"
 ], function(BaseUiDialog, Template, MemberTree) {
-    FUI.widgets.selectPersonnel = BaseUiDialog.extend({
+    HBY.widgets.selectPersonnel = BaseUiDialog.extend({
         template: _.template(Template),
         events: {
             'keyup .dialog_title_input': 'onKeyClick',
@@ -20,14 +20,14 @@ define([
             this.allMembers = [];
 
             // 初始化搜索人员数据
-            var theArr = FUI.datas.imDeparts.pluck('children');
+            var theArr = HBY.datas.imDeparts.pluck('children');
             if (theArr.length) {
                 for (var i = 0; i < theArr.length; i++) {
                     this.allMembers = _.union(this.allMembers, theArr[i]);
                 }
             }
             // 实例化人员树视图
-            FUI.view.create({
+            HBY.view.create({
                 key: "dialog_tree",
                 el: '#left_list_display',
                 inset: 'html',
@@ -88,5 +88,5 @@ define([
             }
         }
     });
-    return new FUI.widgets.selectPersonnel();
+    return new HBY.widgets.selectPersonnel();
 });

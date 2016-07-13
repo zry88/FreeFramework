@@ -2,7 +2,7 @@
  * 联系人条目视图
  */
 define([
-    "core/view/Item",
+    "lib/view/Item",
     "text!src/im/template/contacts-item.html"
 ], function(ItemView, Template) {
     var View = ItemView.extend({

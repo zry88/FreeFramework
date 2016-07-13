@@ -12,7 +12,7 @@ define([
         defaults: {
             uid: "",
             created: "",
-            fuid: "",
+            HBYd: "",
             fuser: {
                 uid: 0,
                 followers_count: null,

@@ -2,7 +2,7 @@
  * 聊天窗视图
  */
 define([
-    "core/view/List",
+    "lib/view/List",
     "src/im/dataproxy/IM",
     'text!src/im/template/chat-panel.html',
     'src/im/view/ChatItem',
@@ -10,7 +10,7 @@ define([
     'src/im/view/TeamMembers',
     "widget/uploadfile/Qiniu",
     "imagesloaded",
-    "core/ux/ImageCapture/ImageCapture",
+    "lib/ux/ImageCapture/ImageCapture",
     "lib/vendor/components/facebox/facebox"
 ], function(ListView, ImDataproxy, Template, ChatItem, AddTeamMember, TeamMembers, QiniuUpload, imagesLoaded, ImageCapture) {
     var View = ListView.extend({
@@ -35,12 +35,12 @@ define([
             'keydown .theme_text': 'onKeyTeamName'
         },
         initialize: function(option) {
-            FUI.Events.off(null, null, this);
-            FUI.Events.on('im:view:chatPanel:closeChat', this.closeChat, this);
-            FUI.Events.on('im:collection:teams:updateTeamName', this.updateTeamName, this);
-            FUI.Events.on('im:view:chatPanel:showMoreBtn', this.showMoreBtn, this);
-            FUI.Events.on('im:view:chatPanel:relaySend', this.relaySend, this);
-            var myAccount = FUI.ux.util.IM.getOneContacter({
+            HBY.Events.off(null, null, this);
+            HBY.Events.on('im:view:chatPanel:closeChat', this.closeChat, this);
+            HBY.Events.on('im:collection:teams:updateTeamName', this.updateTeamName, this);
+            HBY.Events.on('im:view:chatPanel:showMoreBtn', this.showMoreBtn, this);
+            HBY.Events.on('im:view:chatPanel:relaySend', this.relaySend, this);
+            var myAccount = HBY.ux.util.IM.getOneContacter({
                     userId: window.imUser.userId
                 }),
                 scene = option.options.scene,
@@ -54,12 +54,12 @@ define([
                     team: {}
                 };
             if (scene == 'p2p') {
-                var theUser = FUI.ux.util.IM.getOneContacter({
+                var theUser = HBY.ux.util.IM.getOneContacter({
                     imAccountId: chatId
                 });
                 defaults.user = theUser;
             } else {
-                var theTeam = FUI.ux.util.IM.getOneTeam({
+                var theTeam = HBY.ux.util.IM.getOneTeam({
                     teamId: chatId
                 });
                 defaults.team = theTeam;
@@ -69,13 +69,13 @@ define([
             if (!storage.getItem('keyType')) {
                 storage.setItem('keyType', 'enter');
             }
-            FUI.keyType = storage.getItem('keyType');
-            // FUI.keyType = FUI.keyType || 'enter'; //enter/ ctrl+enter
-            option.options.keyType = FUI.keyType;
+            HBY.keyType = storage.getItem('keyType');
+            // HBY.keyType = HBY.keyType || 'enter'; //enter/ ctrl+enter
+            option.options.keyType = HBY.keyType;
             this.parent(option);
             // 定义变量
             var that = this;
-            FUI.currentChatId = chatId;
+            HBY.currentChatId = chatId;
             this.msgType = 'text'; //text/custom
             this.contentEl = '#content_' + chatId;
             this.newHeight = 0;
@@ -86,25 +86,25 @@ define([
             this.selectedMembers = ImDataproxy.getSelectedMembers(this.options);
             // 重置当前会话
             this.sessionId = (this.options.scene == 'team' ? 'team-' : 'p2p-') + chatId;
-            FUI.Events.trigger('im:setUnread', this.sessionId);
+            HBY.Events.trigger('im:setUnread', this.sessionId);
             var contentEl = this.$(this.contentEl);
             contentEl.off().on('keydown', function(event) {
-                if (FUI.keyType == 'enter') {
+                if (HBY.keyType == 'enter') {
                     if (!event.ctrlKey && event.which === 13) {
                         that.sendText();
                         return false;
                     }
                     if (event.ctrlKey && event.which === 13) {
-                        FUI.ux.util.IM.insertText(contentEl, FUI.util.System.checkBrowser().mozilla ? '<br>' : '<br><br>');
+                        HBY.ux.util.IM.insertText(contentEl, HBY.util.System.checkBrowser().mozilla ? '<br>' : '<br><br>');
                     }
                 } else {
                     if (event.ctrlKey && event.keyCode == 13) {
                         that.sendText();
                     }
-                    if (!event.ctrlKey && event.keyCode == 13 && !FUI.util.System.checkBrowser().mozilla) {
+                    if (!event.ctrlKey && event.keyCode == 13 && !HBY.util.System.checkBrowser().mozilla) {
                         setTimeout(function() {
-                            contentEl.html(FUI.ux.util.IM.filterHtml(contentEl.html()));
-                            FUI.ux.util.IM.insertText(contentEl, '<br>');
+                            contentEl.html(HBY.ux.util.IM.filterHtml(contentEl.html()));
+                            HBY.ux.util.IM.insertText(contentEl, '<br>');
                         }, 0);
                     }
                 }
@@ -121,12 +121,12 @@ define([
                 },
                 iconPath: CONFIG.FACE_ICON_PATH,
                 itemClassPrefix: 'fb0',
-                tag: FUI.ux.util.IM.faceTags
+                tag: HBY.ux.util.IM.faceTags
             });
             // 实例化截图插件
             ImageCapture.initPlugin();
             // 实例化上传插件
-            FUI.view.create({
+            HBY.view.create({
                 key: "qiniuUpload",
                 context: this,
                 view: QiniuUpload,
@@ -137,7 +137,7 @@ define([
                     progressEl: '.ajax-file-upload-bar',
                     context: this,
                     module: 'im',
-                    uptoken: FUI.uploadToken,
+                    uptoken: HBY.uploadToken,
                     init: {
                         FilesAdded: function(up, files) {
                             debug.warn('加文件', files);
@@ -146,12 +146,12 @@ define([
                             _.each(files, function(file, index) {
                                 if (!file.size) {
                                     hasError = true;
-                                    FUI.util.System.showMsg('warning', '上传文件大小不能为0');
+                                    HBY.util.System.showMsg('warning', '上传文件大小不能为0');
                                     up.removeFile(file);
                                     up.stop();
                                 }
                                 if (filesCount > 4) {
-                                    if (!hasError) FUI.util.System.showMsg('warning', '上传文件数不能大于4个');
+                                    if (!hasError) HBY.util.System.showMsg('warning', '上传文件数不能大于4个');
                                     hasError = true;
                                     up.removeFile(file);
                                     up.stop();
@@ -162,13 +162,13 @@ define([
                                     that.msgType = 'custom';
                                     var fileObj = that.getContentObj({
                                         fileId: item.id,
-                                        fileType: FUI.util.Media.isImage(item.name) ? 'image' : 'file',
+                                        fileType: HBY.util.Media.isImage(item.name) ? 'image' : 'file',
                                         size: item.size,
                                         name: item.name,
                                         status: item.status
                                     });
                                     fileObj.is_uploading = true;
-                                    FUI.Events.trigger('im:collection:chat_' + chatId + ':onMsg', fileObj);
+                                    HBY.Events.trigger('im:collection:chat_' + chatId + ':onMsg', fileObj);
                                 });
                             }
                         },
@@ -178,7 +178,7 @@ define([
                             var sourceLink = domain + res.key;
                             var fileObj = {
                                 fileId: file.id,
-                                fileType: FUI.util.Media.isImage(file.name) ? 'image' : 'file',
+                                fileType: HBY.util.Media.isImage(file.name) ? 'image' : 'file',
                                 url: sourceLink,
                                 size: file.size,
                                 name: file.name,
@@ -252,7 +252,7 @@ define([
         onPasteContent: function(event) {
             var target = $(event.currentTarget);
             setTimeout(function() {
-                target.html(FUI.ux.util.IM.filterHtml(target.html()));
+                target.html(HBY.ux.util.IM.filterHtml(target.html()));
                 var contentHtml = target.html();
                 if (contentHtml.indexOf('<img') >= 0 && contentHtml.indexOf('<img face') < 0) {
                     target.html('');
@@ -286,7 +286,7 @@ define([
             this.$('#imSendSlectUl li').find('i').removeClass('imIconSelected');
             target.addClass('imIconSelected');
             window.localStorage.setItem('keyType', keytype);
-            FUI.keyType = keytype;
+            HBY.keyType = keytype;
             this.onImSendSlect();
             event.stopPropagation();
         },
@@ -300,7 +300,7 @@ define([
                 } else {
                     isOwner = false;
                 }
-                FUI.util.System.showDialog('warning', '你确定要' + (isOwner ? '解散' : '退出') + '该组吗？', {
+                HBY.util.System.showDialog('warning', '你确定要' + (isOwner ? '解散' : '退出') + '该组吗？', {
                     '确定': function(event) {
                         isOwner ? that.dismissTeam(teamId) : that.leaveTeam(teamId);
                         $(this).dialog("close");
@@ -316,7 +316,7 @@ define([
                 var theme_text = this.$('.theme_text'),
                     teamName = theme_text.val();
                 if (teamName.replace(/ /g, '').length) {
-                    FUI.Events.trigger('im:updateTeam', {
+                    HBY.Events.trigger('im:updateTeam', {
                         teamId: this.options.chatId,
                         name: teamName
                     });
@@ -347,21 +347,21 @@ define([
                     }
                 });
             } else {
-                FUI.ux.util.IM.showDownloadDialog();
+                HBY.ux.util.IM.showDownloadDialog();
             }
         },
         // 关闭聊天窗
         onCloseChat: function(event) {
             // this.closeChat(this.options.chatId);
-            // FUI.Events.trigger('global:im:hideIM');
-            FUI.currentChatId = 0;
-            FUI.datas.session.currentItem = 0;
-            FUI.Events.trigger('im:setUnread', 0);
-            FUI.datas.currentContacts.each(function(model, index) {
+            // HBY.Events.trigger('global:im:hideIM');
+            HBY.currentChatId = 0;
+            HBY.datas.session.currentItem = 0;
+            HBY.Events.trigger('im:setUnread', 0);
+            HBY.datas.currentContacts.each(function(model, index) {
                 var sessionId = (model.get('scene') == 'team' ? 'team-' : 'p2p-') + model.get('chatId');
-                FUI.Events.trigger('im:reSetUnread', sessionId);
+                HBY.Events.trigger('im:reSetUnread', sessionId);
             });
-            FUI.datas.currentContacts.reset([]);
+            HBY.datas.currentContacts.reset([]);
             this.remove();
             event.stopPropagation();
         },
@@ -379,7 +379,7 @@ define([
             target.slideToggle('normal');
             // 组成员视图
             if (!this.$('#newMember > a').length && this.options.scene == 'team') {
-                FUI.view.create({
+                HBY.view.create({
                     key: 'newMember',
                     context: this,
                     view: TeamMembers,
@@ -399,7 +399,7 @@ define([
         addTeamMember: function(event) {
             var that = this;
             // 讨论组人员管理
-            FUI.view.create({
+            HBY.view.create({
                 key: 'addTeamMember',
                 el: "body",
                 isClean: true,
@@ -436,22 +436,22 @@ define([
                                 that.createTeam(that);
                             } else {
                                 var newMembers = that.selectedMembers.pluck('id') || [];
-                                that.oldMembers = FUI.datas['teamMembers_' + that.options.chatId].pluck('id') || [];
+                                that.oldMembers = HBY.datas['teamMembers_' + that.options.chatId].pluck('id') || [];
                                 var delMembers = _.difference(that.oldMembers, newMembers);
                                 var addMembers = _.difference(newMembers, that.oldMembers);
                                 if (newMembers.length + 1 > 200) {
-                                    FUI.util.System.showMsg('warning', '小组人员不能超过' + 200 + '个！');
+                                    HBY.util.System.showMsg('warning', '小组人员不能超过' + 200 + '个！');
                                     return false;
                                 }
                                 // 更改组成员
                                 if (delMembers.length && that.options.team.owner == window.imUser.imAccountId) {
-                                    FUI.Events.trigger('im:delTeamMembers', {
+                                    HBY.Events.trigger('im:delTeamMembers', {
                                         teamId: that.options.team.teamId,
                                         accounts: delMembers
                                     });
                                 }
                                 if (addMembers.length) {
-                                    FUI.Events.trigger('im:addTeamMembers', {
+                                    HBY.Events.trigger('im:addTeamMembers', {
                                         teamId: that.options.team.teamId,
                                         accounts: addMembers
                                     });
@@ -473,26 +473,26 @@ define([
             accounts.push(window.imUser.imAccountId);
             accounts = _.without(accounts, '0');
             if (accounts.length > 1) {
-                FUI.Events.trigger('im:addOneTeam', accounts);
+                HBY.Events.trigger('im:addOneTeam', accounts);
             }
         },
         // 离开
         leaveTeam: function(teamId) {
-            FUI.Events.trigger('im:leaveTeam', teamId);
+            HBY.Events.trigger('im:leaveTeam', teamId);
         },
         // 解散群
         dismissTeam: function(teamId) {
-            FUI.Events.trigger('im:dismissTeam', teamId);
+            HBY.Events.trigger('im:dismissTeam', teamId);
         },
         // 更新群名
         updateTeamName: function(team) {
             team = team || {};
-            if (team.teamId == FUI.currentChatId) {
+            if (team.teamId == HBY.currentChatId) {
                 this.$('#groupName').text(team.name);
             }
         },
         closeChat: function(chatId) {
-            FUI.Events.trigger('im:view:currentItem:removeOne', chatId);
+            HBY.Events.trigger('im:view:currentItem:removeOne', chatId);
         },
         // 组合聊天消息
         getContentObj: function(content) {
@@ -503,8 +503,8 @@ define([
                 from: window.imUser.imAccountId,
                 type: this.msgType,
                 content: content,
-                idClient: FUI.util.Tool.guid(),
-                time: FUI.util.Date.getDateTime()
+                idClient: HBY.util.Tool.guid(),
+                time: HBY.util.Date.getDateTime()
             };
             return messageObj;
         },
@@ -517,10 +517,10 @@ define([
                 hasText = contentEl.text();
             contentEl.empty();
             if (message.indexOf('<img face') < 0 && !hasText.replace(/ /gi, "").length) return;
-            message = FUI.ux.util.IM.faceToText(message);
+            message = HBY.ux.util.IM.faceToText(message);
             if (message.length > 2000) {
                 message = message.substr(0, 2000);
-                // FUI.util.System.showMsg('warning', '您输入的信息太长了！');
+                // HBY.util.System.showMsg('warning', '您输入的信息太长了！');
                 // return;
             }
             this.sendMessage(message);
@@ -555,13 +555,13 @@ define([
                 from: window.imUser.imAccountId,
                 type: 'custom',
                 content: JSON.stringify(content),
-                idClient: FUI.util.Tool.guid(),
-                time: FUI.util.Date.getDateTime(),
+                idClient: HBY.util.Tool.guid(),
+                time: HBY.util.Date.getDateTime(),
                 done: function(error, msg) {
-                    FUI.util.System.showMsg('success', '转发' + (!error ? '成功' : '失败'));
+                    HBY.util.System.showMsg('success', '转发' + (!error ? '成功' : '失败'));
                 }
             };
-            FUI.Events.trigger('im:sendMessage', messageObj);
+            HBY.Events.trigger('im:sendMessage', messageObj);
         },
         // 发送聊天内容
         sendMessage: function(content) {
@@ -577,10 +577,10 @@ define([
                 // debug.log(error);
                 debug.log('发送' + msg.scene + ' ' + msg.type + '消息' + (!error ? '成功' : '失败') + ', id=' + msg.idClient, msg);
                 // 添加到collection
-                FUI.Events.trigger('im:collection:' + that.collection.key + ':onMsg', msg);
+                HBY.Events.trigger('im:collection:' + that.collection.key + ':onMsg', msg);
             }
             // 触发调用sdk接口
-            FUI.Events.trigger('im:sendMessage', messageObj);
+            HBY.Events.trigger('im:sendMessage', messageObj);
         }
     });
     return View;
