@@ -4,9 +4,8 @@
  * @update: 2016/4/1
  */
 define([
-    'core/FUI',
     'core/view/View'
-], function(FUI, BaseView) {
+], function(BaseView) {
     var AppView = BaseView.extend({
         initialize: function(option) {
             var option = option || {};

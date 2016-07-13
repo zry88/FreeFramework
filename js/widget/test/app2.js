@@ -2,13 +2,14 @@ define([
     'core/view/component/Panel',
     'core/view/component/Table',
     'core/view/element/Button',
+    'core/view/Modal',
     'core/view/component/Tooltip',
     'core/view/component/Popover'
-], function(PanelView, TableView, BtnView) {
+], function(PanelView, TableView, BtnView, DialogView) {
     FUI.widgets.test2 = PanelView.extend({
         events: {
             'click button': 'onClickBtn',
-            // 'click .li_item_css': 'onResultItem'
+            'click .btn-danger': 'onModal'
         },
         initialize: function(option) {
             var defaults = {
@@ -90,6 +91,17 @@ define([
                             options: {
                                 html: '弹出框',
                                 className: 'btn btn-success btn-xs',
+                                style: {
+                                    marginRight: '10px'
+                                }
+                            }
+                        }, {
+                            key: '4_btn',
+                            view: BtnView,
+                            context: this,
+                            options: {
+                                html: '模态框',
+                                className: 'btn btn-danger btn-xs',
                             }
                         }]
                     }]
@@ -109,6 +121,16 @@ define([
         onClickBtn: function(event) {
             console.warn('ggggggggggggggg', this.theView.getSelectedRow());
         },
+        onModal: function(event){
+            FUI.view.create({
+                key: this.id + '_modal',
+                view: DialogView,
+                type: 'dialog',
+                options: {
+                    title: '模态框标题'
+                }
+            });
+        }
     });
     return FUI.widgets.test2;
 });

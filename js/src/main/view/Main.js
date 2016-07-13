@@ -20,7 +20,7 @@ define([
             new MenuView();
             // 测试demo
             FUI.view.create({
-                key: "demo",
+                key: "page_demo",
                 view: TestView,
                 inset: 'html',
             });

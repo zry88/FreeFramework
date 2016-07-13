@@ -143,7 +143,6 @@ define([
                             context: null, //上下文
 
                             options: {}, //视图参数
-                            dialogConfig: {}, //对话框配置参数
                             params: {}, //数据源参数
 
                             view: null, //视图类或实例
@@ -151,7 +150,7 @@ define([
 
                             isClean: true, //是否清除原有视图
                             isRender: true, //是否自动渲染视图
-                            type: 'page', // 视图类型 页面视图page 组件视图component, 模态视图modal, 对话框视图dialog
+                            type: 'page', // 视图类型 页面视图page 组件视图component, 模态视图modal
                             animate: undefined, //动画效果
 
                             onInitBefore: function() {}, //视图开始前回调
@@ -163,18 +162,18 @@ define([
                         };
                     if (option && _.isObject(option)) _.extend(defaults, option);
                     var theKey = defaults.key,
-                        el = defaults.el,
+                        type = defaults.type,
+                        el = type == 'modal' ? 'body' : defaults.el,
                         inset = defaults.inset,
                         context = defaults.context,
                         options = defaults.options,
-                        dialogConfig = defaults.dialogConfig,
                         params = defaults.params,
                         view = defaults.view,
                         collection = defaults.collection,
                         isClean = defaults.isClean,
                         isRender = defaults.isRender,
-                        type = defaults.type,
                         animate = defaults.animate;
+                    var theView = {};
                     if (!theKey) return false;
                     if (context) type = 'component';
                     if (type == 'page') {
@@ -188,7 +187,6 @@ define([
                         options: options,
                         params: params
                     };
-                    // if (type == 'component') viewOptions._el = theKey;
 
                     function _showResult() {
                         var showOptions = {
@@ -225,7 +223,7 @@ define([
                             if (_self.views[theKey]) {
                                 return _showResult();
                             }
-                            var theView = (type == 'component') ? context : _self.views;
+                            theView = (type == 'component') ? context : _self.views;
                             theView[theKey] = typeof view == "function" ? new view(viewOptions) : view;
                             if (theView[theKey]) {
                                 viewHtml = theView[theKey].render().el;
@@ -250,9 +248,9 @@ define([
                         }
                         // 插入视图
                         viewEl[inset](viewHtml);
-                        // 对话框视图
-                        if (type == 'dialog') {
-                            $('#' + theKey).dialog(dialogConfig);
+                        // 模态框视图
+                        if (type == 'modal') {
+                            $('#' + theKey).modal(theView[theKey].options);
                         }
                     }
                     return _showResult();

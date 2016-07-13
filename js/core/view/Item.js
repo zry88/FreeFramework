@@ -17,7 +17,6 @@ define([
         initialize: function(option) {
             this.parent(option);
             this.model = option.model || this.model || {};
-            this.tagName = option.tagName || this.tagName;
             this.stopListening(this.model);
             this.listenTo(this.model, "change", this.rendAll);
             this.rendAll();

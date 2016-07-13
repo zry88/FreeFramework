@@ -171,7 +171,7 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
         },
-        demo_triggerEvent: function(data) {
+        triggerEvent: function(data) {
             data.num = 100;
             this.trigger();
         }
