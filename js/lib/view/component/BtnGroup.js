@@ -45,10 +45,10 @@ define([
                         item.key = that.id + '_' + item.key;
                         item.el = that.$el;
                         item.context = that;
-                        HBY.view.create(item);
+                        FUI.view.create(item);
                     } else {
                         // 按钮
-                        HBY.view.create({
+                        FUI.view.create({
                             key: that.id + '_button',
                             el: that.$el,
                             view: ButtonView,
@@ -64,7 +64,7 @@ define([
             event.stopPropagation();
             var target = $(event.currentTarget);
             target.addClass('active').siblings('button').removeClass('active');
-            HBY.Events.trigger(this.context.id + ':clickItem', { from: this.id, data: target });
+            FUI.Events.trigger(this.context.id + ':clickItem', { from: this.id, data: target });
             debug.warn({ from: this.id, data: target });
         }
     });

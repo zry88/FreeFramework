@@ -66,7 +66,7 @@ define([
                         }else{
                             btnText = btn.text + btnText;
                         }
-                        HBY.view.create({
+                        FUI.view.create({
                             key: theKey,
                             el: that.$el,
                             view: ButtonView,
@@ -77,7 +77,7 @@ define([
                             }
                         });
                     } else {
-                        HBY.view.create({
+                        FUI.view.create({
                             key: theKey,
                             el: that.$el,
                             view: ButtonView,
@@ -198,7 +198,7 @@ define([
                 } else {
                     target.addClass('active').siblings('li').removeClass('active');
                 }
-                HBY.Events.trigger(this.context.id + ':clickItem', { from: this.id, data: target });
+                FUI.Events.trigger(this.context.id + ':clickItem', { from: this.id, data: target });
                     if(typeof this.options.onClickItem == 'function') this.options.onClickItem(event);
             }
         }

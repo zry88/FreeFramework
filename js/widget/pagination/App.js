@@ -15,7 +15,7 @@ define([
     "text!widget/pagination/app.html",
     'lib/view/component/Dropdown',
 ], function(BaseView, template, DropdownView) {
-    HBY.widgets.pagination = BaseView.extend({
+    FUI.widgets.pagination = BaseView.extend({
         template: _.template(template),
         events: {
             "click li.page": "gotoPage",
@@ -58,7 +58,7 @@ define([
                 showEllipsis: showEllipsis //省略号
             }));
             if (this.$('.pageSize').length) {
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_dropdown',
                     el: this.$('.pageSize > .info'),
                     view: DropdownView,
@@ -121,5 +121,5 @@ define([
             this.collection.prevPage(event, this.options.onPrev);
         }
     });
-    return HBY.widgets.pagination;
+    return FUI.widgets.pagination;
 });

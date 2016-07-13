@@ -1,17 +1,17 @@
 require([
     'jquery',
     'jqueryui',
-    'lib/HBY',
+    'lib/FUI',
     "src/im/dataproxy/IM",
     "src/im/controller/IM",
     'src/im/view/YunXin'
-], function($, jqueryui, HBY, ImDataproxy, Controller) {
+], function($, jqueryui, FUI, ImDataproxy, Controller) {
     "use strict";
-    HBY.util.System.requestPermission();
+    FUI.util.System.requestPermission();
     // 加载文件预览插件
     require(["js/knowledge/filePreview_app"]);
     // 定义未读数变量
-    HBY.unreadNum = {
+    FUI.unreadNum = {
         email: 0, // 邮件
         calendar: 0, // 日程
         examine: 0, // 审批
@@ -31,7 +31,7 @@ require([
     };
     $(function(){
         $('.crm-wrapper').on('click', function(e) {
-            HBY.Events.trigger('global:im:hideIM');
+            FUI.Events.trigger('global:im:hideIM');
         });
     });
     ImDataproxy.getAlldepart(null, function(collection, response, option) {

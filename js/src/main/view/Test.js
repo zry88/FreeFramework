@@ -3,7 +3,7 @@ define([
 ], function(LayoutView) {
     var View = LayoutView.extend({
         initialize: function(option) {
-            HBY.Events.off(null, null, this);
+            FUI.Events.off(null, null, this);
             var defaults = {
                 options: {
                     style: {

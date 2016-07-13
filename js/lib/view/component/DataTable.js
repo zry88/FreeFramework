@@ -60,9 +60,9 @@ define([
             this.collection = null;
             this.parent(defaults);
             // 自定义事件
-            HBY.Events.off(null, null, this);
-            HBY.Events.on(this.id + ':showHideCol', this._showHideCol, this);
-            HBY.Events.on(this.id + ':changeCol', this._changeCol, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on(this.id + ':showHideCol', this._showHideCol, this);
+            FUI.Events.on(this.id + ':changeCol', this._changeCol, this);
             // 是否有多级子列
             var hasSub = _.pluck(this.options.columns, 'children');
             this.subCols = _.filter(hasSub, function(col) {
@@ -108,7 +108,7 @@ define([
                     bottom: 0,
                     height: '48px'
                 };
-            HBY.view.create({
+            FUI.view.create({
                 key: this.id + '_panel',
                 el: this.$el,
                 view: PanelView,
@@ -155,8 +155,8 @@ define([
                 this.stopListening(this.collection);
                 // this.listenTo(this.options.data, "remove", this._makeData);
                 this.listenTo(this.collection, "reset", this._makeData);
-                HBY.Events.off(this.collection.key);
-                HBY.Events.on(this.collection.key, this._makeData, this);
+                FUI.Events.off(this.collection.key);
+                FUI.Events.on(this.collection.key, this._makeData, this);
             } else {
                 this.renderAll();
             }
@@ -187,7 +187,7 @@ define([
             if (this.options.data.length) {
                 // 表头
                 this.$('#' + this.id + '_header').remove();
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_header',
                     el: this.$('.panel-heading'),
                     view: TableView,
@@ -230,7 +230,7 @@ define([
                 this.$('.panel-heading').append(theLine);
                 // 表体
                 this.$('#' + this.id + '_bodyer').remove();
-                this.listView = HBY.view.create({
+                this.listView = FUI.view.create({
                     key: this.id + '_bodyer',
                     el: this.$('.panel-body'),
                     view: TableView,
@@ -379,7 +379,7 @@ define([
                     if (col) {
                         col.hide = !isShow;
                     }
-                    HBY.Events.trigger(that.id + ':showHideCol', { show: isShow, index: index });
+                    FUI.Events.trigger(that.id + ':showHideCol', { show: isShow, index: index });
                 }
             });
             var itemsTpl = [
@@ -387,7 +387,7 @@ define([
                 '<input type="checkbox" value="" <%= !hide ? "checked=\'checked\'" : "" %>>',
                 ' <%= text ? text : "" %></label></div></a>',
             ].join('');
-            HBY.view.create({
+            FUI.view.create({
                 key: theKey,
                 el: this.$el,
                 view: Dropdown,

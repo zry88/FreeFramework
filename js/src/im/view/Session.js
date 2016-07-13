@@ -11,7 +11,7 @@ define([
         itemView: SessionItem,
         initialize: function(option) {
             this.parent(option);
-            HBY.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
+            FUI.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
         },
         onChangeBg: function(data){
             var selector = _.isObject(data) ? this.$('#sessionItem_' + data.chatId) : this.$('#' + data);

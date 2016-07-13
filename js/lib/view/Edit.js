@@ -197,10 +197,10 @@ define([
                         if(newConfig.islocal){
                             //本地上传
                             fileEl.off().click().change(function(event){
-                                if(!HBY.views['localManyFile']){
-                                    HBY.views['localManyFile'] = new LocalFile(newConfig);
+                                if(!FUI.views['localManyFile']){
+                                    FUI.views['localManyFile'] = new LocalFile(newConfig);
                                 }else{
-                                    HBY.views['localManyFile'].addFiles(newConfig, fileEl);
+                                    FUI.views['localManyFile'].addFiles(newConfig, fileEl);
                                 }
                             });
                         }else{

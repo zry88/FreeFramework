@@ -53,17 +53,17 @@ define([
             this.tabNum = 0; //会话面板
             this.isPanelShow = 0; //面板是否隐藏
             // 全局关闭
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('global:im:hideIM', this.hideIM, this);
-            HBY.Events.on('im:collection:session:allUnRead', this.allUnRead, this);
-            HBY.Events.on('global:updateUnreadNum', this.updateUnreadNum, this);
-            HBY.Events.on('global:onCustomSysMsg', this.onCustomSysMsg, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('global:im:hideIM', this.hideIM, this);
+            FUI.Events.on('im:collection:session:allUnRead', this.allUnRead, this);
+            FUI.Events.on('global:updateUnreadNum', this.updateUnreadNum, this);
+            FUI.Events.on('global:onCustomSysMsg', this.onCustomSysMsg, this);
             // 取未读消息数
-            HBY.Events.trigger('global:getUnreadNum');
-            HBY.fn.loadCss(static_url + '/css/im/' + (CONFIG.IS_DEBUG ? 'app' : 'pack-min') + '.css');
+            FUI.Events.trigger('global:getUnreadNum');
+            FUI.fn.loadCss(static_url + '/css/im/' + (CONFIG.IS_DEBUG ? 'app' : 'pack-min') + '.css');
         },
         allUnRead: function() {
-            var allNumArr = HBY.datas.session.pluck('unread'),
+            var allNumArr = FUI.datas.session.pluck('unread'),
                 allNum = 0,
                 allNumEl = this.$('#chat_num_new_top');
             if (allNumArr) {
@@ -88,7 +88,7 @@ define([
                     var results = [],
                         results2 = [];
                     // if (!this.tabNum) {
-                    results = _.filter(_.pluck(HBY.datas.session.models, 'attributes'), function(model) {
+                    results = _.filter(_.pluck(FUI.datas.session.models, 'attributes'), function(model) {
                         var hasuser = -1;
                         if (model.scene == 'team') {
                             model.displayName = model.team.name;
@@ -100,7 +100,7 @@ define([
                         return hasuser >= 0 ? true : false;
                     });
                     // } else {
-                    results2 = _.filter(_.pluck(HBY.datas.allDepart.models, 'attributes'), function(model) {
+                    results2 = _.filter(_.pluck(FUI.datas.allDepart.models, 'attributes'), function(model) {
                         var hasuser = -1;
                         if (window.imUser.imAccountId !== model.imAccountId) {
                             model.scene = 'p2p';
@@ -139,12 +139,12 @@ define([
             }
             target.addClass('searchHoverBg').siblings('li').removeClass('searchHoverBg');
             if (scene == 'p2p') {
-                HBY.ux.util.IM.openChat({
+                FUI.ux.util.IM.openChat({
                     chatId: chatId,
                     userId: userId
                 });
             } else {
-                HBY.ux.util.IM.openTeamChat({
+                FUI.ux.util.IM.openTeamChat({
                     chatId: chatId
                 });
             }
@@ -191,7 +191,7 @@ define([
                 target.find('h1.im_left_title11').off();
             }).find('#imCollapse').hide();
             this.$('#currentContacts, #chatpanel').fadeOut(300);
-            HBY.Events.trigger('im:view:contacts:showHideChatBtn', true);
+            FUI.Events.trigger('im:view:contacts:showHideChatBtn', true);
         },
         changeTab: function(event) {
             var target = $(event.currentTarget),
@@ -201,7 +201,7 @@ define([
                 target.find('i').addClass('history_record_active');
                 this.$('#listRecentMember').show().siblings('.list_container').hide();
                 this.tabNum = 0;
-                HBY.Events.trigger('im:view:contacts:showHideChatBtn', true);
+                FUI.Events.trigger('im:view:contacts:showHideChatBtn', true);
             } else {
                 theChildren.removeClass('history_record_active');
                 target.find('i').addClass('contactor_active');
@@ -214,16 +214,16 @@ define([
             var target = $(event.currentTarget);
             this.$('.list_container li').removeClass('im_message_box_list_active_li').find('.selectIcon').hide();
             target.hide();
-            if (HBY.selectedArr.length) {
-                if (HBY.selectedArr.length + 1 > 200) {
-                    HBY.util.System.showMsg('warning', '小组人员不能超过' + 200 + '个！');
+            if (FUI.selectedArr.length) {
+                if (FUI.selectedArr.length + 1 > 200) {
+                    FUI.util.System.showMsg('warning', '小组人员不能超过' + 200 + '个！');
                     return false;
                 }
-                var accountsArr = _.filter(HBY.selectedArr, function(val) {
+                var accountsArr = _.filter(FUI.selectedArr, function(val) {
                     return val.chatId !== 0;
                 });
                 if (accountsArr.length == 1) {
-                    HBY.ux.util.IM.openChat({
+                    FUI.ux.util.IM.openChat({
                         chatId: accountsArr[0].chatId,
                         userId: accountsArr[0].userId
                     });
@@ -234,10 +234,10 @@ define([
                     });
                     if (accountsArr.length > 2) {
                         var accounts = _.pluck(accountsArr, 'chatId');
-                        HBY.Events.trigger('im:addOneTeam', accounts);
+                        FUI.Events.trigger('im:addOneTeam', accounts);
                     }
                 }
-                HBY.selectedArr = [];
+                FUI.selectedArr = [];
             }
             event.stopPropagation();
         },
@@ -258,7 +258,7 @@ define([
                     }
 
                     if (messageType != "") {
-                        HBY.unreadNum[messageType] != undefined && HBY.unreadNum[messageType]++; //存在的类型才增加
+                        FUI.unreadNum[messageType] != undefined && FUI.unreadNum[messageType]++; //存在的类型才增加
                         this.updateUnreadNum();
                     }
 
@@ -274,15 +274,15 @@ define([
 
         // 更新未读数
         updateUnreadNum: function() {
-            debug.log('HBY.unreadNum', HBY.unreadNum);
+            debug.log('FUI.unreadNum', FUI.unreadNum);
             var index_sn_unread_num = $('.index_sn_unread_num'),
                 atme_top_menu = $('.top-menu-sysnotice.atme-top-menu'),
                 allCount = 0,
                 indexCount = 0,
                 reDotHtml = '<div class="atme-right-menu"><span class="atme-sn-radio"></span></div>';
             // 头部小红点
-            for (var key in HBY.unreadNum) {
-                var val = HBY.unreadNum[key];
+            for (var key in FUI.unreadNum) {
+                var val = FUI.unreadNum[key];
                 if (key == 'alter' || key == 'alter_reply' || key == 'alter_like' || key == 'alter_comment') {
                     indexCount += val * 1;
                 } else if (key == 'alter_dynamic') {

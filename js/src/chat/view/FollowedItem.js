@@ -20,8 +20,8 @@ define([
             this.stopListening(this.model);
             this.listenTo(this.model, "change", this.rendHtml);
             window.openRooms = window.openRooms || [];
-            this.room_id = Tool.getRoomId(this.model.get('HBYd'), window.account.get('uid'));
-            this.el.id = 'followed_' + this.model.get('HBYd');
+            this.room_id = Tool.getRoomId(this.model.get('FUId'), window.account.get('uid'));
+            this.el.id = 'followed_' + this.model.get('FUId');
         },
         onItem: function(event){
             var target = $(event.currentTarget);
@@ -34,7 +34,7 @@ define([
             if(CONFIG.OPEN_CHAT){
                 Socket.chatSocket.emit('join_room', {
                     room_id: this.room_id,
-                    to_uid: this.model.get('HBYd'),
+                    to_uid: this.model.get('FUId'),
                     uid: window.account.get('uid'),
                     open_rooms: window.openRooms
                 });
@@ -42,7 +42,7 @@ define([
         },
         showChat: function(event){
             event.preventDefault();
-            var uid = this.model.get('HBYd');
+            var uid = this.model.get('FUId');
             if(!CONFIG.OPEN_CHAT){
                 window.location.href = '#mine/home/' + uid;
                 return false;

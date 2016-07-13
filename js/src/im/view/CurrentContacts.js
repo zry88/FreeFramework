@@ -15,10 +15,10 @@ define([
         initialize: function(option) {
             this.parent(option);
             // ListView.prototype.initialize.call(this, option);
-            HBY.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
+            FUI.Events.on('onCurrent:onChangeBg', this.onChangeBg, this);
         },
         renderBefore: function(){
-            if(HBY.datas.currentContacts.length <= 1){
+            if(FUI.datas.currentContacts.length <= 1){
                 this.hideSelf();
             }
         },
@@ -32,7 +32,7 @@ define([
         },
         addOne: function(model) {
             ListView.prototype.addOne.call(this, model);
-            if(HBY.datas.currentContacts.length > 1){
+            if(FUI.datas.currentContacts.length > 1){
                 this.showSelf();
             }
             this.changeBg();

@@ -15,9 +15,9 @@ define([
         },
         initialize: function(option) {
             this.parent(option);
-            HBY.selectedArr = [];
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('im:view:contacts:showHideChatBtn', this.showHideChatBtn, this);
+            FUI.selectedArr = [];
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('im:view:contacts:showHideChatBtn', this.showHideChatBtn, this);
         },
         clickItem: function(event) {
             var target = $(event.currentTarget),
@@ -35,7 +35,7 @@ define([
         showHideChatBtn: function(isHide){
             var theList = this.$('.depart_member > li');
             if(isHide){
-                HBY.selectedArr = [];
+                FUI.selectedArr = [];
                 theList.removeClass('im_message_box_list_active_li').find('.selectIcon').hide();
             }
             var newChatWindow = $('.newChatWindow');
@@ -46,13 +46,13 @@ define([
             }
         },
         changeSelected: function(obj) {
-            var theModel = _.findWhere(HBY.selectedArr, { chatId: obj.chatId });
+            var theModel = _.findWhere(FUI.selectedArr, { chatId: obj.chatId });
             if (theModel) {
-                HBY.selectedArr = _.filter(HBY.selectedArr, function(model) {
+                FUI.selectedArr = _.filter(FUI.selectedArr, function(model) {
                     return model.chatId !== obj.chatId;
                 });
             } else {
-                HBY.selectedArr.push(obj);
+                FUI.selectedArr.push(obj);
             }
         },
         // 打开聊天窗
@@ -65,7 +65,7 @@ define([
                 return false;
             }
             this.showHideChatBtn(true);
-            HBY.ux.util.IM.openChat({
+            FUI.ux.util.IM.openChat({
                 chatId: chatId,
                 userId: userId
             });

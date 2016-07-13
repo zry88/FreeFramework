@@ -60,7 +60,7 @@ define([
             this.parentId = option.context.id;
             this.draggableTh = null;
             if (!this.options.thead.hide) {
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_thead',
                     el: this.$el,
                     view: Thead,
@@ -69,7 +69,7 @@ define([
                 });
             }
             if (!this.options.tbody.hide) {
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_tbody',
                     el: this.$el,
                     view: Tbody,
@@ -78,7 +78,7 @@ define([
                 });
             }
             if (!this.options.tfoot.hide) {
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_tfoot',
                     el: this.$el,
                     view: Tfoot,
@@ -203,7 +203,7 @@ define([
                             type = 'next';
                         }
                         ui.helper.css('left', 0);
-                        HBY.Events.trigger(that.parentId + ':changeCol', { index: index, to: to, type: type });
+                        FUI.Events.trigger(that.parentId + ':changeCol', { index: index, to: to, type: type });
                     }
                 }
             });
@@ -219,7 +219,7 @@ define([
             // 表头
             if (!options.thead.hide) {
                 var theadEl = this.$('#' + this.id + '_thead').empty();
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_thead_tr',
                     el: theadEl,
                     view: Tr,
@@ -254,7 +254,7 @@ define([
                     } else {
                         col.attr.rowspan = subCols.length ? 2 : undefined;
                     }
-                    HBY.view.create({
+                    FUI.view.create({
                         key: theKey,
                         el: that.$('#' + that.id + '_thead_tr' + (isSub ? '_1' : '')),
                         view: Th,
@@ -266,7 +266,7 @@ define([
                     makeTh(col, index);
                 });
                 if (subCols.length) {
-                    HBY.view.create({
+                    FUI.view.create({
                         key: this.id + '_thead_tr_1',
                         el: theadEl,
                         view: Tr,
@@ -320,7 +320,7 @@ define([
             }
             // 表脚
             if (!options.tfoot.hide) {
-                HBY.view.create({
+                FUI.view.create({
                     key: this.id + '_tfoot_tr',
                     el: this.$('#' + this.id + '_tfoot'),
                     view: Tr,
@@ -333,7 +333,7 @@ define([
                 var showData = function(item, index) {
                     var theTrId = that.id + '_tbody_tr_' + index;
                     if (!item._id) item._id = theTrId;
-                    HBY.view.create({
+                    FUI.view.create({
                         key: theTrId,
                         el: tbodyEl,
                         view: Tr,
@@ -341,7 +341,7 @@ define([
                         options: item,
                         onInitAfter: function(theKey, context) {
                             if (options.selectAble) {
-                                HBY.view.create({
+                                FUI.view.create({
                                     key: that.id + '_tbody_td_checkbox',
                                     el: that.$('#' + theTrId),
                                     view: Td,
@@ -366,7 +366,7 @@ define([
                                             newOption.style = { display: 'none' }
                                         }
                                     }
-                                    HBY.view.create({
+                                    FUI.view.create({
                                         key: that.id + '_tbody_td_' + key,
                                         el: that.$('#' + theTrId),
                                         view: Td,

@@ -1,15 +1,15 @@
 require.config(CONFIG.REQUIRE_CONFIG);
 require([
     'jquery',
-    'lib/HBY',
+    'lib/FUI',
     'src/main/app',
     'util',
     'uxUtil'
     // 'framework7',
     // 'fastclick',
-], function($, HBY, App) {
+], function($, FUI, App) {
     "use strict";
-    // HBY.fw7 = new Framework7(CONFIG.FW7_CONFIG || {});
+    // FUI.fw7 = new Framework7(CONFIG.FW7_CONFIG || {});
     // FastClick.attach(document.body);
 
     if (!CONFIG.IS_CORDOVA) {

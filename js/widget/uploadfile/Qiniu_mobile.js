@@ -2,16 +2,16 @@
  * 七牛上传 移动版
  */
 define([
-    'lib/core/Hby',
+    'lib/core/FUI',
     'localResizeIMG'
-], function(Hby, localResizeIMG) {
+], function(FUI, localResizeIMG) {
     var qiniuUploadUrl;
     if (window.location.protocol === 'https:') {
         qiniuUploadUrl = 'https://up.qbox.me';
     } else {
         qiniuUploadUrl = 'http://upload.qiniu.com';
     }
-    Hby.widgets.qiniu_mobile = function(option) {
+    FUI.widgets.qiniu_mobile = function(option) {
         option = option || {};
         var defaults = {
             file_el: null,
@@ -65,7 +65,7 @@ define([
                     var buttons2 = [{
                         text: '取消'
                     }];
-                    Hby.fw7.actions([buttons1, buttons2]);
+                    FUI.fw7.actions([buttons1, buttons2]);
                     return false;
                 });
             } else {
@@ -77,7 +77,7 @@ define([
             }
         }
     };
-    Hby.widgets.qiniu_mobile.prototype = {
+    FUI.widgets.qiniu_mobile.prototype = {
         uploadInit: function(files, blob, context) {
             var theUploadFiles = [],
                 oldUploadFiles = this.added_files.slice(0);
@@ -94,7 +94,7 @@ define([
                 addedCount = this.added_files.length;
             if (filesCount) {
                 if (addedCount > maxFilesCount) {
-                    Hby.fw7.modal({
+                    FUI.fw7.modal({
                         title: '',
                         text: '只能上传' + maxFilesCount + '张图片',
                         buttons: [{
@@ -107,11 +107,11 @@ define([
                 this.upload_files = this.added_files.slice(0);
                 if (typeof this.options.filesAdded == 'function') this.options.filesAdded(this.upload_files, theUploadFiles);
                 _.each(theUploadFiles, function(fileObj, i) {
-                    fileObj.id = Hby.util.Tool.guid();
+                    fileObj.id = FUI.util.Tool.guid();
                     if (Math.ceil(fileObj.size / (1024 * 1024)) > parseInt(that.options.max_file_size)) {
                         var msg = "发送文件最大为" + that.options.max_file_size;
                         if (theUploadFiles.length == 1) {
-                            Hby.fw7.modal({
+                            FUI.fw7.modal({
                                 title: '',
                                 text: msg,
                                 buttons: [{
@@ -259,7 +259,7 @@ define([
             navigator.camera.getPicture(onSuccess, onFail, cameraOption);
         },
         getKey: function(fileName) {
-            return this.options.keyRoot + Hby.util.Tool.guid() + '.' + Hby.util.File.getExtName(fileName);
+            return this.options.keyRoot + FUI.util.Tool.guid() + '.' + FUI.util.File.getExtName(fileName);
         },
         showPic: function(uploadOption, preview_view, container_el) {
             var view = new(preview_view)(uploadOption);
@@ -275,5 +275,5 @@ define([
             return view;
         }
     };
-    return Hby.widgets.qiniu_mobile;
+    return FUI.widgets.qiniu_mobile;
 });

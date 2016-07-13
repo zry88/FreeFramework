@@ -4,7 +4,7 @@ define([
     'lib/view/element/Button',
     'src/test/collection/Test',
 ], function(BaseView, DataTable, BtnView, TestCollection) {
-    HBY.widgets.test3 = BaseView.extend({
+    FUI.widgets.test3 = BaseView.extend({
         events: {
             'click th': 'onClickBtn',
             // 'click .li_item_css': 'onResultItem'
@@ -32,11 +32,11 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.pageId = option.context.id;
-            // HBY.Events.off(null, null, this);
-            // HBY.Events.on(this.pageId + ':onEvent', this.onevent, this);
-            // HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
+            // FUI.Events.off(null, null, this);
+            // FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            // FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            this.theView = HBY.view.create({
+            this.theView = FUI.view.create({
                 key: this.id + '_datatable',
                 el: this.$el,
                 view: DataTable,
@@ -106,12 +106,12 @@ define([
             });
             // 分页
             require(['widget/pagination/App'], function() {
-                HBY.view.create({
+                FUI.view.create({
                     key: that.id + '_paging',
                     el: that.$('.panel-footer'),
                     context: that,
                     inset: 'html',
-                    view: HBY.widgets.pagination,
+                    view: FUI.widgets.pagination,
                     collection: TestCollection,
                     options: {
                         style: {
@@ -136,5 +136,5 @@ define([
             console.warn('数据表格已被选中行: ', this.theView.getSelectedRow());
         },
     });
-    return HBY.widgets.test3;
+    return FUI.widgets.test3;
 });

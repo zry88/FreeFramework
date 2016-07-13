@@ -10,7 +10,7 @@ define([
             this.home();
         },
         home: function() {
-            HBY.view.create({
+            FUI.view.create({
                 key: "chat",
                 view: ChatView,
                 isClean: true

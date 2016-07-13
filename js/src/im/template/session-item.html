@@ -5,7 +5,7 @@
         <img src="/public/style/images/im/im_group_icon.png" class="list_user_icon" width="20" height="20">
     </span>
 <% }else{ %>
-    <%= HBY.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
+    <%= FUI.ux.util.IM.getImage(user.photoUrl, user.displayName) %>
 <% } %>
     <span class="user_chat_num imUnReadNumChorme" style="<%= unread ? 'display:block;' : '' %>"><%= unread > 99 ? '99+' : unread %></span>
 </a>
@@ -14,7 +14,7 @@
 <% 
 var lastText = '';
 if(lastMsg.type == 'text'){
-    lastText = HBY.ux.util.IM.textToFace(lastMsg.text);
+    lastText = FUI.ux.util.IM.textToFace(lastMsg.text);
 }else{
     if(lastMsg.type !== 'notification'){
         var contentObj = JSON.parse(lastMsg.content);

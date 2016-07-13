@@ -6,7 +6,7 @@ define([
     'vendor/bootstrap/Tooltip',
     'vendor/bootstrap/Popover'
 ], function(PanelView, TableView, BtnView, ModalView) {
-    HBY.widgets.test2 = PanelView.extend({
+    FUI.widgets.test2 = PanelView.extend({
         events: {
             'click button': 'onClickBtn',
             'click .btn-danger': 'onModal',
@@ -31,11 +31,11 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.pageId = option.context.id;
-            // HBY.Events.off(null, null, this);
-            // HBY.Events.on(this.pageId + ':onEvent', this.onevent, this);
-            // HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
+            // FUI.Events.off(null, null, this);
+            // FUI.Events.on(this.pageId + ':onEvent', this.onevent, this);
+            // FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            this.theView = HBY.view.create({
+            this.theView = FUI.view.create({
                 key: this.id + '_table',
                 el: this.$('.panel-body p'),
                 view: TableView,
@@ -134,7 +134,7 @@ define([
             console.warn('ggggggggggggggg', this.theView.getSelectedRow());
         },
         onDialog: function(event) {
-            HBY.view.create({
+            FUI.view.create({
                 key: this.id + '_dialog',
                 view: ModalView,
                 type: 'modal',
@@ -184,7 +184,7 @@ define([
             });
         },
         onModal: function(event) {
-            HBY.view.create({
+            FUI.view.create({
                 key: this.id + '_modal',
                 view: ModalView,
                 type: 'modal',
@@ -244,5 +244,5 @@ define([
             });
         }
     });
-    return HBY.widgets.test2;
+    return FUI.widgets.test2;
 });

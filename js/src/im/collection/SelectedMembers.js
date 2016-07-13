@@ -9,10 +9,10 @@ define([
         model: Model,
         initialize: function(models, option) {
             this.parent(models, option);
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('im:collection:' + this.key + ':onAdd', this.onAdd, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('im:collection:' + this.key + ':onAdd', this.onAdd, this);
             // 添加成员
-            HBY.Events.on('im:collection:' + this.key + ':onRemove', this.onRemove, this);
+            FUI.Events.on('im:collection:' + this.key + ':onRemove', this.onRemove, this);
         },
         onAdd: function(data) {
             data = _.isArray(data) ? data : [data];

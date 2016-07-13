@@ -2,7 +2,7 @@
  * 截图插件
  */
 define(['jquery'], function($) {
-    var ImageCapture = HBY.Base.extend({
+    var ImageCapture = FUI.Base.extend({
         downURL: CAPTURE_PLUGIN_URL,
         captrueUrl: CAPTURE_URL + "/comm/upload",
         captureArr: [],
@@ -60,27 +60,27 @@ define(['jquery'], function($) {
                     plugin = document.getElementById("winbons_plugin_id");
                     var usedVersion = plugin.version;
                     if (!usedVersion) {
-                        HBY.ux.util.IM.showDownloadDialog();
+                        FUI.ux.util.IM.showDownloadDialog();
                         return false;
                     }
                     if (Number(usedVersion.replace(new RegExp("\\.", "g"), "")) < Number(this.captureVersion.replace(new RegExp("\\.", "g"), ""))) {
-                        HBY.ux.util.IM.showDownloadDialog();
+                        FUI.ux.util.IM.showDownloadDialog();
                         return false;
                     }
 
                 } catch (e) {
-                    HBY.ux.util.IM.showDownloadDialog();
+                    FUI.ux.util.IM.showDownloadDialog();
                     return false;
                 }
             } else {
                 plugin = document.getElementById("winbons_plugin_id");
                 var usedVersion = plugin.version;
                 if (!usedVersion) {
-                    HBY.ux.util.IM.showDownloadDialog();
+                    FUI.ux.util.IM.showDownloadDialog();
                     return false;
                 }
                 if (Number(usedVersion.replace(new RegExp("\\.", "g"), "")) < Number(this.captureVersion.replace(new RegExp("\\.", "g"), ""))) {
-                    HBY.ux.util.IM.showDownloadDialog();
+                    FUI.ux.util.IM.showDownloadDialog();
                     return false;
                 }
             }

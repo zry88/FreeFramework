@@ -15,7 +15,7 @@ define([
             this.parent(option);
             // ItemView.prototype.initialize.call(this, option);
             this.el.id = 'currentContact_' + this.model.get('chatId');
-            HBY.Events.on('im:view:currentItem:removeOne', this.removeOne, this);
+            FUI.Events.on('im:view:currentItem:removeOne', this.removeOne, this);
         },
         clickItem: function(event) {
             var target = $(event.currentTarget),
@@ -24,13 +24,13 @@ define([
                 chatId = target.data('chatid');
             window.location.hash = '#im/' + scene + '/' + chatId + '/' + (userId || 0);
             this.setCurrentItem(chatId);
-            HBY.Events.trigger('onCurrent:onChangeBg', {
+            FUI.Events.trigger('onCurrent:onChangeBg', {
                 chatId:chatId
             });
             event.stopPropagation();
         },
         setCurrentItem: function(chatId){
-            HBY.datas.session.currentItem = chatId;
+            FUI.datas.session.currentItem = chatId;
         },
         onRemoveItem: function(event){
             this.removeOne();
@@ -42,8 +42,8 @@ define([
                 if(this.model.get('chatId') !== id) return false;
             }
             this.remove();
-            HBY.datas.currentContacts.remove(this.model);
-            var theLastModel = HBY.datas.currentContacts.at(HBY.datas.currentContacts.length - 1);
+            FUI.datas.currentContacts.remove(this.model);
+            var theLastModel = FUI.datas.currentContacts.at(FUI.datas.currentContacts.length - 1);
             if(theLastModel){
                 var chatId = theLastModel.get('chatId'),
                     userId = theLastModel.get('user') ? theLastModel.get('user').userId : 0,
@@ -54,12 +54,12 @@ define([
                 $('#chatpanel').remove();
             }
             // 重置当前会话
-            var theSessionModel = HBY.datas.session.findWhere({
+            var theSessionModel = FUI.datas.session.findWhere({
                 to: this.model.get('chatId')
             });
             if (theSessionModel) {
                 var sessionId = (this.model.get('scene') == 'team' ? 'team-' : 'p2p-') + this.model.get('chatId');
-                HBY.Events.trigger('im:reSetUnread', sessionId);
+                FUI.Events.trigger('im:reSetUnread', sessionId);
             }
         },
     });

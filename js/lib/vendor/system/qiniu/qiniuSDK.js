@@ -3,9 +3,9 @@
 /*exported Qiniu */
 /*exported QiniuJsSDK */
 define([
-    'lib/HBY',
+    'lib/FUI',
     'plupload_v2',
-], function(HBY, plupload) {
+], function(FUI, plupload) {
     /**
      * Creates new cookie or removes cookie with negative expiration
      * @param  key       The key or identifier for the store
@@ -297,7 +297,7 @@ define([
             // +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
             // -    depends on: this.utf8_encode
             // *     example 1: this.base64_encode('Kevin van Zonneveld');
-            // *     returns 1: 'S2V2aW4gdmHBYFpvbm5ldmVsZA=='
+            // *     returns 1: 'S2V2aW4gdmFUIFpvbm5ldmVsZA=='
             // mozilla has this native
             // - but breaks in 2.0.0.12!
             //if (typeof this.window['atob'] == 'function') {

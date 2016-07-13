@@ -36,7 +36,7 @@ define([
                 };
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
-            HBY.view.create({
+            FUI.view.create({
                 key: this.id + '_nav',
                 el: this.$el,
                 view: NavView,
@@ -47,8 +47,8 @@ define([
                 }
             });
             this.renderAll();
-            HBY.Events.off(null, null, this);
-            HBY.Events.on(this.id + ':clickItem', this._clickTab, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on(this.id + ':clickItem', this._clickTab, this);
         },
         renderAll: function() {
             var contentEl = this.$('.tab-content').length ? this.$('.tab-content').empty() : $('<div class="tab-content"></div>'),
@@ -60,7 +60,7 @@ define([
                 if (options.currentItem == index) {
                     contentItemEl.addClass('active');
                     if (tab.content.key) {
-                        var view = HBY.view.create(tab.content);
+                        var view = FUI.view.create(tab.content);
                         contentItemEl.html(view.render().el);
                     } else {
                         if (typeof tab.content == 'string' || tab.content instanceof jQuery) {
@@ -101,7 +101,7 @@ define([
                     if (targetPanelId) this.$('#' + targetPanelId).addClass('active').siblings('div').removeClass('active');
                 }
                 if (tab.content.key) {
-                    var view = HBY.view.create(tab.content);
+                    var view = FUI.view.create(tab.content);
                     this.$('#' + targetPanelId).html(view.render().el);
                 } else {
                     if (typeof tab.content == 'string' || tab.content instanceof jQuery) {

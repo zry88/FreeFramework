@@ -11,9 +11,9 @@ define([
         pageSize: 20,
         initialize: function(models, option){
             this.parent(models, option);
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('im:collection:currentContacts:onAddOne', this.onAddOne, this);
-            HBY.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('im:collection:currentContacts:onAddOne', this.onAddOne, this);
+            FUI.Events.on('im:collection:teams:updateTeamName', this.onUpdateTeamName, this);
         },
         onAddOne: function(data) {
             this.add(data);

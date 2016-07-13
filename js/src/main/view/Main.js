@@ -4,11 +4,11 @@
  * @class main
  */
 define([
-    'lib/HBY',
+    'lib/FUI',
     'lib/view/View',
     'src/main/view/Test',
     'src/main/view/Menu'
-], function(HBY, BaseView, TestView, MenuView) {
+], function(FUI, BaseView, TestView, MenuView) {
     var View = BaseView.extend({
         el: "body",
         events: {
@@ -19,14 +19,14 @@ define([
         initialize: function() {
             new MenuView();
             // 测试demo
-            HBY.view.create({
+            FUI.view.create({
                 key: "page_demo",
                 view: TestView,
                 inset: 'html',
             });
-            // if (!window.localStorage.getItem(HBY.getCurrentModule())) {
+            // if (!window.localStorage.getItem(FUI.getCurrentModule())) {
             //     require(['widget/guide/App'], function() {
-            //         var guide = new HBY.widgets.guide({
+            //         var guide = new FUI.widgets.guide({
             //             options: {
             //                 key: 'guide',
             //                 el: 'body',
@@ -72,8 +72,8 @@ define([
             // }
             // new LayoutView();
             if (CONFIG.IS_DEBUG) {
-                // HBY.fn.loadCss(static_url + '/css/common.css?v=1');
-                // HBY.fn.loadCss(static_url + '/css/debug.css?v=1');
+                // FUI.fn.loadCss(static_url + '/css/common.css?v=1');
+                // FUI.fn.loadCss(static_url + '/css/debug.css?v=1');
                 this.$('.tabpanel-container').addClass('debug-bg');
             }
             // 加载IM
@@ -123,12 +123,12 @@ define([
                 value = $.trim(searchBox.val());
             if (value) {
                 if (value.length > 50) {
-                    HBY.util.System.showMsg('warning', "关键字不能超过50个字符！");
+                    FUI.util.System.showMsg('warning', "关键字不能超过50个字符！");
                 } else {
                     window.location.href = "/search?key=" + encodeURIComponent(value);
                 }
             } else {
-                HBY.util.System.showMsg('warning', "请输入搜索条件！");
+                FUI.util.System.showMsg('warning', "请输入搜索条件！");
             }
         }
     });

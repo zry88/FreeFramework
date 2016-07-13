@@ -5,7 +5,7 @@ define([
     return {
         init: function() {
             new Controller();
-            HBY.history.start();
+            FUI.history.start();
         }
     };
 });

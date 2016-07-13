@@ -5,14 +5,14 @@ define([
     "baseApp/model/RemoteModel"
 ], function(RemoteModel) {
     var Model = RemoteModel.extend({
-        idAttribute: 'HBYd',
+        idAttribute: 'FUId',
         apiUrl: {
             // follow: CONFIG.SERVER_URI + '/app/usersfw/follow',
         },
         defaults: {
             uid: "",
             created: "",
-            HBYd: "",
+            FUId: "",
             fuser: {
                 uid: 0,
                 followers_count: null,

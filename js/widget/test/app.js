@@ -5,7 +5,7 @@ define([
     'lib/view/component/Tab',
     'lib/view/component/Dropdown',
 ], function(PanelView, BtnView, NavView, TabView, DropdownView) {
-    HBY.widgets.test = PanelView.extend({
+    FUI.widgets.test = PanelView.extend({
         events: {
             'click button': 'onKeyClick',
             // 'click .li_item_css': 'onResultItem'
@@ -29,12 +29,12 @@ define([
             if (option) $.extend(true, defaults, option || {});
             this.parent(defaults);
             this.parentId = option.context.id;
-            HBY.Events.off(null, null, this);
-            HBY.Events.on(this.parentId + ':onEvent', this.onevent, this);
-            HBY.Events.on(this.id + ':clickNav', this.clickNav, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on(this.parentId + ':onEvent', this.onevent, this);
+            FUI.Events.on(this.id + ':clickNav', this.clickNav, this);
 
-            // var btnView = HBY.view.create();
-            HBY.view.create({
+            // var btnView = FUI.view.create();
+            FUI.view.create({
                 key: this.id + '_menu',
                 el: this.$('.panel-body p'),
                 view: NavView,
@@ -78,7 +78,7 @@ define([
                     }]
                 }
             });
-            HBY.view.create({
+            FUI.view.create({
                 key: this.id + '_tab',
                 el: this.$('.tt'),
                 view: TabView,
@@ -184,7 +184,7 @@ define([
             });
         },
         onKeyClick: function(event) {
-            HBY.Events.trigger(this.parentId + ':triggerEvent', { num: 168 }, 100);
+            FUI.Events.trigger(this.parentId + ':triggerEvent', { num: 168 }, 100);
         },
         onevent: function(data) {
             this.$('#panel_2_header span').text(data.num);
@@ -194,5 +194,5 @@ define([
             console.warn(data.attr('id'));
         }
     });
-    return HBY.widgets.test;
+    return FUI.widgets.test;
 });

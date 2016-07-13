@@ -5,10 +5,10 @@
  * @update: 2015/6/4
  */
 define([
-    'lib/HBY',
+    'lib/FUI',
     "socket.io",
-], function(HBY, io) {
-    var app = HBY.Model.extend({
+], function(FUI, io) {
+    var app = FUI.Model.extend({
         chatSocket: CONFIG.OPEN_CHAT ? {} : $(),
         newsSocket: CONFIG.OPEN_CHAT ? {} : $(),
         defaults: {

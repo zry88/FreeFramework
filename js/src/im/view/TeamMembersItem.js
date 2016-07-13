@@ -25,7 +25,7 @@ define([
                 event.stopPropagation();
                 return false;
             }
-            HBY.ux.util.IM.openChat({
+            FUI.ux.util.IM.openChat({
                 chatId: chatId,
                 userId: this.model.get('userId')
             });
@@ -37,15 +37,15 @@ define([
                     teamId: this.options.chatId,
                     accounts: [this.model.get('id')]
                 };
-            HBY.util.System.showDialog('warning', '你确定删除该讨论组成员数据吗？', {
+            FUI.util.System.showDialog('warning', '你确定删除该讨论组成员数据吗？', {
                 '确定': function(event) {
-                    HBY.datas['teamMembers_' + that.options.chatId].remove(that.model);
+                    FUI.datas['teamMembers_' + that.options.chatId].remove(that.model);
                     that.remove();
-                    if (!HBY.datas['teamMembers_' + that.options.chatId].length) {
+                    if (!FUI.datas['teamMembers_' + that.options.chatId].length) {
                         // 解散组
-                        HBY.Events.trigger('im:dismissTeam', that.options.chatId);
+                        FUI.Events.trigger('im:dismissTeam', that.options.chatId);
                     } else {
-                        HBY.Events.trigger('im:delTeamMembers', data);
+                        FUI.Events.trigger('im:delTeamMembers', data);
                     }
                     $(this).dialog("close");
                 },

@@ -1,7 +1,7 @@
 <a href="javascript:;" title="<%= name %>" data-scene="<%= scene %>" data-chatid="<%= chatId || 0 %>" data-userid="<%= user.userId || 0 %>">
     <span class="im_message_list_pho">
 	<% if(scene == 'p2p'){ %>
-		<%= HBY.ux.util.IM.getImage(photoUrl, name, 's') %>
+		<%= FUI.ux.util.IM.getImage(photoUrl, name, 's') %>
     <% }else{ %>
         <img src="/public/style/images/im/im_group_icon.png" width="20" height="20">
     <% } %>

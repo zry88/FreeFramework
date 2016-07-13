@@ -22,7 +22,7 @@ define([
                 // uptoken : '<Your upload token>', //若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
                 // unique_names: false, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
                 // save_key: true,   // 默认 false。若在服务端生成uptoken的上传策略中指定了 `sava_key`，则开启，SDK在前端将不对key进行任何处理
-                domain: Hby.DOWNLOAD_PATH || 'http://dn-openwinbons.qbox.me/', //bucket 域名，下载资源时用到，**必需**
+                domain: FUI.DOWNLOAD_PATH || 'http://dn-openwinbons.qbox.me/', //bucket 域名，下载资源时用到，**必需**
                 get_new_uptoken: true, //设置上传文件的时候是否每次都重新获取新的token
                 container: 'container', //上传区域DOM ID，默认是browser_button的父元素，
                 max_file_size: '100mb', //最大文件体积限制
@@ -104,7 +104,7 @@ define([
                         // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
                         // 该配置必须要在 unique_names: false , save_key: false 时才生效
 
-                        var key = window.imUser.dbid + '/' + that.options.module + '/' + Hby.util.Tool.guid() + '.' + Hby.ux.util.Qiniu.getExtName(file.name);
+                        var key = window.imUser.dbid + '/' + that.options.module + '/' + FUI.util.Tool.guid() + '.' + FUI.ux.util.Qiniu.getExtName(file.name);
                         // do something with key here
                         return key
                     }

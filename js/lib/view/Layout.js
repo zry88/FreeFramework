@@ -43,7 +43,7 @@ define([
             this.parent(option);
             // 新手引导
             if (!window.localStorage.getItem(option.key) && this.options.guide) {
-                HBY.view.create({
+                FUI.view.create({
                     key: "guide",
                     el: 'body',
                     view: Guide,
@@ -61,7 +61,7 @@ define([
                             className: 'row',
                         };
                     if (theRow) $.extend(true, rowOption, theRow);
-                    var RowView = HBY.view.create({
+                    var RowView = FUI.view.create({
                         key: rowKey,
                         el: that.$el,
                         view: Row,
@@ -78,7 +78,7 @@ define([
                                     className: col.className ? col.className : ('col-md-' + 12 / colCount),
                                 };
                             if (theCol) $.extend(true, colOption, theCol);
-                            var ColView = HBY.view.create({
+                            var ColView = FUI.view.create({
                                 key: colKey,
                                 el: that.$el.find('#' + rowKey),
                                 view: Col,
@@ -94,11 +94,11 @@ define([
                 _.each(widgets, function(widget, index) {
                     if (widget.name) {
                         require([widget.src], function(obj) {
-                            HBY.view.create({
+                            FUI.view.create({
                                 key: widget.key,
                                 el: widget.target ? ('#' + widget.target) : undefined,
                                 context: that,
-                                view: HBY.widgets[widget.name],
+                                view: FUI.widgets[widget.name],
                                 params: widget.params || undefined,
                                 options: widget.options || {},
                             });
@@ -123,11 +123,11 @@ define([
                     that[key] = function(data) {
                         _.each(that.bindEvent[key], function(val, index) {
                             var newVal = that.id + ':' + val;
-                            HBY.Events.trigger(newVal, data);
+                            FUI.Events.trigger(newVal, data);
                         });
                     };
                 }
-                HBY.Events.on(that.id + ':' + key, that[key], that);
+                FUI.Events.on(that.id + ':' + key, that[key], that);
             });
             // console.warn(this);
         },
@@ -138,16 +138,16 @@ define([
             _.each(this.bindEvent[method], function(val, index) {
                 switch (data.length) {
                     case 1:
-                        HBY.Events.trigger(thisId + ':' + val, data[0]);
+                        FUI.Events.trigger(thisId + ':' + val, data[0]);
                         break;
                     case 2:
-                        HBY.Events.trigger(thisId + ':' + val, data[0], data[1]);
+                        FUI.Events.trigger(thisId + ':' + val, data[0], data[1]);
                         break;
                     case 3:
-                        HBY.Events.trigger(thisId + ':' + val, data[0], data[1], data[2]);
+                        FUI.Events.trigger(thisId + ':' + val, data[0], data[1], data[2]);
                         break;
                     case 4:
-                        HBY.Events.trigger(thisId + ':' + val, data[0], data[1], data[2], data[3]);
+                        FUI.Events.trigger(thisId + ':' + val, data[0], data[1], data[2], data[3]);
                         break;
                 }
             });

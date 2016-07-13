@@ -29,7 +29,7 @@ define([
                     mask: true, //是否显示遮罩层
                     type: 'step', //类型
                     root: CONFIG.ROOT_URI + '/img/guide/', //图片根路径
-                    module: HBY.getCurrentModule ? HBY.getCurrentModule() : '', //当前模块名(新框架不用)
+                    module: FUI.getCurrentModule ? FUI.getCurrentModule() : '', //当前模块名(新框架不用)
                     steps: [{
                         html: '',
                         buttons: {}

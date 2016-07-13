@@ -5,9 +5,9 @@
  * @update: 2015/2/6
  */
 define([
-    "lib/HBY"
-], function(HBY) {
-    var BaseModel = HBY.Model.extend({
+    "lib/FUI"
+], function(FUI) {
+    var BaseModel = FUI.Model.extend({
         urlRoot: '',
         initialize: function(attributes, option) {
             option = option || {};

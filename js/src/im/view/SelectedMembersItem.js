@@ -23,9 +23,9 @@ define([
         // 删除当前人员
         delOne: function(event){
             var target = $(event.currentTarget);
-            HBY.datas['selectedMembers_' + this.options.chatId].remove(this.model);
+            FUI.datas['selectedMembers_' + this.options.chatId].remove(this.model);
             this.remove();
-            HBY.Events.trigger('view:memberTree:clearChecked', {treeId: this.model.get('id')});
+            FUI.Events.trigger('view:memberTree:clearChecked', {treeId: this.model.get('id')});
             event.stopPropagation();
         },
     });

@@ -130,10 +130,10 @@ define(['jquery', 'toastr'], function($, toastr) {
                     }
                 }, 1000);
             }
-            HBY.Events.on("online", function() {
+            FUI.Events.on("online", function() {
                 checkOnLine(true);
             }, window);
-            HBY.Events.on("offline", function() {
+            FUI.Events.on("offline", function() {
                 checkOnLine(false);
             }, window);
         },
@@ -247,7 +247,7 @@ define(['jquery', 'toastr'], function($, toastr) {
                 }
             };
             if (dialogEl.length) dialogEl.remove();
-            HBY.view.create({
+            FUI.view.create({
                 key: 'dialog',
                 selector: "body",
                 insert: 'append',
@@ -260,7 +260,7 @@ define(['jquery', 'toastr'], function($, toastr) {
         showMsg: function(type, content) {
             var typeArr = ['success', 'info', 'warning', 'error'];
             if (_.indexOf(typeArr, type) >= 0 || content) {
-                HBY.fn.loadCss(sources_root + '/js/lib/vendor/components/toastr/toastr.css');
+                FUI.fn.loadCss(sources_root + '/js/lib/vendor/components/toastr/toastr.css');
                 toastr[type](content);
             };
         },

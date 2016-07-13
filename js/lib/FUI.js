@@ -163,7 +163,7 @@ define([
                     if (option && _.isObject(option)) _.extend(defaults, option);
                     var theKey = defaults.key,
                         type = defaults.type,
-                        el = type == 'modal' ? 'body' : defaults.el,
+                        el = defaults.el,
                         inset = defaults.inset,
                         context = defaults.context,
                         options = defaults.options,
@@ -250,7 +250,17 @@ define([
                         viewEl[inset](viewHtml);
                         // 模态框视图
                         if (type == 'modal') {
-                            $('#' + theKey).modal(theView[theKey].options);
+                            var theViewEl = $('#' + theKey),
+                                theModal = theView[theKey];
+                            theViewEl.on('hidden.bs.modal', function(e) {
+                                theModal.remove();
+                            });
+                            theViewEl.modal(theModal.options);
+                            if (animate) {
+                                var animateName = animate.name ? animate.name : 'fadeIn';
+                                theViewEl.data('animate', animateName)
+                                    .animateCss('animated ' + animateName);
+                            }
                         }
                     }
                     return _showResult();
@@ -445,14 +455,14 @@ define([
             }
             return getNameSpace(FUI, 1);
         },
-        getHistory: function(index){
-            if(typeof index == 'string'){
-                if(index == 'current' && this.historys.length > 0) return this.historys[this.historys.length - 1];
-            }else{
+        getHistory: function(index) {
+            if (typeof index == 'string') {
+                if (index == 'current' && this.historys.length > 0) return this.historys[this.historys.length - 1];
+            } else {
                 return this.historys[index];
             }
         },
-        getCurrentModule: function(){
+        getCurrentModule: function() {
             return this.getHistory('current');
         }
     };

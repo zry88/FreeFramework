@@ -48,7 +48,7 @@ define([
             this.parent(defaults);
             var options = this.options;
             if (!options.header.hide) {
-                var theHeader = HBY.view.create({
+                var theHeader = FUI.view.create({
                     key: this.id + '_header',
                     el: this.$el,
                     view: Row,
@@ -57,7 +57,7 @@ define([
                 });
             }
 
-            var theBody = HBY.view.create({
+            var theBody = FUI.view.create({
                 key: this.id + '_body',
                 el: this.$el,
                 view: Row,
@@ -66,7 +66,7 @@ define([
             });
 
             if (!options.footer.hide) {
-                var theFooter = HBY.view.create({
+                var theFooter = FUI.view.create({
                     key: this.id + '_footer',
                     el: this.$el,
                     view: Row,

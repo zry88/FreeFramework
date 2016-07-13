@@ -1,8 +1,8 @@
 // QQ表情插件
 define([
     "jquery",
-    "lib/HBY",
-], function($, HBY) {
+    "lib/FUI",
+], function($, FUI) {
     $.fn.facebox = function(options) {
         var defaults = {
             key: 'faceBox',
@@ -91,7 +91,7 @@ define([
             el.focus();
             if(!selector.html().length) cursorPos = 0;
             // console.warn(selector.html().length, cursorPos);
-            text = HBY.ux.util.IM.textToFace(text);
+            text = FUI.ux.util.IM.textToFace(text);
             if (window.getSelection) {
                 sel = window.getSelection();
                 range = sel.getRangeAt(0);

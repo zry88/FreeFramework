@@ -5,10 +5,10 @@
  * @update: 2016/1/30
  */
 define([
-    'lib/HBY'
-], function(HBY) {
-    // var AppRouter = HBY.Router.extend({
+    'lib/FUI'
+], function(FUI) {
+    // var AppRouter = FUI.Router.extend({
 
     // });
-    return HBY.Router;
+    return FUI.Router;
 });

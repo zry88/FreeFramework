@@ -2,10 +2,10 @@
  * 所有部门
  */
 define([
-    'lib/HBY',
+    'lib/FUI',
     "lib/data/collection/Remote",
     "src/main/model/AllDepart"
-], function(HBY, RemoteCollection, Model) {
+], function(FUI, RemoteCollection, Model) {
     var Collection = RemoteCollection.extend({
         urlType: 1,
         model: Model,

@@ -17,7 +17,7 @@ define([
         },
         home: function() {
             var that = this;
-            HBY.view.create({
+            FUI.view.create({
                 key: "crm_im",
                 el: 'body',
                 view: IMView,
@@ -30,23 +30,23 @@ define([
         // 初始化im功能
         init: function(key, context) {
             // 右边联系人
-            HBY.view.create({
+            FUI.view.create({
                 key: 'listMemberAndGroup',
-                context: HBY.views[key],
+                context: FUI.views[key],
                 view: ContactsView,
                 collection: ImDataproxy.getImdeparts()
             });
             // 左边当前联系人
-            HBY.view.create({
+            FUI.view.create({
                 key: 'currentContacts',
-                context: HBY.views[key],
+                context: FUI.views[key],
                 view: CurrentContacts,
                 collection: ImDataproxy.getCurrentContacts()
             });
             // 会话列表
-            HBY.view.create({
+            FUI.view.create({
                 key: 'departMember_p',
-                context: HBY.views[key],
+                context: FUI.views[key],
                 view: Session,
                 collection: ImDataproxy.getSession()
             }).rendAll();
@@ -63,8 +63,8 @@ define([
             };
             // 获取上传token
             ImDataproxy.getUploadToken(null, function(resp) {
-                HBY.uploadToken = resp;
-                HBY.view.create({
+                FUI.uploadToken = resp;
+                FUI.view.create({
                     key: "chatpanel",
                     el: '#imContainer',
                     view: ChatPanel,

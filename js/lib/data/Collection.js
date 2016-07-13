@@ -5,9 +5,9 @@
  * @update: 2016/7/7
  */
 define([
-    "lib/HBY"
-], function(HBY) {
-    var AppCollection = HBY.Collection.extend({
+    "lib/FUI"
+], function(FUI) {
+    var AppCollection = FUI.Collection.extend({
         key: new Date() * 1,
         isLoaded: false, //是否已加载过数据
         pagingType: 1, //分页风格
@@ -39,7 +39,7 @@ define([
                 this.fetch(this.ajaxOption);
             } else {
                 setTimeout(function() {
-                    HBY.Events.trigger(that.key);
+                    FUI.Events.trigger(that.key);
                 }, 0);
             }
         },

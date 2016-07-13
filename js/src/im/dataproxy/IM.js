@@ -20,42 +20,42 @@ define([
             this.getSelectedMembers();
             this.getSession();
             this.getTeams();
-            HBY.Events.off(null, null, this);
-            // HBY.Events.on('im:getOldMsgs', this.getOldMsgs, this);
-            HBY.Events.on('im:getGroupId', this.getGroupId, this);
-            HBY.Events.on('global:getUnreadNum', this.getUnreadNotifyNum, this);
+            FUI.Events.off(null, null, this);
+            // FUI.Events.on('im:getOldMsgs', this.getOldMsgs, this);
+            FUI.Events.on('im:getGroupId', this.getGroupId, this);
+            FUI.Events.on('global:getUnreadNum', this.getUnreadNotifyNum, this);
         },
         // 所有人员
         getAllUsers: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'allUsers';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: AllUsers,
                 callback: callback
             }).loadData();
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 部门所有人员
         getAlldepart: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'allDepart';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: AllDepart,
                 params: option,
                 callback: callback
             }).loadData();
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // IM联系人部门
         getImdeparts: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'imDeparts';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: ImDeparts,
                 params: option.imdeparts,
@@ -65,7 +65,7 @@ define([
                 if (that.imReady.length) {
                     that.imReady.shift();
                     if (!that.imReady.length) {
-                        HBY.datas.imDeparts.loadData();
+                        FUI.datas.imDeparts.loadData();
                     }
                 }
             };
@@ -73,41 +73,41 @@ define([
                 this.getAlldepart(option.alldepart, callbackFun, this);
                 this.getAllUsers(option.allusers, callbackFun, this);
             }
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // im当前联系人
         getCurrentContacts: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'currentContacts';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: CurrentContacts
             });
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 聊天内容
         getChat: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'chat_' + option.chatId;
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: Chat,
                 options: option
             }).loadData();
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 会话列表
         getSession: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'session';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: Session
             });
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 上传文件token
         getUploadToken: function(option, callback, context) {
@@ -159,7 +159,7 @@ define([
                 });
             } else {
                 // 群聊
-                var theTeam = HBY.datas.teams.get(option.teamId );
+                var theTeam = FUI.datas.teams.get(option.teamId );
                 debug.warn('群历史', option, theTeam);
                 if (theTeam) {
                     option.collection.groupId = !_.isEmpty(theTeam.get('custom')) ? theTeam.get('custom') : 0;
@@ -186,12 +186,12 @@ define([
                     success: function(resp) {
                         if (resp.resultCode == 200 && resp.data) {
                             debug.warn('取旧历史记录接口', resp);
-                            HBY.Events.trigger('im:collection:' + option.key + ':onReset', {
+                            FUI.Events.trigger('im:collection:' + option.key + ':onReset', {
                                 historyMessage: resp.data,
                                 scene: option.scene
                             });
                         } else {
-                            HBY.Events.trigger('im:view:chatPanel:showMoreBtn', false);
+                            FUI.Events.trigger('im:view:chatPanel:showMoreBtn', false);
                         }
                     },
                     error: function(xhr) {
@@ -199,12 +199,12 @@ define([
                     }
                 });
             }else{
-                HBY.Events.trigger('im:view:chatPanel:showMoreBtn', false);
+                FUI.Events.trigger('im:view:chatPanel:showMoreBtn', false);
             }
         },
         // 取未读消息数
         getUnreadNotifyNum: function() {
-            var typeArr = _.allKeys(HBY.unreadNum);
+            var typeArr = _.allKeys(FUI.unreadNum);
             $.ajax({
                 type: "POST",
                 dataType: "json",
@@ -222,9 +222,9 @@ define([
                         if (theData.length) {
                             for (var i = 0; i < theData.length; i++) {
                                 var val = theData[i];
-                              HBY.unreadNum[val.messageType] = parseInt(val.count);
+                              FUI.unreadNum[val.messageType] = parseInt(val.count);
                             }
-                            HBY.Events.trigger('global:updateUnreadNum', theData);
+                            FUI.Events.trigger('global:updateUnreadNum', theData);
                         }
                     }
                 },
@@ -240,35 +240,35 @@ define([
             var that = context || this,
                 option = option || {},
                 theKey = 'selectedMembers_' + option.chatId;
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: SelectedMembers
             });
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 群组
         getTeams: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'teams';
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 collection: Teams
             });
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         },
         // 讨论组成员
         getTeamMembers: function(option, callback, context) {
             var that = context || this,
                 option = option || {},
                 theKey = 'teamMembers_' + option.chatId;
-            HBY.data.create({
+            FUI.data.create({
                 key: theKey,
                 params: option,
                 options: option,
                 collection: TeamMembers
             });
-            return HBY.datas[theKey];
+            return FUI.datas[theKey];
         }
     });
     return new Dataproxy();

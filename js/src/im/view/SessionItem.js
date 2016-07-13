@@ -27,11 +27,11 @@ define([
                 userId = target.data('userid'),
                 chatId = target.data('chatid').replace('team-', '').replace('p2p-', '');
             window.location.hash = '#im/' + scene + '/' + chatId + '/' + (userId || 0);
-            HBY.datas.session.currentItem = chatId;
-            HBY.Events.trigger('onCurrent:onChangeBg', {
+            FUI.datas.session.currentItem = chatId;
+            FUI.Events.trigger('onCurrent:onChangeBg', {
                 chatId: chatId
             });
-            var theModel = HBY.datas.currentContacts.get(chatId);
+            var theModel = FUI.datas.currentContacts.get(chatId);
             if (!theModel) {
                 var newData = {};
                 if (this.model.get('scene') == 'p2p') {
@@ -55,7 +55,7 @@ define([
                         team: team
                     };
                 }
-                HBY.datas.currentContacts.add(newData);
+                FUI.datas.currentContacts.add(newData);
             }
             event.stopPropagation();
         }

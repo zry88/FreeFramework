@@ -24,8 +24,8 @@ var CONFIG = {
     PAGE_EL: '#container', //页面容器
     PREFIX_STR: '', //key前缀
     IS_PAGE_CACHE: false, //是否缓存页面
-    SERVER_URI: 'http://crm.com/remote', //后台服务器地址
-    ROOT_URI: 'http://crm.com', //文件资源服务器地址
+    SERVER_URI: 'http://freeui.com/remote', //后台服务器地址
+    ROOT_URI: 'http://freeui.com', //文件资源服务器地址
     FACE_ICON_PATH: '/public/style/images/im/face/f0', //表情图标地址
     DOWNLOAD_PATH: 'dn-openwinbons.qbox.me/', //文件下载地址
     IMAGE_URI: 'http://192.168.2.165:8080/upload', //头像地址

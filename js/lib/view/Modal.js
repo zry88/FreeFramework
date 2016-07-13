@@ -92,7 +92,7 @@ define([
                 if (body.html.url) {
                     this._getData(body.html, '.modal-body');
                 } else {
-                    HBY.view.create({
+                    FUI.view.create({
                         key: this.id + '_body',
                         el: this.$('.modal-body'),
                         inset: 'html',

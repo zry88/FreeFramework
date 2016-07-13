@@ -19,7 +19,7 @@ define([
             personalsetting: 'js/addressBook/app.js'
         },
         initialize: function() {
-            // HBY.currentModule = 'home';
+            // FUI.currentModule = 'home';
             // 创建布局框架
             new MainView();
         },

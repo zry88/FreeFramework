@@ -32,7 +32,7 @@ define([
                 theMember.name = theMember.displayName;
                 theTeamMembers = [this.options.user];
             }else{
-                theTeamMembers = _.pluck(HBY.datas['teamMembers_' + this.options.chatId].models, 'attributes');
+                theTeamMembers = _.pluck(FUI.datas['teamMembers_' + this.options.chatId].models, 'attributes');
             }
             if(theTeamMembers){
                 _.each(theTeamMembers, function(user, i){
@@ -50,14 +50,14 @@ define([
             this.options.teamMembers = teamMembers;
             this.selectedMembers.reset(teamMembers);
             // 初始化搜索人员数据
-            var theArr = HBY.datas.imDeparts.pluck('children');
+            var theArr = FUI.datas.imDeparts.pluck('children');
             if (theArr.length) {
                 for (var i = 0; i < theArr.length; i++) {
                     this.allMembers = _.union(this.allMembers, theArr[i]);
                 }
             }
             // 实例化人员树视图
-            HBY.view.create({
+            FUI.view.create({
                 key: "dialog_tree",
                 el: '#left_list_display',
                 context: this,
@@ -65,7 +65,7 @@ define([
                 options: this.options
             });
             // 实例化已选人员视图
-            HBY.view.create({
+            FUI.view.create({
                 key: "selectedMembers",
                 el: '.right_list_con',
                 context: this,

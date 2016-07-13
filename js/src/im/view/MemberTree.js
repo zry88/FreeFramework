@@ -14,8 +14,8 @@ define([
             this.selectedMembersAdd = 'im:collection:selectedMembers_' + this.options.chatId + ':onAdd';
             this.selectedMembersDel = 'im:collection:selectedMembers_' + this.options.chatId + ':onRemove';
 
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('view:memberTree:clearChecked', clearChecked, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('view:memberTree:clearChecked', clearChecked, this);
 
             this.setting = {
                 check: {
@@ -73,7 +73,7 @@ define([
                     photoUrl: treeNode.photoUrl,
                 };
                 if (treeNode.isParent) {
-                    var theParent = HBY.datas.imDeparts.clone().get(treeNode.id);
+                    var theParent = FUI.datas.imDeparts.clone().get(treeNode.id);
                     if (theParent) {
                         var theSub = theParent.attributes.children;
                         if (theSub.length) {
@@ -90,9 +90,9 @@ define([
                             }
                             // debug.warn(newSub);
                             if (treeNode.checked) {
-                                HBY.Events.trigger(that.selectedMembersAdd, newSub);
+                                FUI.Events.trigger(that.selectedMembersAdd, newSub);
                             } else {
-                                HBY.Events.trigger(that.selectedMembersDel, newSub);
+                                FUI.Events.trigger(that.selectedMembersDel, newSub);
                             }
                         }
                     }
@@ -100,9 +100,9 @@ define([
                     if (filterMember(thePerson.imAccountId)) return false;
                     // debug.warn(thePerson);
                     if (treeNode.checked) {
-                        HBY.Events.trigger(that.selectedMembersAdd, thePerson);
+                        FUI.Events.trigger(that.selectedMembersAdd, thePerson);
                     } else {
-                        HBY.Events.trigger(that.selectedMembersDel, thePerson);
+                        FUI.Events.trigger(that.selectedMembersDel, thePerson);
                     }
                 }
             }
@@ -111,7 +111,7 @@ define([
         rendAll: function() {
             var datas = [],
                 that = this;
-            HBY.datas.imDeparts.each(function(model) {
+            FUI.datas.imDeparts.each(function(model) {
                 _.each(model.attributes.children, function(subModel, index){
                     if(_.indexOf(_.pluck(that.options.teamMembers, 'id'), subModel.imAccountId) >= 0){
                         subModel.checked = true;

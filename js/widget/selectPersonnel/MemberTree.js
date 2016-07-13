@@ -13,7 +13,7 @@ define([
             this.parent(option);
             var that = this;
 
-            HBY.Events.off(null, null, this);
+            FUI.Events.off(null, null, this);
             this.setting = {
                 check: {
                     enable: true,
@@ -77,16 +77,16 @@ define([
                 teamArr = [],
                 msgGroupData = { id: 'imGroupInTree', name: '群组', nocheck: true, children: [] },
                 that = this;
-            HBY.datas.imDeparts.each(function(model) {
+            FUI.datas.imDeparts.each(function(model) {
                 model.attributes.nocheck = true;
                 datas.push(model.attributes);
             });
-            /*var teams = HBY.datas['teams'].models,
+            /*var teams = FUI.datas['teams'].models,
                 teamsArr = _.pluck(teams, 'attributes');
             teamsArr.each(function(team){
                 team.id = team.teamId;
             });*/
-            HBY.datas.teams.each(function(model) {
+            FUI.datas.teams.each(function(model) {
                 model.attributes.id = model.attributes.teamId;
                 model.attributes.isImMsgGroup = true;
                 teamArr.push(model.attributes);

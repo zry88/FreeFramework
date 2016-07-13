@@ -9,9 +9,9 @@
  * }
  */
 define([
-    'lib/HBY',
+    'lib/FUI',
     'lib/view/View',
-], function(HBY, BaseView) {
+], function(FUI, BaseView) {
     var ItemView = BaseView.extend({
         tagName: "li",
         initialize: function(option) {

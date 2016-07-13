@@ -11,9 +11,9 @@ define([
         currentItem: 0,
         initialize: function(models, option) {
             this.parent(models, option);
-            HBY.Events.off(null, null, this);
-            HBY.Events.on('im:collection:session:onReset', this.onReset, this);
-            HBY.Events.on('im:collection:session:onRemove', this.onRemove, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on('im:collection:session:onReset', this.onReset, this);
+            FUI.Events.on('im:collection:session:onRemove', this.onRemove, this);
         },
         // 重置数据
         onReset: function(data) {
@@ -22,7 +22,7 @@ define([
                 lastMsg = {};
             _.each(data, function(val, index){
                 if (val.scene == 'team' && val.lastMsg.type == 'notification') {
-                    HBY.nim.getLocalMsgs({
+                    FUI.nim.getLocalMsgs({
                         scene: 'team',
                         to: val.to,
                         limit: 10,
@@ -44,7 +44,7 @@ define([
             });
             this.reset(allData);
             // 总未读数
-            HBY.Events.trigger('im:collection:session:allUnRead');
+            FUI.Events.trigger('im:collection:session:allUnRead');
         },
         // 过滤组装数据
         filterData: function(data, context) {
@@ -53,7 +53,7 @@ define([
                 theType = data.lastMsg.scene;
             if (theType == 'p2p') {
                 // 私聊
-                data.user = HBY.ux.util.IM.getOneContacter({
+                data.user = FUI.ux.util.IM.getOneContacter({
                     imAccountId: data.lastMsg.target
                 });
             } else {
@@ -61,7 +61,7 @@ define([
                 if (data.lastMsg.attach) {
                     data.team = data.lastMsg.attach.team;
                 } else {
-                    data.team = HBY.ux.util.IM.getOneTeam({
+                    data.team = FUI.ux.util.IM.getOneTeam({
                         teamId: data.lastMsg.target
                     });
                 }

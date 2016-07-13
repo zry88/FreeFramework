@@ -2,7 +2,7 @@
  * 系统工具库
  */
 define([
-    "lib/HBY",
+    "lib/FUI",
     "lib/util/Tool",
     "lib/util/Date",
     "lib/util/File",
@@ -10,8 +10,8 @@ define([
     "lib/util/Media",
     "lib/util/String",
     "lib/util/System",
-], function(HBY, UTool, UDate, UFile, UMedia, UString, USystem) {
-    var Util = HBY.ns('HBY.util', HBY.Base.extend({
+], function(FUI, UTool, UDate, UFile, UMedia, UString, USystem) {
+    var Util = FUI.ns('FUI.util', FUI.Base.extend({
         Tool: UTool,
         Date: UDate,
         File: UFile,

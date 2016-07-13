@@ -31,8 +31,8 @@ define([
             this.listenTo(this.collection, "add", this.addOne);
             this.listenTo(this.collection, "remove", this.rendAll);
             this.listenTo(this.collection, "reset", this.rendAll);
-            HBY.Events.off(this.collection.key);
-            HBY.Events.on(this.collection.key, this.rendAll, this);
+            FUI.Events.off(this.collection.key);
+            FUI.Events.on(this.collection.key, this.rendAll, this);
         },
         addOne: function(model) {
             var theItemEl = (this.itemEl == '#' + this.el.id) ? this.$el : this.$(this.itemEl);

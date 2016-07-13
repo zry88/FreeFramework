@@ -5,9 +5,9 @@
  * @update: 2016/6/20
  */
 define([
-    'lib/HBY'
-], function(HBY) {
-    var BaseView = HBY.View.extend({
+    'lib/FUI'
+], function(FUI) {
+    var BaseView = FUI.View.extend({
         initialize: function(option) {
             var that = this;
             if (option.key) this.el.id = this.id = option.key;
@@ -29,14 +29,14 @@ define([
                     if (_.isArray(this.options.html)) {
                         this.$el.empty();
                         _.each(this.options.html, function(val, index) {
-                            var view = HBY.view.create(val);
+                            var view = FUI.view.create(val);
                             that.$el.append(view.render().el);
                         });
                     } else {
                         if (_.isFunction(this.options.html)) {
                             this.$el.html(this.options.html());
                         } else {
-                            var view = HBY.view.create(this.options.html);
+                            var view = FUI.view.create(this.options.html);
                             this.$el.html(view.render().el);
                         }
                     }

@@ -237,7 +237,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -250,7 +250,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -263,7 +263,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -276,7 +276,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -289,7 +289,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -302,7 +302,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -316,7 +316,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -329,7 +329,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -342,7 +342,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         },
@@ -355,7 +355,7 @@
                 'backbone',
                 'framework7',
                 'text',
-                'lib/HBY',
+                'lib/FUI',
                 'util',
             ]
         }

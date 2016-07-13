@@ -16,8 +16,8 @@ define([
                     this.$el.data('width', this.options.style.width);
                 }
             }
-            HBY.Events.off(null, null, this);
-            HBY.Events.on(this.id + ':showhide', this._showHide, this);
+            FUI.Events.off(null, null, this);
+            FUI.Events.on(this.id + ':showhide', this._showHide, this);
         },
         // 显示
         _showHide: function(data) {

@@ -6,7 +6,7 @@ define([
     'text!widget/selectPersonnel/select-personnel.html',
     "widget/selectPersonnel/MemberTree"
 ], function(BaseUiDialog, Template, MemberTree) {
-    HBY.widgets.selectPersonnel = BaseUiDialog.extend({
+    FUI.widgets.selectPersonnel = BaseUiDialog.extend({
         template: _.template(Template),
         events: {
             'keyup .dialog_title_input': 'onKeyClick',
@@ -20,14 +20,14 @@ define([
             this.allMembers = [];
 
             // 初始化搜索人员数据
-            var theArr = HBY.datas.imDeparts.pluck('children');
+            var theArr = FUI.datas.imDeparts.pluck('children');
             if (theArr.length) {
                 for (var i = 0; i < theArr.length; i++) {
                     this.allMembers = _.union(this.allMembers, theArr[i]);
                 }
             }
             // 实例化人员树视图
-            HBY.view.create({
+            FUI.view.create({
                 key: "dialog_tree",
                 el: '#left_list_display',
                 inset: 'html',
@@ -88,5 +88,5 @@ define([
             }
         }
     });
-    return new HBY.widgets.selectPersonnel();
+    return new FUI.widgets.selectPersonnel();
 });

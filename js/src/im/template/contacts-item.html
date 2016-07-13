@@ -3,7 +3,7 @@
 	<% _.each(children, function(val, index){ %>
     <li data-chatid="<%= val.imAccountId || 0 %>" data-userid="<%= val.userId %>" class="depart_member_li ui-draggable">
         <a href="javascript:void(0);" class="depart_user">
-            <%= HBY.ux.util.IM.getImage(val.photoUrl, val.displayName) %>
+            <%= FUI.ux.util.IM.getImage(val.photoUrl, val.displayName) %>
         </a>
         <p class="userNickname"><%= val.displayName %></p>
         <p class="userPosname"> <%= val.staffNo %></p>

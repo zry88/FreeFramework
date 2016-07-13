@@ -5,25 +5,25 @@
  * @update: 2016/1/30
  */
 define([
-    'lib/HBY'
-], function(HBY) {
-    var App = HBY.Base.extend({
+    'lib/FUI'
+], function(FUI) {
+    var App = FUI.Base.extend({
         datas: {},
         initialize: function(option) {
             option = option || {};
-            _.extend(HBY.datas, this.datas, option.datas || {});
+            _.extend(FUI.datas, this.datas, option.datas || {});
         },
         // 创建数据
         createData: function(option) {
-            return HBY.DataManager.createData(option);
+            return FUI.DataManager.createData(option);
         },
         //获取数据
         getData: function(key) {
-            return HBY.DataManager.getData(key);
+            return FUI.DataManager.getData(key);
         },
         //删除数据
         removeData: function(key) {
-            return HBY.DataManager.removeData(key);
+            return FUI.DataManager.removeData(key);
         }
     });
     return App;

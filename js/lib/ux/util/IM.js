@@ -31,9 +31,9 @@ define(['jquery'], function($) {
             var theUser = {},
                 theId = option.imAccountId || option.id;
             if (theId) {
-                theUser = HBY.datas.allUsers.get(theId);
+                theUser = FUI.datas.allUsers.get(theId);
             } else {
-                theUser = HBY.datas.allUsers.findWhere(option);
+                theUser = FUI.datas.allUsers.findWhere(option);
             }
             return theUser ? theUser.attributes : {
                 userId: 0,
@@ -47,9 +47,9 @@ define(['jquery'], function($) {
             var theTeam = {},
                 theId = option.imAccountId || option.id;
             if (theId) {
-                theTeam = HBY.datas.teams.get(theId);
+                theTeam = FUI.datas.teams.get(theId);
             } else {
-                theTeam = HBY.datas.teams.findWhere(option);
+                theTeam = FUI.datas.teams.findWhere(option);
             }
             return theTeam ? theTeam.attributes : {};
         },
@@ -57,17 +57,17 @@ define(['jquery'], function($) {
         openChat: function(option) {
             option = option || {};
             window.location.hash = '#im/p2p/' + option.chatId + '/' + (option.userId || 0);
-            HBY.datas.session.currentItem = option.chatId;
-            var theModel = HBY.datas.currentContacts.get(option.chatId);
+            FUI.datas.session.currentItem = option.chatId;
+            var theModel = FUI.datas.currentContacts.get(option.chatId);
             if (theModel) {
-                HBY.Events.trigger('onCurrent:onChangeBg', {
+                FUI.Events.trigger('onCurrent:onChangeBg', {
                     chatId: option.chatId
                 });
             } else {
                 var userModel = this.getOneContacter({ userId: option.userId || 0 });
                 if (userModel) {
                     userModel.chatId = option.chatId;
-                    HBY.datas.currentContacts.add({
+                    FUI.datas.currentContacts.add({
                         chatId: option.chatId,
                         name: userModel.displayName,
                         photoUrl: userModel.photoUrl,
@@ -81,16 +81,16 @@ define(['jquery'], function($) {
         openTeamChat: function(option) {
             option = option || {};
             window.location.hash = '#im/team/' + option.chatId + '/0';
-            HBY.datas.session.currentItem = option.chatId;
-            var theModel = HBY.datas.currentContacts.get(option.chatId);
+            FUI.datas.session.currentItem = option.chatId;
+            var theModel = FUI.datas.currentContacts.get(option.chatId);
             if (theModel) {
-                HBY.Events.trigger('onCurrent:onChangeBg', {
+                FUI.Events.trigger('onCurrent:onChangeBg', {
                     chatId: option.chatId
                 });
             } else {
                 var teamModel = this.getOneTeam({ teamId: option.chatId.toString() || 0 });
                 if (teamModel) {
-                    HBY.datas.currentContacts.add({
+                    FUI.datas.currentContacts.add({
                         chatId: option.chatId,
                         name: teamModel.name || '讨论组',
                         photoUrl: '',
@@ -110,7 +110,7 @@ define(['jquery'], function($) {
         // 过滤标签
         filterHtml: function(str) {
             var valiHTML = ["br|img"];
-            if (HBY.util.System.checkBrowser.mozilla) {
+            if (FUI.util.System.checkBrowser.mozilla) {
                 str = str.replace(/(<!--\[if[^<]*?\])>([\S\s]*?)<(!\[endif\]-->)/gi, '');
             }
             str = str.replace(/_moz_dirty=""/gi, "")
@@ -136,7 +136,7 @@ define(['jquery'], function($) {
             return str;
         },
         filterTag: function(str) {
-            if (HBY.util.System.checkBrowser.mozilla) {
+            if (FUI.util.System.checkBrowser.mozilla) {
                 str = str.replace(/<\s*br\s*[^<]*>$/ig, '');
             }
             return str.replace(/&nbsp;/gi, ' ')
@@ -221,7 +221,7 @@ define(['jquery'], function($) {
                     lineHeight: imgConfig[size] + 'px'
                 }),
                 img = new Image(),
-                nameWord = HBY.util.String.toPinyin(nameStr),
+                nameWord = FUI.util.String.toPinyin(nameStr),
                 that = this;
             if(attrObj){
                 for(var key in attrObj){
@@ -235,7 +235,7 @@ define(['jquery'], function($) {
             }
             if (imgSrc) {
                 img.src = realImgSrc;
-                img.id = HBY.util.Tool.guid();
+                img.id = FUI.util.Tool.guid();
                 img.width = img.height = imgConfig[size];
                 $(img).data('error_times', 0);
                 imgContainer.append($(img));
@@ -307,12 +307,12 @@ define(['jquery'], function($) {
                 notifyText = '',
                 theNames = '';
             if (msg.attach.type == 'dismissTeam' || msg.attach.type == 'updateTeam' || msg.attach.type == 'leaveTeam') {
-                var theUser = HBY.ux.util.IM.getOneContacter({ imAccountId: msg.attach.users[0].account });
+                var theUser = FUI.ux.util.IM.getOneContacter({ imAccountId: msg.attach.users[0].account });
                 if (theUser) {
                     theUserArr = [theUser];
                 }
             } else {
-                theUserArr = _.filter(_.pluck(HBY.datas.allUsers.models, 'attributes'), function(theUser) {
+                theUserArr = _.filter(_.pluck(FUI.datas.allUsers.models, 'attributes'), function(theUser) {
                     return _.indexOf(msg.attach.accounts, theUser.imAccountId) >= 0;
                 });
             }
@@ -379,11 +379,11 @@ define(['jquery'], function($) {
         },
         // 弹出下载对话框
         showDownloadDialog: function() {
-            var isWindow = HBY.util.System.isWindow(),
+            var isWindow = FUI.util.System.isWindow(),
                 contentHtml = isWindow ? '<p>请点击[下载]，关闭所有浏览器，双击运行WinbonsPluginInstall.exe，<br/>安装完之后重启浏览器<p>' : '<p>暂时不支持截图功能！<p>';
-            HBY.util.System.showDialog('download', contentHtml, isWindow ? {
+            FUI.util.System.showDialog('download', contentHtml, isWindow ? {
                 '下载': function(event) {
-                    if (HBY.util.System.isWindow()) {
+                    if (FUI.util.System.isWindow()) {
                         var elemIF = document.createElement("iframe");
                         elemIF.src = CAPTURE_PLUGIN_URL;
                         elemIF.style.display = "none";

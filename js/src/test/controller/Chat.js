@@ -11,7 +11,7 @@ define([
         },
         home: function(id) {
             debug.warn('bbbbbb');
-            HBY.view.create({
+            FUI.view.create({
                 key: "test",
                 view: ChatView,
                 isClean: true

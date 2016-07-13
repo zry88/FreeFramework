@@ -3272,7 +3272,7 @@ define('moxie/core/utils/Encode', [], function() {
 		// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 		// +      input by: Brett Zamir (http://brett-zamir.me)
 		// +   bugfixed by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
-		// *     example 1: base64_decode('S2V2aW4gdmHBYFpvbm5ldmVsZA==');
+		// *     example 1: base64_decode('S2V2aW4gdmFUIFpvbm5ldmVsZA==');
 		// *     returns 1: 'Kevin van Zonneveld'
 		// mozilla has this native
 		// - but breaks in 2.0.0.12!
@@ -3344,7 +3344,7 @@ define('moxie/core/utils/Encode', [], function() {
 		// +   improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
 		// +   improved by: Rafał Kukawski (http://kukawski.pl)
 		// *     example 1: base64_encode('Kevin van Zonneveld');
-		// *     returns 1: 'S2V2aW4gdmHBYFpvbm5ldmVsZA=='
+		// *     returns 1: 'S2V2aW4gdmFUIFpvbm5ldmVsZA=='
 		// mozilla has this native
 		// - but breaks in 2.0.0.12!
 		var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
