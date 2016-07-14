@@ -32,7 +32,7 @@ a:hover {
     border-radius: 0;
     border: none;
     background-color: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
 }
 .right-modal .modal-body {
     position: absolute;

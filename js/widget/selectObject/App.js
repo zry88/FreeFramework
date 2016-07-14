@@ -6,15 +6,14 @@
  * 获取返回数据：
  */
 define([
-    'backbone',
-    "widget/selectObject/v2/PositionList",
-    "widget/selectObject/v2/DepartmentList",
-    "widget/selectObject/v2/EmployeeList",
-    "widget/selectObject/v2/Position",
-    "widget/selectObject/v2/Department",
-    "widget/selectObject/v2/Employee",
-    "text!widget/selectObject/v2/template.html",
-], function(Backbone, PositionList, DepartmentList, EmployeeList, Position, Department, Employee, Template) {
+    "./v2/PositionList",
+    "./v2/DepartmentList",
+    "./v2/EmployeeList",
+    "./v2/Position",
+    "./v2/Department",
+    "./v2/Employee",
+    "./v2/template.html",
+], function(PositionList, DepartmentList, EmployeeList, Position, Department, Employee, Template) {
     var AppView = Backbone.View.extend({
         template: _.template(Template),
         events: {
